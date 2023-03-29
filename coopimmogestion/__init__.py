@@ -4,6 +4,7 @@ from flask import Flask
 from .db.db import db, migrate
 from .config.DevelopmentConfig import DevelopmentConfig
 from .config.ProductionConfig import ProductionConfig
+from .config.TestingConfig import TestingConfig
 
 
 def create_app(test_config=None):
@@ -12,13 +13,17 @@ def create_app(test_config=None):
     app.config.from_object(DevelopmentConfig)
 
     if test_config is None:
+        # Set production config when app is deployed
         if os.environ.get('FLASK_ENV') == 'production':
             app.config.from_object(ProductionConfig)
+        # Set testing config for test db migration
+        if os.environ.get('FLASK_ENV') == 'testing':
+            app.config.from_object(TestingConfig)
     else:
-        # load the test config if passed in
+        # load the test config for unit test pytest
         app.config.from_object(test_config)
 
-    @app.route('/')
+    @app.route('/connexion', methods=["POST"])
     def initialization():
         return 'Flask initialization'
 

@@ -241,4 +241,10 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+js/
+!bootstrap.bundle.min.js
 
+scss/
+!bootstrap.scss
+!bootstrap.css
+!bootstrap.css.map

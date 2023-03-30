@@ -5,7 +5,7 @@ from .db.db import db, migrate
 from .config.DevelopmentConfig import DevelopmentConfig
 from .config.ProductionConfig import ProductionConfig
 from .config.TestingConfig import TestingConfig
-
+from .controller.LoginView import LoginView
 
 def create_app(test_config=None):
     # create and configure the app
@@ -23,9 +23,7 @@ def create_app(test_config=None):
         # load the test config for unit test pytest
         app.config.from_object(test_config)
 
-    @app.route('/connexion', methods=["POST"])
-    def initialization():
-        return 'Flask initialization'
+    app.add_url_rule('/connexion', view_func=LoginView.as_view('login_view'))
 
     db.init_app(app)
     migrate.init_app(app, db)

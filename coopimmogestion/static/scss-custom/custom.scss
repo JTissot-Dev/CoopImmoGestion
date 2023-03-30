@@ -1,0 +1,88 @@
+@import "../bootstrap-5.3.0-alpha2/scss/bootstrap";
+
+
+body{
+  width: 100%;
+  height: 100vh;
+}
+
+.bg-image {
+    background-image: url('../img/login-background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: fixed;
+
+}
+
+.text-custom{
+  color: #095479;
+}
+
+.logo-sizing{
+  width: 150px;
+  height: 110px;
+}
+
+
+//Login page
+// Custom container
+@mixin make-container($padding-x: $container-padding-x) {
+  width: 100%;
+  height: 100%;
+  padding-right: $padding-x;
+  padding-left: $padding-x;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+// Usage
+.custom-container {
+  @include make-container();
+}
+
+//Custom button
+@mixin button-variant(
+  $background,
+  $border,
+  $color: color-contrast($background),
+  $hover-background: if($color == $color-contrast-light, shade-color($background, $btn-hover-bg-shade-amount), tint-color($background, $btn-hover-bg-tint-amount)),
+  $hover-border: if($color == $color-contrast-light, shade-color($border, $btn-hover-border-shade-amount), tint-color($border, $btn-hover-border-tint-amount)),
+  $hover-color: color-contrast($hover-background),
+  $active-background: if($color == $color-contrast-light, shade-color($background, $btn-active-bg-shade-amount), tint-color($background, $btn-active-bg-tint-amount)),
+  $active-border: if($color == $color-contrast-light, shade-color($border, $btn-active-border-shade-amount), tint-color($border, $btn-active-border-tint-amount)),
+  $active-color: color-contrast($active-background),
+  $disabled-background: $background,
+  $disabled-border: $border,
+  $disabled-color: color-contrast($disabled-background)
+) {
+  --#{$prefix}btn-color: #{$color};
+  --#{$prefix}btn-bg: #{$background};
+  --#{$prefix}btn-border-color: #{$border};
+  --#{$prefix}btn-hover-color: #{$hover-color};
+  --#{$prefix}btn-hover-bg: #{$hover-background};
+  --#{$prefix}btn-hover-border-color: #{$hover-border};
+  --#{$prefix}btn-focus-shadow-rgb: #{to-rgb(mix($color, $border, 15%))};
+  --#{$prefix}btn-active-color: #{$active-color};
+  --#{$prefix}btn-active-bg: #{$active-background};
+  --#{$prefix}btn-active-border-color: #{$active-border};
+  --#{$prefix}btn-active-shadow: #{$btn-active-box-shadow};
+  --#{$prefix}btn-disabled-color: #{$disabled-color};
+  --#{$prefix}btn-disabled-bg: #{$disabled-background};
+  --#{$prefix}btn-disabled-border-color: #{$disabled-border};
+}
+
+.btn-ct-submit{
+  @include button-variant(#34A0D4,transparent)
+}
+
+@mixin button-size($padding-y, $padding-x, $font-size, $border-radius) {
+  --#{$prefix}btn-padding-y: #{$padding-y};
+  --#{$prefix}btn-padding-x: #{$padding-x};
+  @include rfs($font-size, --#{$prefix}btn-font-size);
+  --#{$prefix}btn-border-radius: #{$border-radius};
+}
+
+.btn-ct-size{
+  @include  button-size(7px,20px,15px,3px)
+}
+

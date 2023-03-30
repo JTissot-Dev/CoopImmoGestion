@@ -241,10 +241,11 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
-js/
+coopimmogestion/static/bootstrap-5.3.0-alpha2/js/*
 !bootstrap.bundle.min.js
 
-scss/
+
+coopimmogestion/static/bootstrap-5.3.0-alpha2/scss/*
 !bootstrap.scss
 !bootstrap.css
 !bootstrap.css.map

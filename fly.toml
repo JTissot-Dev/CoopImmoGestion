@@ -12,7 +12,7 @@ processes = []
   PORT = "8080"
 
 [deploy]
-  release_command = "flask --app coopimmogestion db migrate"
+  release_command = "flask --app coopimmogestion db upgrade"
 
 [experimental]
   auto_rollback = true

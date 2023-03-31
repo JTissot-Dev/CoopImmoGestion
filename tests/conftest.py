@@ -1,4 +1,5 @@
 import pytest
+from flask import session
 from coopimmogestion import create_app
 from coopimmogestion.config.TestingConfig import TestingConfig
 from coopimmogestion.models.Address import Address
@@ -6,6 +7,7 @@ from coopimmogestion.models.AppUser import AppUser
 from coopimmogestion.db.db import db
 from datetime import datetime as dt
 from coopimmogestion.crypt.crypt import bcrypt
+
 
 @pytest.fixture()
 def app():

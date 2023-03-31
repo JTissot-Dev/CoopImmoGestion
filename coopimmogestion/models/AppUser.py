@@ -59,3 +59,7 @@ class AppUser(Person):
             return True
         return False
 
+    @classmethod
+    def logout(cls):
+        session.clear()
+

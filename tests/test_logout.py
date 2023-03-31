@@ -3,11 +3,11 @@ from flask import session
 
 class TestLogout:
     def test_access_logout_status(self, client):
-        response = client.get("/deconnexion")
+        response = client.get("/deconnexion", follow_redirects=True)
         assert response.status_code == 200
 
     def test_access_logout_data(self, client):
-        response = client.get("/deconnexion")
+        response = client.get("/deconnexion", follow_redirects=True)
         assert '<title>CoopImmoGestion-connexion</title>' in response.data.decode('utf-8')
 
     def test_logout_session(self, client):

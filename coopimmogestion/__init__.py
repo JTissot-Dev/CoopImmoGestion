@@ -8,6 +8,7 @@ from .config.ProductionConfig import ProductionConfig
 from .config.TestingConfig import TestingConfig
 from .controller.LoginView import LoginView
 from .controller.IndexView import IndexView
+from .controller.LogoutView import LogoutView
 
 
 def create_app(test_config=None):
@@ -25,6 +26,7 @@ def create_app(test_config=None):
 
     app.add_url_rule('/connexion', view_func=LoginView.as_view('login_view'))
     app.add_url_rule('/', view_func=IndexView.as_view('index_view'))
+    app.add_url_rule('/deconnexion', view_func=LogoutView.as_view('logout_view'))
 
     bcrypt.init_app(app)
     db.init_app(app)

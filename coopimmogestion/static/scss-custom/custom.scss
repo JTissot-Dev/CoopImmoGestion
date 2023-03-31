@@ -121,4 +121,20 @@ body{
   background-color: rgba(52, 160, 212, 0.32);
 }
 
+.nav-item-custom{
+  background-color: transparent;
+}
+
+.btn-logout-modal{
+  @include button-variant(#34A0D4,transparent);
+  @include  button-size(7px,20px,15px,3px)
+}
+
+.btn-logout-cancel-modal{
+  @include button-variant(#E0E3E4,transparent);
+  @include  button-size(7px,20px,15px,3px)
+}
+
+$modal-content-border-radius: 15px;
+$prefix-modal-border-radius: $modal-content-border-radius;
 

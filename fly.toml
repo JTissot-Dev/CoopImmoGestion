@@ -11,6 +11,9 @@ processes = []
 [env]
   PORT = "8080"
 
+[deploy]
+  release_command = "flask --app coopimmogestion db migrate"
+
 [experimental]
   auto_rollback = true
 

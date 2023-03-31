@@ -24,7 +24,7 @@ def create_app(test_config=None):
         app.config.from_object(test_config)
 
     app.add_url_rule('/connexion', view_func=LoginView.as_view('login_view'))
-    app.add_url_rule('/acceuil', view_func=IndexView.as_view('index_view'))
+    app.add_url_rule('/', view_func=IndexView.as_view('index_view'))
 
     bcrypt.init_app(app)
     db.init_app(app)

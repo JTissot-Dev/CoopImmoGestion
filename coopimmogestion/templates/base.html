@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='scss-custom/custom.css') }}">
+</head>
+<body>
+    <header class="container-fluid d-flex justify-content-between py-1 px-3 bg-light bg-gradient shadow">
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <div class="p-2 nav-item-custom rounded-3">
+                <img src="{{ url_for('static', filename='img/lateral_navbar_logo.svg') }}" class="logo-sizing-menu">
+            </div>
+        </button>
+        <a class="ps-4" href="#">
+            <img class="logo-sizing-base" src="{{ url_for('static', filename='img/login-logo-brand.png') }}">
+        </a>
+        <nav class="d-flex align-items-center">
+            <a class="p-2 me-2 nav-item-custom rounded-3"  href="#">
+                <img class="logo-sizing-menu " src="{{ url_for('static', filename='img/account-logo.svg') }}">
+            </a>
+            <a class="p-2 nav-item-custom rounded-3" href="#">
+                <img class="logo-sizing-menu" src="{{ url_for('static', filename='img/logout-logo.svg') }}">
+            </a>
+        </nav>
+    <div class="bg-light bg-gradient offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">CoopImmoGestion</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body mt-5">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li class="nav-item nav-item-custom border-bottom border-primary-subtle py-2 mt-4">
+                    <a class="d-flex align-items-center nav-link fw-medium ms-3" href="#">
+                        <img class="logo-sizing-menu" src="{{ url_for('static', filename='img/property-logo.svg') }}">
+                        <span class="ps-3">
+                            Biens immobiliers
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item nav-item-custom border-bottom border-primary-subtle py-2">
+                    <a class="d-flex align-items-center nav-link fw-medium ms-3" href="#">
+                        <img class="logo-sizing-menu" src="{{ url_for('static', filename='img/tenants-logo.svg') }}">
+                        <span class="ps-3">
+                            Locataires
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item nav-item-custom border-bottom border-primary-subtle py-2">
+                    <a class="d-flex align-items-center nav-link fw-medium ms-3" href="#">
+                        <img class="logo-sizing-menu" src="{{ url_for('static', filename='img/rentals-logo.svg') }}">
+                        <span class="ps-3">
+                            Locations
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item nav-item-custom border-bottom border-primary-subtle py-2">
+                    <a class="d-flex align-items-center nav-link fw-medium ms-3" href="#">
+                        <img class="logo-sizing-menu" src="{{ url_for('static', filename='img/inventories-logo.svg') }}">
+                        <span class="ps-3">
+                            Etats des lieux
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item nav-item-custom border-bottom border-primary-subtle py-2">
+                    <a class="d-flex align-items-center nav-link fw-medium ms-3" href="#">
+                        <img class="logo-sizing-menu" src="{{ url_for('static', filename='img/money-logo.svg') }}">
+                        <span class="ps-3">
+                            Finances
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    </header>
+
+    {%block main%}{%endblock%}
+
+    <footer class="fixed-bottom mt-5 p-4 w-100 text-center bg-light shadow-lg text-custom">
+        <span>@2023 CoopImmoGestion</span>
+    </footer>
+<script type="text/javascript" src="{{ url_for('static', filename='bootstrap-5.3.0-alpha2/js/bootstrap.bundle.min.js') }}">
+</script>
+</body>
+</html>
+

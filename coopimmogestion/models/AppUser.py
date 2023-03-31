@@ -1,14 +1,16 @@
+from flask import session
 from ..db.db import db
 from sqlalchemy.ext.hybrid import hybrid_property
 from datetime import datetime as dt
 from .Person import Person
+from ..crypt.crypt import bcrypt
 
 
 class AppUser(Person):
     # Mapping Class with db table
     __tablename__ = "AppUser"
     _role = db.Column('role', db.String(50), nullable=False)
-    _password = db.Column('password', db.String(50), unique=True, nullable=False)
+    _password = db.Column('password', db.String, unique=True, nullable=False)
 
     # Constructor
     def __init__(self, person_id: int, first_name: str, last_name: str, birthday: dt,
@@ -35,7 +37,25 @@ class AppUser(Person):
     def password(self, password):
         self._password = password
 
+    @hybrid_property
+    def full_name(self):
+        return f'{self._first_name} {self._last_name}'
+
     # Define string representation for UserApp object
     def __repr__(self):
         return f'<UserApp>: {self.first_name} {self.last_name}'
+
+    # User login validator
+    @classmethod
+    def login(cls, email, password):
+        try:
+            user = cls.query.filter_by(email=email).first()
+        except Exception:
+            return False
+        if user and bcrypt.check_password_hash(user.password, password):
+            session['userfirstname'] = user.first_name
+            session['username'] = user.email
+            session['role'] = user.role
+            return True
+        return False
 

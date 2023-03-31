@@ -13,8 +13,8 @@ class TestLogin:
     def test_login_success_status(self, client):
         response = client.post("/connexion", data={
             "email": "test@test.fr",
-            "password": "Test1*"
-        })
+            "password": "Test1*",
+        }, follow_redirects=True)
         assert response.status_code == 200
 
     def test_login_success_session(self, client):
@@ -22,7 +22,7 @@ class TestLogin:
             response = client.post("/connexion", data={
                 "email": "test@test.fr",
                 "password": "Test1*"
-            })
+            }, follow_redirects=True)
             assert session["username"] == "test@test.fr"
 
     def test_login_success_redirect(self, client):
@@ -30,7 +30,7 @@ class TestLogin:
             response = client.post("/connexion", data={
                 "email": "test@test.fr",
                 "password": "Test1*"
-            })
+            }, follow_redirects=True)
             assert '<title>CoopImmoGestion-acceuil</title>' in response.data.decode('utf-8')
 
     def test_login_failed_status(self, client):
@@ -48,7 +48,7 @@ class TestLogin:
             })
             assert session.get("username") is None
 
-    def test_login_failed_redirect(self, client):
+    def test_login_failed_data(self, client):
         response = client.post("/connexion", data={
             "email": "test_wrong_value",
             "password": "test_wrong_value"

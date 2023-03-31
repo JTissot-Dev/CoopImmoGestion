@@ -11876,23 +11876,7 @@ textarea.form-control-lg {
 }
 body {
   width: 100%;
-  height: 100vh;
-}
-
-.bg-image {
-  background-image: url("../img/login-background.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: fixed;
-}
-
-.text-custom {
-  color: #095479;
-}
-
-.logo-sizing {
-  width: 150px;
-  height: 110px;
+  min-height: 100vh;
 }
 
 .custom-container {
@@ -11926,6 +11910,49 @@ body {
   --bs-btn-padding-x: 20px;
   --bs-btn-font-size: 0.9375rem;
   --bs-btn-border-radius: 3px;
+}
+
+.bg-image {
+  background-image: url("../img/login-background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: fixed;
+}
+
+.text-custom {
+  color: #095479;
+}
+
+.logo-sizing-connexion {
+  width: 150px;
+  height: 110px;
+}
+
+.position-custom-log {
+  bottom: 80px;
+}
+
+.font-size-custom {
+  font-size: small;
+}
+
+.logo-sizing-base {
+  width: 60px;
+  height: 40px;
+}
+
+.logo-sizing-menu {
+  width: 25px;
+  height: 25px;
+}
+
+.logo-sizing-index {
+  width: 150px;
+  height: 150px;
+}
+
+.nav-item-custom:hover {
+  background-color: rgba(52, 160, 212, 0.32);
 }
 
 /*# sourceMappingURL=custom.css.map */

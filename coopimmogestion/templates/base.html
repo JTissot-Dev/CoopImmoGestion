@@ -14,11 +14,11 @@
                 <img src="{{ url_for('static', filename='img/lateral_navbar_logo.svg') }}" class="logo-sizing-menu">
             </div>
         </button>
-        <a class="ps-4" href="#">
+        <a class="ps-4" href="{{ url_for('index_view') }}">
             <img class="logo-sizing-base" src="{{ url_for('static', filename='img/login-logo-brand.png') }}">
         </a>
         <nav class="d-flex align-items-center">
-            <a class="p-2 me-2 nav-item-custom rounded-3"  href="#">
+            <a class="p-2 me-2 nav-item-custom rounded-3"  href="{{ url_for('account_view') }}">
                 <img class="logo-sizing-menu " src="{{ url_for('static', filename='img/account-logo.svg') }}">
             </a>
             <button type="button" class="p-2 nav-item-custom rounded-3 border-0" data-bs-toggle="modal" data-bs-target="#logoutModal">

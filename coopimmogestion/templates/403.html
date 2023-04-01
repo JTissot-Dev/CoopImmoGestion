@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoopImmoGestion-redirection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='scss-custom/custom.css') }}">
+</head>
+<body>
+    <main class="custom-container d-flex flex-column justify-content-center">
+        <div class="row justify-content-center mb-5">
+            <div class="col col-12 col-sm-10 col-md-9 col-lg-8 bg-body-tertiary rounded-2 px-5 py-4 mb-5 d-flex flex-column align-items-center">
+                <img class="logo-sizing-403 rounded-2 mb-5" src="{{ url_for('static', filename='img/banner-403.png') }}">
+                <div class="mb-2">
+                    Cette page est réservée aux administrateurs
+                </div>
+                <a href="{{ url_for('index_view') }}" class="btn btn-exit-403">
+                    Revenir à la page d'acceuil
+                </a>
+            </div>
+        </div>
+    </main>
+<script type="text/javascript" src="{{ url_for('static', filename='bootstrap-5.3.0-alpha2/js/bootstrap.bundle.min.js') }}">
+</script>
+</body>
+</html>

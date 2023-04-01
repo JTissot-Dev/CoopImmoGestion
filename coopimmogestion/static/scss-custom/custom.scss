@@ -3,7 +3,7 @@
 
 body{
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 
@@ -135,6 +135,12 @@ body{
   @include  button-size(7px,20px,15px,3px)
 }
 
-$modal-content-border-radius: 15px;
-$prefix-modal-border-radius: $modal-content-border-radius;
+//page 403
+.logo-sizing-403{
+  @include logo-sizing(300px, 300px);
+}
 
+.btn-exit-403{
+  @include button-variant(rgba(185, 200, 208, 0.42),transparent);
+  @include  button-size(7px,65px,15px,3px)
+}

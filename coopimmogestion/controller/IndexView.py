@@ -1,7 +1,6 @@
-from flask import render_template, request, escape, session, redirect, url_for
+from flask import render_template, session
 from flask.views import View
 from ..decorators.login_required import login_required
-from ..models.AppUser import AppUser
 
 
 class IndexView(View):

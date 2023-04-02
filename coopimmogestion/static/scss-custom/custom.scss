@@ -3,7 +3,7 @@
 
 body{
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 
@@ -11,7 +11,8 @@ body{
 // Custom container
 @mixin make-container($padding-x: $container-padding-x) {
   width: 100%;
-  height: 100%;
+  padding-bottom: 70px;
+  padding-top: 70px;
   padding-right: $padding-x;
   padding-left: $padding-x;
   margin-right: auto;
@@ -73,7 +74,7 @@ body{
     background-image: url('../img/login-background.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    position: fixed;
+    background-attachment: scroll;
 
 }
 
@@ -143,4 +144,25 @@ body{
 .btn-exit-403{
   @include button-variant(rgba(185, 200, 208, 0.42),transparent);
   @include  button-size(7px,65px,15px,3px)
+}
+
+//Account page
+table td, th{
+
+  text-align: center;
+}
+
+.btn-ct-page-tab{
+  @include button-variant(#34A0D4,transparent);
+  @include  button-size(0px,15px,15px,3px)
+}
+
+.btn-ct-edit{
+  @include button-variant(#E7EBED,transparent);
+  @include  button-size(2px,7px,15px,3px)
+}
+
+.btn-ct-add{
+  @include button-variant(#34A0D4,transparent);
+  @include  button-size(5px,40px,15px,3px)
 }

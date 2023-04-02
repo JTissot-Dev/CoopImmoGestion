@@ -7,8 +7,8 @@
     <title>{{ page_title }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='scss-custom/custom.css') }}">
 </head>
-<body>
-<div class="custom-container bg-image">
+<body class="bg-image">
+<div class="custom-container">
     <div class="row justify-content-center align-items-center h-100">
         <div class="col-12 col-sm-7 col-md-6 col-lg-5 col-xl-4 col-xxl-3">
             <form action="{{url_for('login_view')}}" method="post"
@@ -32,7 +32,7 @@
                     {{ error_log }}
                 </div>
             </form>
-            <div class="d-flex mt-2 text-white bold justify-content-center">
+            <div class="d-flex mt-2 mb-5 text-white bold justify-content-center">
                 @2023 - CoopImmoGestion
             </div>
         </div>

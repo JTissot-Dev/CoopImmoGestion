@@ -10,7 +10,7 @@ from .controller.error_403 import page_forbidden
 from .controller.LoginView import LoginView
 from .controller.IndexView import IndexView
 from .controller.LogoutView import LogoutView
-from .controller.AccountView import AccountView
+from .controller.AccountsView import AccountView
 
 
 def create_app(test_config=None):

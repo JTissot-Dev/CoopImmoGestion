@@ -88,8 +88,8 @@
                 Êtes-vous sûr de vouloir quitter l'application ?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-logout-cancel-modal" data-bs-dismiss="modal">Annuler</button>
-                    <a href="{{ url_for('logout_view') }}" type="button" class="btn btn-logout-modal">Confirmer</a>
+                    <button type="button" class="btn btn-ct-cancel-modal" data-bs-dismiss="modal">Annuler</button>
+                    <a href="{{ url_for('logout_view') }}" type="button" class="btn btn-ct-modal">Confirmer</a>
                 </div>
             </div>
         </div>
@@ -104,7 +104,7 @@
     </footer>
 <script type="text/javascript" src="{{ url_for('static', filename='bootstrap-5.3.0-alpha2/js/bootstrap.bundle.min.js') }}">
 </script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}">
+<script type="module" src="{{ url_for('static', filename='js/main.js') }}">
 </script>
 </body>
 </html>

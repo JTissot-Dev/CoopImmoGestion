@@ -1,5 +1,13 @@
 @import "../bootstrap-5.3.0-alpha2/scss/bootstrap";
 
+@mixin logo-sizing($width, $height){
+  width: $width;
+  height: $height;
+}
+
+@mixin font-sizing($font-size){
+  font-size: $font-size;
+}
 
 body{
   width: 100%;
@@ -12,7 +20,7 @@ body{
 }
 
 .btn-ct-size{
-  @include  button-size(7px,20px,15px,3px);
+  @include button-size(7px,20px,15px,3px);
 }
 
 .bg-image {
@@ -28,16 +36,11 @@ body{
 }
 
 .logo-sizing-connexion{
-  width: 150px;
-  height: 110px;
+  @include logo-sizing(150px, 110px);
 }
 
 .position-custom-log{
   bottom: 80px;
-}
-
-@mixin font-sizing($font-size){
-  font-size: $font-size;
 }
 
 .font-size-custom{
@@ -45,11 +48,6 @@ body{
 }
 
 //Index page
-@mixin logo-sizing($width, $height){
-  width: $width;
-  height: $height;
-}
-
 .logo-sizing-base{
   @include logo-sizing(60px, 40px);
 }
@@ -70,12 +68,12 @@ body{
   background-color: transparent;
 }
 
-.btn-logout-modal{
+.btn-ct-modal{
   @include button-variant(#34A0D4,transparent);
   @include  button-size(7px,20px,15px,3px);
 }
 
-.btn-logout-cancel-modal{
+.btn-ct-cancel-modal{
   @include button-variant(#E0E3E4,transparent);
   @include  button-size(7px,20px,15px,3px);
 }
@@ -115,6 +113,11 @@ table{
   @include button-size(5px,40px,15px,3px);
 }
 
+.btn-ct-add-s{
+  @include button-outline-variant(#34A0D4);
+  @include button-size(5px,10px,10px,3px);
+}
+
 .dropdown-menu{
   --#{$prefix}dropdown-link-active-color: #000000;
   --#{$prefix}dropdown-link-active-bg: #34A0D4;
@@ -124,4 +127,8 @@ table{
 .table{
   --#{$prefix}table-hover-bg: rgba(52, 160, 212, 0.25);
   --#{$prefix}table-cell-vertical-align: middle;
+}
+
+.form-submit-error{
+  @include font-sizing(12px);
 }

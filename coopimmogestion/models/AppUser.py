@@ -3,6 +3,7 @@ from ..db.db import db
 from sqlalchemy.ext.hybrid import hybrid_property
 from datetime import datetime as dt
 from .Person import Person
+from .Address import Address
 from ..crypt.crypt import bcrypt
 
 
@@ -14,9 +15,9 @@ class AppUser(Person):
 
     # Constructor
     def __init__(self, person_id: int, first_name: str, last_name: str, birthday: dt,
-                 phone_number: str, email: str, address_id: int, role: str, password: str):
+                 phone_number: str, email: str, address: Address, role: str, password: str):
         super().__init__(person_id, first_name, last_name, birthday, phone_number, email,
-                         address_id)
+                         address)
         self._role = role
         self._password = password
 

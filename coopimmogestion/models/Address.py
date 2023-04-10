@@ -11,7 +11,7 @@ class Address(db.Model):
     _additional_address = db.Column('additional_address', db.String(50), nullable=True)
     _zip_code = db.Column('zip_code', db.String(50), nullable=False)
     _city = db.Column('city', db.String(50), nullable=False)
-    _app_users = db.relationship('AppUser')
+    _app_users = db.relationship('AppUser', backref='address', lazy=True)
 
     # Constructor
     def __init__(self, address_id: int, street_name: str, street_number: int,

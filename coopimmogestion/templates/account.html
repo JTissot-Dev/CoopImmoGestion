@@ -7,7 +7,7 @@
             <div class="row justify-content-between my-5 mx-1 border-bottom border-primary-subtle">
                 <h1 class="col-8 fs-5 p-0">Comptes utilisateurs</h1>
                 <div class="col-4 d-none d-sm-flex justify-content-end p-0">
-                    <a href="{{ url_for('index_view') }}" class="link-body-emphasis link-underline link-underline-opacity-0 pe-0">
+                    <a href="{{ url_for('index.index_get') }}" class="link-body-emphasis link-underline link-underline-opacity-0 pe-0">
                         <img src="{{ url_for('static', filename='img/home-logo.svg') }}" class="mb-1">
                         Accueil
                     </a>
@@ -148,7 +148,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body position-relative modal-body-create-user">
-                        <form class="form-create-account" action="{{url_for('account_view')}}" method="post">
+                        <form class="form-create-account" action="{{url_for('account.account_create')}}" method="post">
                             <fieldset class="row g-3 my-2 m-1 pb-2 border border-primary-subtle rounded-2">
                                 <legend class="fs-6 my-0 py-0 text-custom text-center">Utilisateur</legend>
                                 <div class="col-md-4">

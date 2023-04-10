@@ -7,10 +7,10 @@ from .config.DevelopmentConfig import DevelopmentConfig
 from .config.ProductionConfig import ProductionConfig
 from .config.TestingConfig import TestingConfig
 from .controller.error_403 import page_forbidden
-from .controller.LoginView import LoginView
-from .controller.IndexView import IndexView
-from .controller.LogoutView import LogoutView
-from .controller.AccountsView import AccountsView
+from .controller.login import login
+from .controller.index import index
+from .controller.logout import logout
+from .controller.account import account
 
 
 def create_app(test_config=None):
@@ -28,11 +28,10 @@ def create_app(test_config=None):
 
     app.register_error_handler(403, page_forbidden)
 
-    # URL
-    app.add_url_rule('/connexion', view_func=LoginView.as_view('login_view'))
-    app.add_url_rule('/', view_func=IndexView.as_view('index_view'))
-    app.add_url_rule('/deconnexion', view_func=LogoutView.as_view('logout_view'))
-    app.add_url_rule('/comptes', view_func=AccountsView.as_view('account_view'))
+    app.register_blueprint(login)
+    app.register_blueprint(logout)
+    app.register_blueprint(index)
+    app.register_blueprint(account)
 
     # Initialize hashing, db, db migration
     bcrypt.init_app(app)

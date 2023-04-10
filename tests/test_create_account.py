@@ -7,7 +7,7 @@ class TestCreateAccount:
             session["username"] = "test@test.fr"
             session["role"] = "admin"
 
-        response = client.post("/comptes", data={
+        response = client.post("/comptes/creer", data={
             "first_name": "test",
             "last_name": "test",
             "birthday": "2023-04-08",
@@ -28,7 +28,7 @@ class TestCreateAccount:
             session["username"] = "test@test.fr"
             session["role"] = "admin"
 
-        client.post("/comptes", data={
+        client.post("/comptes/creer", data={
             "first_name": "test",
             "last_name": "test",
             "birthday": "2023-04-08",
@@ -55,7 +55,7 @@ class TestCreateAccount:
             session["username"] = "test@test.fr"
             session["role"] = "admin"
 
-        response = client.post("/comptes", data={
+        response = client.post("/comptes/creer", data={
             "first_name": "test",
             "last_name": "test",
             "birthday": "2023-04-08",

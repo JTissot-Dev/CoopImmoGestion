@@ -10,7 +10,7 @@ from .controller.error_403 import page_forbidden
 from .controller.LoginView import LoginView
 from .controller.IndexView import IndexView
 from .controller.LogoutView import LogoutView
-from .controller.AccountsView import AccountView
+from .controller.AccountsView import AccountsView
 
 
 def create_app(test_config=None):
@@ -32,7 +32,7 @@ def create_app(test_config=None):
     app.add_url_rule('/connexion', view_func=LoginView.as_view('login_view'))
     app.add_url_rule('/', view_func=IndexView.as_view('index_view'))
     app.add_url_rule('/deconnexion', view_func=LogoutView.as_view('logout_view'))
-    app.add_url_rule('/comptes', view_func=AccountView.as_view('account_view'))
+    app.add_url_rule('/comptes', view_func=AccountsView.as_view('account_view'))
 
     # Initialize hashing, db, db migration
     bcrypt.init_app(app)

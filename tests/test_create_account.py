@@ -14,7 +14,7 @@ class TestCreateAccount:
             "phone_number": "0000000001",
             "email": "test@test1.fr",
             "role": "user",
-            "password": "Test1*",
+            "password": "Test2000*",
             "street_name": "test",
             "street_number": 1,
             "additional_address": "A",
@@ -23,7 +23,7 @@ class TestCreateAccount:
         }, follow_redirects=True)
         assert response.status_code == 200
 
-    def test_create_user_account(self, client):
+    def test_create_user_account(self, client, app):
         with client.session_transaction() as session:
             session["username"] = "test@test.fr"
             session["role"] = "admin"
@@ -35,7 +35,7 @@ class TestCreateAccount:
             "phone_number": "0000000001",
             "email": "test@test1.fr",
             "role": "user",
-            "password": "Test1*",
+            "password": "Test2000*",
             "street_name": "test",
             "street_number": 1,
             "additional_address": "A",
@@ -43,10 +43,11 @@ class TestCreateAccount:
             "city": "Test"
         }, follow_redirects=True)
 
-        try:
-            user_test = AppUser.query.filter_by(email="test@test1.fr")
-        except Exception:
-            user_test = None
+        with app.app_context():
+            try:
+                user_test = AppUser.query.filter_by(email="test@test1.fr").first()
+            except Exception:
+                user_test = None
         assert user_test is not None
 
     def test_create_user_account_redirect(self, client):
@@ -61,7 +62,7 @@ class TestCreateAccount:
             "phone_number": "0000000001",
             "email": "test@test1.fr",
             "role": "user",
-            "password": "Test1*",
+            "password": "Test2000*",
             "street_name": "test",
             "street_number": 1,
             "additional_address": "A",

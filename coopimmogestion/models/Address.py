@@ -81,3 +81,23 @@ class Address(db.Model):
         return f'''<Address>: {self.street_name} {self.street_number} {self.additional_address}
                 {self.zip_code} {self.city}'''
 
+    @classmethod
+    def create(cls, user_input):
+        address = cls(None, user_input['street_name'], user_input['street_number'],
+                      user_input['additional_address'], user_input['zip_code'], user_input['city'])
+
+        # Add address in db if not exist
+        try:
+            exist_address = Address.query.filter_by(street_name=address.street_name,
+                                                    street_number=address.street_number,
+                                                    additional_address=address.additional_address,
+                                                    zip_code=address.zip_code, city=address.city).first()
+            if not exist_address:
+                db.session.add(address)
+                db.session.commit()
+            else:
+                address = exist_address
+            return address
+        except Exception:
+            db.session.rollback()
+            return None

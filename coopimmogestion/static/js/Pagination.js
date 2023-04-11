@@ -12,7 +12,12 @@ export class Pagination {
   // Pagination display
   updatePaging() {
     this.pagesNumber.forEach((pageNumber) => {
-      pageNumber.innerText = `${this.currentPage} / ${this.pages}`;
+      if (this.pages === 0){
+        pageNumber.innerText = '1 / 1';
+      }
+      else{
+        pageNumber.innerText = `${this.currentPage} / ${this.pages}`;
+      }
     });
     this.tbodyRows.forEach((row, index) => {
       if (index >= this.rowsDisplay[0] && index <= this.rowsDisplay[1]) {

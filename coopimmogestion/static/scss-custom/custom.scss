@@ -132,3 +132,15 @@ table{
 .form-submit-error{
   @include font-sizing(12px);
 }
+
+.alert-sizing{
+  --#{$prefix}alert-padding-x: 5px;
+  --#{$prefix}alert-padding-y: 5px;
+  --#{$prefix}alert-border-radius: 2px;
+  --#{$prefix}alert-margin-bottom: 0;
+  @include font-sizing(13px);
+}
+
+.text-modal-sizing{
+  @include font-sizing(13px);
+}

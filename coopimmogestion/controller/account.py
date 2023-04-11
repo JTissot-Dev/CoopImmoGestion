@@ -15,7 +15,7 @@ def account_read_all():
     page_title = 'CoopImmoGestion-comptes'
     users: list = AppUser.read()
     if not users:
-        flash("Erreur lors du chargement des comptes utilisateurs")
+        flash("Erreur lors du chargement des comptes utilisateurs", "error")
 
     return render_template('account.html', page_title=page_title,
                            users=users)
@@ -32,9 +32,9 @@ def account_create():
     user: AppUser = AppUser.create(user_input, app_user_address)
 
     if user:
-        flash("Succès de la création du compte utilisateur")
+        flash("Succès de la création du compte utilisateur", "success")
     else:
-        flash("Erreur lors de la création du compte utilisateur")
+        flash("Erreur lors de la création du compte utilisateur", "error")
 
     return redirect(url_for('account.account_read_all'))
 

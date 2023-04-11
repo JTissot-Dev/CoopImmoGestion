@@ -4,7 +4,7 @@
 
     <main>
         <div class="container py-3">
-            <div class="row justify-content-between my-5 mx-1 border-bottom border-primary-subtle">
+            <div class="row justify-content-between my-4 mx-1 border-bottom border-primary-subtle">
                 <h1 class="col-8 fs-5 p-0">Comptes utilisateurs</h1>
                 <div class="col-4 d-none d-sm-flex justify-content-end p-0">
                     <a href="{{ url_for('index.index_get') }}" class="link-body-emphasis link-underline link-underline-opacity-0 pe-0">
@@ -42,16 +42,37 @@
                             3-6 4s1 1 1 1h5.256Z"/>
                         </svg>
                     </button>
-                    <div>
-                        {% with log = get_flashed_messages() %}
-                            {% if log %}
-                                {% for message in log %}
-                                    {{ message }}
-                                {% endfor %}
-                            {% endif %}
-                        {% endwith %}
-                    </div>
                 </div>
+            </div>
+            {#Success/Error message#}
+            <div class="row mx-1 mt-2">
+                {% with log = get_flashed_messages(with_categories=true) %}
+                    {% if log %}
+                        {% for category, message in log %}
+                            {% if category == "error" %}
+                                <div class="alert alert-danger d-flex align-items-center justify-content-between alert-sizing"
+                                     role="alert">
+                                    <div>
+                                        {{ message }}
+                                    </div>
+                                    <button type="button"
+                                            class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                    </button>
+                                </div>
+                            {% elif category == "success" %}
+                                <div class="alert alert-success d-flex align-items-center justify-content-between alert-sizing"
+                                     role="alert">
+                                    <div>
+                                        {{ message }}
+                                    </div>
+                                    <button type="button"
+                                            class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                    </button>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
             </div>
             <div class="row mx-1 mb-5 pb-5">
                 <table class="table table-hover col mt-4  shadow-sm">
@@ -67,49 +88,51 @@
                         </tr>
                     </thead>
                     <tbody>
-                    {% for user in users %}
-                        <tr class="d-none">
-                            <td class="align-middle">
-                                {{ user.first_name }}
-                            </td>
-                            <td class="align-middle">
-                                {{ user.last_name }}
-                            </td>
-                            <td class="align-middle d-none d-lg-table-cell">
-                                {{ user.text_birthday }}
-                            </td>
-                            <td class="align-middle d-none d-lg-table-cell">
-                                {{ user.phone_number }}
-                            </td>
-                            <td class="align-middle d-none d-lg-table-cell">
-                                {{ user.email }}
-                            </td>
-                            <td class="align-middle d-none d-lg-table-cell">
-                                {{ user.role }}
-                            </td>
-                            <td class="align-middle pe-4">
-                                <button type="button" class="btn btn-ct-edit dropdown-toggle" data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                    <img src="{{ url_for('static', filename='img/edition-logo.svg') }}"
-                                         class="logo-page-tab mb-1">
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li>
-                                        <button class="dropdown-item" type="button">
-                                            <img src="{{ url_for('static', filename='img/update-logo.svg') }}" class="me-1 mb-1">
-                                            Modifier
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button class="dropdown-item" type="button">
-                                            <img src="{{ url_for('static', filename='img/delete-logo.svg') }}" class="me-1 mb-1">
-                                            Supprimer
-                                        </button>
-                                    </li>
-                                </ul>
-                            </td>
-                        </tr>
-                    {% endfor %}
+                    {% if users %}
+                        {% for user in users %}
+                            <tr class="d-none">
+                                <td class="align-middle">
+                                    {{ user.first_name }}
+                                </td>
+                                <td class="align-middle">
+                                    {{ user.last_name }}
+                                </td>
+                                <td class="align-middle d-none d-lg-table-cell">
+                                    {{ user.text_birthday }}
+                                </td>
+                                <td class="align-middle d-none d-lg-table-cell">
+                                    {{ user.phone_number }}
+                                </td>
+                                <td class="align-middle d-none d-lg-table-cell">
+                                    {{ user.email }}
+                                </td>
+                                <td class="align-middle d-none d-lg-table-cell">
+                                    {{ user.role }}
+                                </td>
+                                <td class="align-middle pe-4">
+                                    <button type="button" class="btn btn-ct-edit dropdown-toggle" data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                        <img src="{{ url_for('static', filename='img/edition-logo.svg') }}"
+                                             class="logo-page-tab mb-1">
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li>
+                                            <button class="dropdown-item" type="button">
+                                                <img src="{{ url_for('static', filename='img/update-logo.svg') }}" class="me-1 mb-1">
+                                                Modifier
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button class="dropdown-item" type="button">
+                                                <img src="{{ url_for('static', filename='img/delete-logo.svg') }}" class="me-1 mb-1">
+                                                Supprimer
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
                     </tbody>
                     <tfoot class="table-light">
                         <tr class="text-custom">
@@ -141,7 +164,7 @@
 
         {# Create user account modal #}
         <div class="modal modal-lg fade rounded-2" id="CreateUserModal" tabindex="-1" aria-labelledby="CreateUserModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog my-3">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h2 class="modal-title fs-5" id="CreateUserModalLabel">Créer un compte</h2>
@@ -149,64 +172,64 @@
                     </div>
                     <div class="modal-body position-relative modal-body-create-user">
                         <form class="form-create-account" action="{{url_for('account.account_create')}}" method="post">
-                            <fieldset class="row g-3 my-2 m-1 pb-2 border border-primary-subtle rounded-2">
-                                <legend class="fs-6 my-0 py-0 text-custom text-center">Utilisateur</legend>
-                                <div class="col-md-4">
-                                    <label for="first_name" class="form-label">Prénom*</label>
+                            <fieldset class="row g-3 m-1 pb-2 border border-primary-subtle rounded-2">
+                                <legend class="my-0 py-0 text-custom text-modal-sizing text-center">Utilisateur</legend>
+                                <div class="col-md-4 my-1">
+                                    <label for="first_name" class="form-label text-modal-sizing">Prénom*</label>
                                     <input name="first_name" type="text" class="form-control form-control-sm rounded-1" id="first_name">
                                 </div>
-                                <div class="col-md-4">
-                                    <label for="last_name" class="form-label">Nom*</label>
+                                <div class="col-md-4 my-1">
+                                    <label for="last_name" class="form-label text-modal-sizing">Nom*</label>
                                     <input name="last_name" type="text" class="form-control form-control-sm rounded-1" id="last_name">
                                 </div>
-                                <div class="col-md-4">
-                                    <label for="birthday" class="form-label">Date de naissance*</label>
+                                <div class="col-md-4 my-1">
+                                    <label for="birthday" class="form-label text-modal-sizing">Date de naissance*</label>
                                     <input name="birthday" type="date" class="form-control form-control-sm rounded-1" id="birthday">
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="phone_number" class="form-label">Téléphone*</label>
+                                <div class="col-md-6 my-1">
+                                    <label for="phone_number" class="form-label text-modal-sizing">Téléphone*</label>
                                     <input name="phone_number" type="tel" class="form-control form-control-sm rounded-1" id="phone_number">
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="email" class="form-label">E-mail*</label>
+                                <div class="col-md-6 my-1">
+                                    <label for="email" class="form-label text-modal-sizing">E-mail*</label>
                                     <input name="email" type="email" class="form-control form-control-sm rounded-1" id="email">
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="password" class="form-label">Mot de passe*</label>
+                                <div class="col-md-6 my-1">
+                                    <label for="password" class="form-label text-modal-sizing">Mot de passe*</label>
                                     <input name="password" type="password" class="form-control form-control-sm rounded-1" id="password">
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="password_check" class="form-label">Confirmer le mot de passe*</label>
+                                <div class="col-md-6 my-1">
+                                    <label for="password_check" class="form-label text-modal-sizing">Confirmer le mot de passe*</label>
                                     <input name="password_check" type="password" class="form-control form-control-sm rounded-1" id="password_check">
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="role" class="form-label">Rôle*</label>
+                                <div class="col-md-6 my-1">
+                                    <label for="role" class="form-label text-modal-sizing">Rôle*</label>
                                     <select name="role" id="role" class="form-select form-select-sm rounded-1">
                                         <option selected>User</option>
                                         <option>Admin</option>
                                     </select>
                                 </div>
                             </fieldset>
-                            <fieldset class="row g-3 my-2 mx-1 mt-3 pb-2 border border-primary-subtle rounded-2">
-                                <legend class="fs-6 my-0 py-0 text-custom text-center">Adresse</legend>
-                                <div class="col-md-10">
-                                    <label for="street_name" class="form-label">Nom de voie*</label>
+                            <fieldset class="row g-3 mx-1 mt-3 pb-2 border border-primary-subtle rounded-2">
+                                <legend class="my-0 py-0 text-custom  text-modal-sizing text-center">Adresse</legend>
+                                <div class="col-md-10 my-1">
+                                    <label for="street_name" class="form-label text-modal-sizing">Nom de voie*</label>
                                     <input name="street_name" type="text" class="form-control form-control-sm rounded-1" id="street_name" placeholder="Place de l'Eglise">
                                 </div>
-                                <div class="col-md-2">
-                                    <label for="street_number" class="form-label">Numéro*</label>
+                                <div class="col-md-2 my-1">
+                                    <label for="street_number" class="form-label text-modal-sizing">Numéro*</label>
                                     <input name="street_number" type="number" class="form-control form-control-sm rounded-1" id="street_number">
                                 </div>
-                                <div class="col-12">
-                                    <label for="additional_address" class="form-label">Adresse complément</label>
+                                <div class="col-12 my-1">
+                                    <label for="additional_address" class="form-label text-modal-sizing">Adresse complément</label>
                                     <input name="additional_address" type="text" class="form-control form-control-sm rounded-1" id="additional_address" placeholder="Bâtiment, étage, ...">
                                 </div>
-                                <div class="col-md-8">
-                                    <label for="city" class="form-label">Ville*</label>
+                                <div class="col-md-8 my-1">
+                                    <label for="city" class="form-label text-modal-sizing">Ville*</label>
                                     <input name="city" type="text" class="form-control form-control-sm rounded-1" id="city">
                                 </div>
-                                <div class="col-md-4">
-                                    <label for="zip_code" class="form-label">Code postal*</label>
+                                <div class="col-md-4 my-1">
+                                    <label for="zip_code" class="form-label text-modal-sizing">Code postal*</label>
                                     <input name="zip_code" type="text" class="form-control form-control-sm rounded-1" id="zip_code">
                                 </div>
                             </fieldset>

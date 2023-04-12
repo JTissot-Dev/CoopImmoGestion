@@ -109,4 +109,15 @@ class AppUser(Person):
         except Exception:
             return None
 
-
+    @classmethod
+    def delete(cls, person_id):
+        try:
+            user = cls.query.get(person_id)
+            if user.email == "coopimmogestion@gmail.com":
+                return False
+            else:
+                db.session.delete(user)
+                db.session.commit()
+                return True
+        except Exception:
+            return False

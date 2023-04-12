@@ -43,7 +43,6 @@ def account_create():
 @login_required
 @admin_required
 def account_update(person_id):
-    print(person_id)
     # Escape form inputs values
     user_input = {name: escape(value) for name, value in request.form.items()}
     # Update User
@@ -58,5 +57,15 @@ def account_update(person_id):
     return redirect(url_for('account.account_read_all'))
 
 
+@account.get('/comptes/supprimer/<int:person_id>')
+@login_required
+@admin_required
+def account_delete(person_id):
+    # Delete user concerned by person_id
+    if AppUser.delete(person_id):
+        flash("Succès de la suppression du compte utilisateur", "success")
+    else:
+        flash("Erreur lors de la suppression du compte utilisateur", "error")
 
+    return redirect(url_for('account.account_read_all'))
 

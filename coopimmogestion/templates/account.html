@@ -137,13 +137,14 @@
                                     <ul class="dropdown-menu dropdown-menu-end">
                                         <li>
                                             <button class="dropdown-item" type="button"
-                                                    data-bs-toggle="modal" data-bs-target="#{{ user.person_id }}">
+                                                    data-bs-toggle="modal" data-bs-target="#update{{ user.person_id }}">
                                                 <img src="{{ url_for('static', filename='img/update-logo.svg') }}" class="me-1 mb-1">
                                                 Modifier
                                             </button>
                                         </li>
                                         <li>
-                                            <button class="dropdown-item" type="button">
+                                            <button class="dropdown-item" type="button"
+                                                    data-bs-toggle="modal" data-bs-target="#delete{{ user.person_id }}">
                                                 <img src="{{ url_for('static', filename='img/delete-logo.svg') }}" class="me-1 mb-1">
                                                 Supprimer
                                             </button>
@@ -263,9 +264,10 @@
                 </div>
             </div>
         </div>
-        {# Update user account modal #}
+
         {% for user in users %}
-            <div class="modal modal-lg fade rounded-2" id="{{ user.person_id }}" tabindex="-1" aria-labelledby="CreateUserModalLabel" aria-hidden="true">
+            {# Update user account modal #}
+            <div class="modal modal-lg fade rounded-2" id="update{{ user.person_id }}" tabindex="-1" aria-labelledby="CreateUserModalLabel" aria-hidden="true">
                 <div class="modal-dialog my-3">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -338,6 +340,26 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-ct-cancel-modal" data-bs-dismiss="modal">Annuler</button>
                             <button type="button" class="btn btn-primary btn-ct-modal submit-update-user">Valider</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {# Delete user modal #}
+            <div class="modal fade" id="delete{{ user.person_id }}" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content rounded-2">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="logoutModalLabel">Supprimer un compte</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                        Confirmer la suppression de {{ user.full_name }} ?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-ct-cancel-modal" data-bs-dismiss="modal">Annuler</button>
+                            <a href="{{ url_for('account.account_delete', person_id = user.person_id) }}" type="button"
+                               class="btn btn-ct-modal">Confirmer</a>
                         </div>
                     </div>
                 </div>

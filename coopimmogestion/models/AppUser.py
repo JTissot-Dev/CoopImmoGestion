@@ -69,16 +69,10 @@ class AppUser(Person):
     def logout(cls):
         session.clear()
 
-    # Put input birthday in datetime format
-    @classmethod
-    def convert_birthday(cls, text_birthday):
-        date_birthday = dt.strptime(text_birthday, "%Y-%m-%d")
-        return date_birthday
-
     @classmethod
     def read(cls):
         try:
-            users = AppUser.query.all()
+            users = cls.query.all()
             return users
         except Exception:
             return None
@@ -99,4 +93,20 @@ class AppUser(Person):
         except Exception:
             db.session.rollback()
             return None
+
+    @classmethod
+    def update(cls, person_id, user_input, app_user_address):
+        try:
+            user = cls.query.get(person_id)
+            user.first_name = user_input['first_name']
+            user.last_name = user_input['last_name']
+            user.birthday = user_input['birthday']
+            user.phone_number = user_input['phone_number']
+            user.role = user_input['role'].lower()
+            user.address_id = app_user_address.address_id
+            db.session.commit()
+            return user
+        except Exception:
+            return None
+
 

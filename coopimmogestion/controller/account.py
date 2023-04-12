@@ -39,5 +39,24 @@ def account_create():
     return redirect(url_for('account.account_read_all'))
 
 
+@account.post('/comptes/modifier/<int:person_id>')
+@login_required
+@admin_required
+def account_update(person_id):
+    print(person_id)
+    # Escape form inputs values
+    user_input = {name: escape(value) for name, value in request.form.items()}
+    # Update User
+    app_user_address: Address = Address.create(user_input)
+    user: AppUser = AppUser.update(person_id, user_input, app_user_address)
+
+    if user:
+        flash("Succès de la mise à jour du compte utilisateur", "success")
+    else:
+        flash("Erreur lors de la mise à jour du compte utilisateur", "error")
+
+    return redirect(url_for('account.account_read_all'))
+
+
 
 

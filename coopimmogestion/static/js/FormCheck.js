@@ -9,7 +9,7 @@ export class FormCheck{
     // Message error generator
     setErrorLog(message){
         this.errorLog.innerText = message;
-        this.errorLog.className = "position-absolute bottom-0 form-submit-error m-1 text-danger"
+        this.errorLog.className = "position-absolute bottom-0 ms-1 form-submit-error text-danger"
         this.modalBody.append(this.errorLog);
     }
 }

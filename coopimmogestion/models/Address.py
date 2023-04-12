@@ -73,7 +73,7 @@ class Address(db.Model):
         return self._app_users
 
     @app_users.setter
-    def persons(self, app_users):
+    def app_users(self, app_users):
         self._app_users = app_users
 
     # Define string representation for Address object
@@ -88,7 +88,7 @@ class Address(db.Model):
 
         # Add address in db if not exist
         try:
-            exist_address = Address.query.filter_by(street_name=address.street_name,
+            exist_address = cls.query.filter_by(street_name=address.street_name,
                                                     street_number=address.street_number,
                                                     additional_address=address.additional_address,
                                                     zip_code=address.zip_code, city=address.city).first()
@@ -101,3 +101,4 @@ class Address(db.Model):
         except Exception:
             db.session.rollback()
             return None
+

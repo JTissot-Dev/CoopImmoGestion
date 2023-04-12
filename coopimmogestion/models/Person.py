@@ -80,4 +80,10 @@ class Person(db.Model):
     def address_id(self, address_id):
         self._address_id = address_id
 
+    # Put input birthday in datetime format
+    @classmethod
+    def convert_birthday(cls, text_birthday):
+        date_birthday = dt.strptime(text_birthday, "%Y-%m-%d")
+        return date_birthday
+
 

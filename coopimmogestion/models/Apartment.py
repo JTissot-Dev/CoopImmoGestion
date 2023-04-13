@@ -34,3 +34,14 @@ class Apartment(Property):
     def outdoor(self, outdoor):
         self._outdoor = outdoor
 
+    # Define string representation for Apartment object
+    def __repr__(self):
+        return f'<UserApp>: {self.reference}'
+
+    @classmethod
+    def read(cls):
+        try:
+            apartments = cls.query.all()
+            return apartments
+        except Exception:
+            return None

@@ -11,6 +11,7 @@ from .controller.login import login
 from .controller.index import index
 from .controller.logout import logout
 from .controller.account import account
+from .controller.apartment import apartment
 
 
 def create_app(test_config=None):
@@ -32,6 +33,7 @@ def create_app(test_config=None):
     app.register_blueprint(logout)
     app.register_blueprint(index)
     app.register_blueprint(account)
+    app.register_blueprint(apartment)
 
     # Initialize hashing, db, db migration
     bcrypt.init_app(app)

@@ -8,8 +8,8 @@ class Property(db.Model):
     __abstract__ = True
     _property_id = db.Column('property_id', db.Integer, primary_key=True, autoincrement=True)
     _reference = db.Column('reference', db.String(50), nullable=False)
-    _living_area = db.Column('living_area', db.Float(precision=15, scale=4), nullable=False)
-    _rooms = db.Column('rooms', db.Integer(50), nullable=False)
+    _living_area = db.Column('living_area', db.Float(precision=15, decimal_return_scale=4), nullable=False)
+    _rooms = db.Column('rooms', db.Integer, nullable=False)
     _address_id = db.Column('address_id', db.Integer, db.ForeignKey('Address.address_id'),
                             nullable=False)
 
@@ -50,3 +50,5 @@ class Property(db.Model):
     @rooms.setter
     def rooms(self, rooms):
         self._rooms = rooms
+
+

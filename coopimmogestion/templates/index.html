@@ -11,8 +11,8 @@
         </div>
         <div class="row row-cols-auto mx-2 pt-5 justify-content-around">
             <div class="d-flex flex-column align-items-center col py-3">
-                <span class="text-center pb-3"> Gérez vos biens </span>
-                <a href="#" class="nav-item-custom rounded-2">
+                <span class="text-center pb-3"> Gérez vos appartements </span>
+                <a href="{{ url_for('apartment.apartment_read_all') }}" class="nav-item-custom rounded-2">
                     <img class="logo-sizing-index border border-3 rounded-2 border-primary-subtle p-2" src="{{ url_for('static', filename='img/property-logo.svg') }}">
                 </a>
             </div>

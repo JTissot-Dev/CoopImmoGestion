@@ -88,7 +88,7 @@ body{
   @include  button-size(7px,65px,15px,3px);
 }
 
-//Account page
+//Account + Apartment pages
 table{
   th, td{
     text-align: center;
@@ -143,4 +143,9 @@ table{
 
 .text-modal-sizing{
   @include font-sizing(13px);
+}
+
+.check-custom{
+  @include logo-sizing(20px, 20px)
+
 }

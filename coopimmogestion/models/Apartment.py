@@ -1,5 +1,7 @@
+from flask import Markup
 from ..db.db import db
 from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.orm.exc import NoResultFound
 from .Property import Property
 from .Address import Address
 
@@ -43,5 +45,25 @@ class Apartment(Property):
         try:
             apartments = cls.query.all()
             return apartments
+        except NoResultFound:
+            return []
         except Exception:
+            return None
+
+    @classmethod
+    def create(cls, user_input, apartment_address):
+        # get outdoor value in boolean type
+        if user_input.get('outdoor'):
+            outdoor = bool(Markup(user_input['outdoor']))
+        else:
+            outdoor = False
+
+        apartment = cls(None, user_input['reference'], user_input['living_area'], user_input['rooms'],
+                        apartment_address, user_input['stage'], outdoor)
+        try:
+            db.session.add(apartment)
+            db.session.commit()
+            return apartment
+        except Exception:
+            db.session.rollback()
             return None

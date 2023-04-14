@@ -141,11 +141,18 @@ table{
   @include font-sizing(13px);
 }
 
+.alert-sizing-lg{
+  --#{$prefix}alert-padding-x: 10px;
+  --#{$prefix}alert-padding-y: 10px;
+  --#{$prefix}alert-border-radius: 2px;
+  --#{$prefix}alert-margin-bottom: 0;
+  @include font-sizing(15px);
+}
+
 .text-modal-sizing{
   @include font-sizing(13px);
 }
 
 .check-custom{
   @include logo-sizing(20px, 20px)
-
 }

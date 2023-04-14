@@ -1,6 +1,7 @@
 import { Pagination } from './Pagination.js';
 import { AccountCreateFormCheck } from "./AccountCreateFormCheck.js";
 import { AccountUpdateFormCheck } from "./AccountUpdateFormCheck.js";
+import {ApartmentCreateFormCheck} from "./ApartmentCreateFormCheck.js";
 
 
 // Table variables
@@ -19,6 +20,10 @@ const modalsBodyUpdateAccount = document.querySelectorAll('.modal-body-update-us
 const formsUpdateAccount = document.querySelectorAll('.form-update-account');
 const submitsButtonUpdateAccount = document.querySelectorAll('.submit-update-user');
 
+// Create apartment modal variables
+const modalBodyCreateApartment = document.querySelector('.modal-body-create-apartment');
+const formCreateApartment = document.querySelector('.form-create-apartment');
+const submitButtonCreateApartment = document.querySelector('.submit-create-apartment');
 
 // Table display
 if (tbodyRows, pagesNumber, nextPage, previousPage){
@@ -41,7 +46,12 @@ if (modalsBodyUpdateAccount.length, formsUpdateAccount.length, submitsButtonUpda
         const accountUpdateFormCheck = new AccountUpdateFormCheck(modalBodyUpdateAccount, formUpdateAccount, submitButtonUpdateAccount);
         accountUpdateFormCheck.attachEventListeners();
     })
+}
 
+// Create user account form submit
+if (modalBodyCreateApartment, formCreateApartment, submitButtonCreateApartment){
+    const apartmentCreateFormCheck = new ApartmentCreateFormCheck(modalBodyCreateApartment, formCreateApartment, submitButtonCreateApartment);
+    apartmentCreateFormCheck.attachEventListeners();
 }
 
 

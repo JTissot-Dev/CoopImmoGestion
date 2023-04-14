@@ -52,3 +52,15 @@ def apartment_update(property_id):
         flash("Erreur lors de la mise à jour de l'appartement", "error")
 
     return redirect(url_for('apartment.apartment_read_all'))
+
+
+@apartment.get('/appartements/supprimer/<int:property_id>')
+@login_required
+def apartment_delete(property_id):
+    # Delete Apartment concerned by property_id
+    if Apartment.delete(property_id):
+        flash("Succès de la suppression de l'appartement", "success")
+    else:
+        flash("Erreur lors de la suppression de l'appartement", "error")
+
+    return redirect(url_for('apartment.apartment_read_all'))

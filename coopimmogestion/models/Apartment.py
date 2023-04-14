@@ -89,3 +89,13 @@ class Apartment(Property):
         except Exception as e:
             print(e)
             return None
+
+    @classmethod
+    def delete(cls, property_id):
+        try:
+            apartment = cls.query.get(property_id)
+            db.session.delete(apartment)
+            db.session.commit()
+            return True
+        except Exception:
+            return False

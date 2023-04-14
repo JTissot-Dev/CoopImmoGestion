@@ -35,3 +35,20 @@ def apartment_create():
         flash("Erreur lors de la création de l'appartement", "error")
 
     return redirect(url_for('apartment.apartment_read_all'))
+
+
+@apartment.post('/appartements/modifier/<int:property_id>')
+@login_required
+def apartment_update(property_id):
+    # Escape form inputs values
+    user_input = {name: escape(value) for name, value in request.form.items()}
+    # Update Apartment
+    apartment_address: Address = Address.create(user_input)
+    apartment: Apartment = Apartment.update(property_id, user_input, apartment_address)
+
+    if apartment:
+        flash("Succès de la mise à jour de l'appartement", "success")
+    else:
+        flash("Erreur lors de la mise à jour de l'appartement", "error")
+
+    return redirect(url_for('apartment.apartment_read_all'))

@@ -1,7 +1,7 @@
 import { Pagination } from './Pagination.js';
 import { AccountCreateFormCheck } from "./AccountCreateFormCheck.js";
 import { AccountUpdateFormCheck } from "./AccountUpdateFormCheck.js";
-import {ApartmentCreateFormCheck} from "./ApartmentCreateFormCheck.js";
+import {ApartmentFormCheck} from "./ApartmentFormCheck.js";
 
 
 // Table variables
@@ -21,9 +21,9 @@ const formsUpdateAccount = document.querySelectorAll('.form-update-account');
 const submitsButtonUpdateAccount = document.querySelectorAll('.submit-update-user');
 
 // Create apartment modal variables
-const modalBodyCreateApartment = document.querySelector('.modal-body-create-apartment');
-const formCreateApartment = document.querySelector('.form-create-apartment');
-const submitButtonCreateApartment = document.querySelector('.submit-create-apartment');
+const modalsBodyApartment = document.querySelectorAll('.modal-body-apartment');
+const formsApartment = document.querySelectorAll('.form-apartment');
+const submitsButtonApartment = document.querySelectorAll('.submit-apartment');
 
 // Table display
 if (tbodyRows, pagesNumber, nextPage, previousPage){
@@ -48,10 +48,16 @@ if (modalsBodyUpdateAccount.length, formsUpdateAccount.length, submitsButtonUpda
     })
 }
 
-// Create user account form submit
-if (modalBodyCreateApartment, formCreateApartment, submitButtonCreateApartment){
-    const apartmentCreateFormCheck = new ApartmentCreateFormCheck(modalBodyCreateApartment, formCreateApartment, submitButtonCreateApartment);
-    apartmentCreateFormCheck.attachEventListeners();
+// Apartment Create/Update form submit
+if (modalsBodyApartment, formsApartment, submitsButtonApartment){
+if (modalsBodyApartment.length, formsApartment.length, submitsButtonApartment.length){
+    modalsBodyApartment.forEach((modalBodyApartment, index)=>{
+        const formApartment = formsApartment[index];
+        const submitButtonApartment = submitsButtonApartment[index];
+        const apartmentFormCheck = new ApartmentFormCheck(modalBodyApartment, formApartment, submitButtonApartment);
+        apartmentFormCheck.attachEventListeners();
+    })
+}
 }
 
 

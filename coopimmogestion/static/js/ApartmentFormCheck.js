@@ -1,11 +1,11 @@
 import {FormCheck} from "./FormCheck.js";
 
-export class ApartmentCreateFormCheck extends FormCheck{
+export class ApartmentFormCheck extends FormCheck{
     constructor(modalBody, form, submitButton) {
         super(modalBody, form, submitButton);
     }
 
-    // Form submit and data validation
+    // Form Create/Update submit and data validation
     attachEventListeners(){
         this.submitButton.addEventListener("click", ()=>{
             let isValid = true;

@@ -67,3 +67,25 @@ class Apartment(Property):
         except Exception:
             db.session.rollback()
             return None
+
+    @classmethod
+    def update(cls, property_id, user_input, apartment_address):
+        # get outdoor value in boolean type
+        if user_input.get('outdoor'):
+            outdoor = bool(Markup(user_input['outdoor']))
+        else:
+            outdoor = False
+
+        try:
+            apartment = cls.query.get(property_id)
+            apartment.reference = user_input['reference']
+            apartment.living_area = user_input['living_area']
+            apartment.rooms = user_input['rooms']
+            apartment.stage = user_input['stage']
+            apartment.outdoor = outdoor
+            apartment.address_id = apartment_address.address_id
+            db.session.commit()
+            return apartment
+        except Exception as e:
+            print(e)
+            return None

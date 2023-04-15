@@ -11,7 +11,7 @@ class AppUser(Person):
     # Mapping Class with db table
     __tablename__ = "AppUser"
     _role = db.Column('role', db.String(50), nullable=False)
-    _password = db.Column('password', db.String, unique=True, nullable=False)
+    _password = db.Column('password', db.Text, unique=True, nullable=False)
 
     # Constructor
     def __init__(self, person_id: int, first_name: str, last_name: str, birthday: dt,
@@ -81,7 +81,7 @@ class AppUser(Person):
     def create(cls, user_input, app_user_address):
         user_birthday = cls.convert_birthday(user_input['birthday'])
         # Hashing password
-        user_password = bcrypt.generate_password_hash(user_input['password'])
+        user_password = bcrypt.generate_password_hash(user_input['password']).decode('utf-8')
 
         user = cls(None, user_input['first_name'], user_input['last_name'], user_birthday,
                    user_input['phone_number'], user_input['email'], app_user_address, user_input['role'].lower(),

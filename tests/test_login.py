@@ -13,7 +13,7 @@ class TestLogin:
     def test_login_success_status(self, client):
         response = client.post("/connexion", data={
             "email": "test@test.fr",
-            "password": "Test1*",
+            "password": "Test2023*",
         }, follow_redirects=True)
         assert response.status_code == 200
 
@@ -21,7 +21,7 @@ class TestLogin:
         with client:
             response = client.post("/connexion", data={
                 "email": "test@test.fr",
-                "password": "Test1*"
+                "password": "Test2023*"
             }, follow_redirects=True)
             assert session["username"] == "test@test.fr"
 
@@ -29,7 +29,7 @@ class TestLogin:
         with client:
             response = client.post("/connexion", data={
                 "email": "test@test.fr",
-                "password": "Test1*"
+                "password": "Test2023*"
             }, follow_redirects=True)
             assert '<title>CoopImmoGestion-acceuil</title>' in response.data.decode('utf-8')
 

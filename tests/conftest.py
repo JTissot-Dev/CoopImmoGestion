@@ -37,7 +37,7 @@ def create_user_test(app):
         address_test: Address = Address(None, 'test', 1, 'C', '00000', 'Bron')
         db.session.add(address_test)
         db.session.commit()
-        user_test_password = bcrypt.generate_password_hash('Test1*').decode('utf-8')
+        user_test_password = bcrypt.generate_password_hash('Test2023*').decode('utf-8')
         user_test: AppUser = AppUser(None, 'test', 'test', dt.now(), '0000000000',
                                      'test@test.fr', address_test, 'user', user_test_password)
         db.session.add(user_test)

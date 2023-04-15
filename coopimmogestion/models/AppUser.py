@@ -38,15 +38,6 @@ class AppUser(Person):
     def password(self, password):
         self._password = password
 
-    @hybrid_property
-    def full_name(self):
-        return f'{self._first_name} {self._last_name}'
-
-    # Date text format
-    @hybrid_property
-    def text_birthday(self):
-        return dt.strftime(self._birthday, "%Y-%m-%d")
-
     # Define string representation for UserApp object
     def __repr__(self):
         return f'<UserApp>: {self.first_name} {self.last_name}'

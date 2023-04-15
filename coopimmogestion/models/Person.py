@@ -80,6 +80,15 @@ class Person(db.Model):
     def address_id(self, address_id):
         self._address_id = address_id
 
+    @hybrid_property
+    def full_name(self):
+        return f'{self._first_name} {self._last_name}'
+
+    # Date text format
+    @hybrid_property
+    def text_birthday(self):
+        return dt.strftime(self._birthday, "%Y-%m-%d")
+
     # Put input birthday in datetime format
     @classmethod
     def convert_birthday(cls, text_birthday):

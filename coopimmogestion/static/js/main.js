@@ -2,6 +2,7 @@ import { Pagination } from './Pagination.js';
 import { AccountCreateFormCheck } from "./AccountCreateFormCheck.js";
 import { AccountUpdateFormCheck } from "./AccountUpdateFormCheck.js";
 import {ApartmentFormCheck} from "./ApartmentFormCheck.js";
+import {TenantFormCheck} from "./TenantFormCheck.js";
 
 
 // Table variables
@@ -20,10 +21,15 @@ const modalsBodyUpdateAccount = document.querySelectorAll('.modal-body-update-us
 const formsUpdateAccount = document.querySelectorAll('.form-update-account');
 const submitsButtonUpdateAccount = document.querySelectorAll('.submit-update-user');
 
-// Create apartment modal variables
+// Apartment modal variables
 const modalsBodyApartment = document.querySelectorAll('.modal-body-apartment');
 const formsApartment = document.querySelectorAll('.form-apartment');
 const submitsButtonApartment = document.querySelectorAll('.submit-apartment');
+
+// Tenant modal variables
+const modalsBodyTenant = document.querySelectorAll('.modal-body-tenant');
+const formsTenant = document.querySelectorAll('.form-tenant');
+const submitsButtonTenant = document.querySelectorAll('.submit-tenant');
 
 // Table display
 if (tbodyRows, pagesNumber, nextPage, previousPage){
@@ -50,14 +56,26 @@ if (modalsBodyUpdateAccount.length, formsUpdateAccount.length, submitsButtonUpda
 
 // Apartment Create/Update form submit
 if (modalsBodyApartment, formsApartment, submitsButtonApartment){
-if (modalsBodyApartment.length, formsApartment.length, submitsButtonApartment.length){
-    modalsBodyApartment.forEach((modalBodyApartment, index)=>{
-        const formApartment = formsApartment[index];
-        const submitButtonApartment = submitsButtonApartment[index];
-        const apartmentFormCheck = new ApartmentFormCheck(modalBodyApartment, formApartment, submitButtonApartment);
-        apartmentFormCheck.attachEventListeners();
-    })
+    if (modalsBodyApartment.length, formsApartment.length, submitsButtonApartment.length){
+        modalsBodyApartment.forEach((modalBodyApartment, index)=>{
+            const formApartment = formsApartment[index];
+            const submitButtonApartment = submitsButtonApartment[index];
+            const apartmentFormCheck = new ApartmentFormCheck(modalBodyApartment, formApartment, submitButtonApartment);
+            apartmentFormCheck.attachEventListeners();
+        })
+    }
 }
+
+// Tenant Create/Update form submit
+if (modalsBodyTenant, formsTenant, submitsButtonTenant){
+    if (modalsBodyTenant.length, formsTenant.length, submitsButtonTenant.length){
+        modalsBodyTenant.forEach((modalBodyTenant, index)=>{
+            const formTenant = formsTenant[index];
+            const submitButtonTenant = submitsButtonTenant[index];
+            const tenantFormCheck = new TenantFormCheck(modalBodyTenant, formTenant, submitButtonTenant);
+            tenantFormCheck.attachEventListeners();
+        })
+    }
 }
 
 

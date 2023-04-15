@@ -56,3 +56,19 @@ class Tenant(Person):
         except Exception:
             return None
 
+    @classmethod
+    def create(cls, user_input, tenant_address):
+        # Get birthday in datetime
+        tenant_birthday = cls.convert_birthday(user_input['birthday'])
+
+        tenant = cls(None, user_input['first_name'], user_input['last_name'], tenant_birthday,
+                     user_input['phone_number'], user_input['email'], tenant_address,
+                     user_input['social_security_number'], user_input['annual_salary'])
+        try:
+            db.session.add(tenant)
+            db.session.commit()
+            return tenant
+        except Exception:
+            db.session.rollback()
+            return None
+

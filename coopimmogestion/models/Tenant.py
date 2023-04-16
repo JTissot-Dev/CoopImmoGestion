@@ -89,3 +89,13 @@ class Tenant(Person):
         except Exception as e:
             print(e)
             return None
+
+    @classmethod
+    def delete(cls, person_id):
+        try:
+            tenant = cls.query.get(person_id)
+            db.session.delete(tenant)
+            db.session.commit()
+            return True
+        except Exception:
+            return False

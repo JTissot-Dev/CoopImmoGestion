@@ -128,7 +128,7 @@
                                             </button>
                                         </li>
                                         <li>
-                                            <button class="dropdown-item" type="button">
+                                            <button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#delete{{ tenant.person_id }}">
                                                 <img src="{{ url_for('static', filename='img/delete-logo.svg') }}" class="me-1 mb-1">
                                                 Supprimer
                                             </button>
@@ -382,6 +382,26 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-ct-cancel-modal" data-bs-dismiss="modal">Annuler</button>
                                 <button type="button" class="btn btn-ct-modal submit-tenant">Valider</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {# Delete tenant modal #}
+                <div class="modal fade" id="delete{{ tenant.person_id }}" tabindex="-1" aria-labelledby="DeleteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content rounded-2">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="DeleteModalLabel">Supprimer un locataire</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                            Confirmer la suppression de {{ tenant.full_name }} ?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-ct-cancel-modal" data-bs-dismiss="modal">Annuler</button>
+                                <a href="{{ url_for('tenant.tenant_delete', person_id=tenant.person_id) }}" type="button"
+                                   class="btn btn-ct-modal">Confirmer</a>
                             </div>
                         </div>
                     </div>

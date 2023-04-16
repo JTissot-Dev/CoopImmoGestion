@@ -52,3 +52,15 @@ def tenant_update(person_id):
         flash("Erreur lors de la mise à jour du locataire", "error")
 
     return redirect(url_for('tenant.tenant_read_all'))
+
+
+@tenant.get('/locataires/supprimer/<int:person_id>')
+@login_required
+def tenant_delete(person_id):
+    # Delete Apartment concerned by property_id
+    if Tenant.delete(person_id):
+        flash("Succès de la suppression du locataire", "success")
+    else:
+        flash("Erreur lors de la suppression du locataire", "error")
+
+    return redirect(url_for('tenant.tenant_read_all'))

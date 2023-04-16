@@ -36,3 +36,19 @@ def tenant_create():
 
     return redirect(url_for('tenant.tenant_read_all'))
 
+
+@tenant.post('/locataires/modifier/<int:person_id>')
+@login_required
+def tenant_update(person_id):
+    # Escape form inputs values
+    user_input = {name: escape(value) for name, value in request.form.items()}
+    # Update Apartment
+    tenant_address: Address = Address.create(user_input)
+    tenant: Tenant = Tenant.update(person_id, user_input, tenant_address)
+
+    if tenant:
+        flash("Succès de la mise à jour du locataire", "success")
+    else:
+        flash("Erreur lors de la mise à jour du locataire", "error")
+
+    return redirect(url_for('tenant.tenant_read_all'))

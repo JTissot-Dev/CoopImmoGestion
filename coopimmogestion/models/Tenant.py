@@ -29,7 +29,7 @@ class Tenant(Person):
         return self._social_security_number
 
     @social_security_number.setter
-    def role(self, social_security_number):
+    def social_security_number(self, social_security_number):
         self._social_security_number = social_security_number
 
     @hybrid_property
@@ -37,7 +37,7 @@ class Tenant(Person):
         return self._annual_salary
 
     @annual_salary.setter
-    def password(self, annual_salary):
+    def annual_salary(self, annual_salary):
         self._annual_salary = annual_salary
 
     @hybrid_property
@@ -72,3 +72,20 @@ class Tenant(Person):
             db.session.rollback()
             return None
 
+    @classmethod
+    def update(cls, person_id, user_input, tenant_address):
+        try:
+            tenant = cls.query.get(person_id)
+            tenant.first_name = user_input['first_name']
+            tenant.last_name = user_input['last_name']
+            tenant.birthday = user_input['birthday']
+            tenant.phone_number = user_input['phone_number']
+            tenant.email = user_input['email']
+            tenant.social_security_number = user_input['social_security_number']
+            tenant.annual_salary = user_input['annual_salary']
+            tenant.address_id = tenant_address.address_id
+            db.session.commit()
+            return tenant
+        except Exception as e:
+            print(e)
+            return None

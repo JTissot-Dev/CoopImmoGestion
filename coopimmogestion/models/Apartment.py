@@ -86,8 +86,7 @@ class Apartment(Property):
             apartment.address_id = apartment_address.address_id
             db.session.commit()
             return apartment
-        except Exception as e:
-            print(e)
+        except Exception:
             return None
 
     @classmethod

@@ -12,6 +12,7 @@ class Property(db.Model):
     _rooms = db.Column('rooms', db.Integer, nullable=False)
     _address_id = db.Column('address_id', db.Integer, db.ForeignKey('Address.address_id'),
                             nullable=False)
+    _rental = db.relationship('Rental', uselist=False, backref='property', lazy=True)
 
     # Constructor
     def __init__(self, property_id: int, reference: str, living_area: float, rooms: int,

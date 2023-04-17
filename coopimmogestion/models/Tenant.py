@@ -11,6 +11,7 @@ class Tenant(Person):
     _social_security_number = db.Column('social_security_number', db.String(50), nullable=False)
     _annual_salary = db.Column('annual_salary', db.Float(precision=15, decimal_return_scale=2), nullable=False)
     _balance = db.Column('balance', db.Float(precision=15, decimal_return_scale=2), nullable=True)
+    _rentals = db.relationship('Rental', backref='tenant', lazy=True)
 
     # Constructor
     def __init__(self, person_id: int, first_name: str, last_name: str, birthday: dt,

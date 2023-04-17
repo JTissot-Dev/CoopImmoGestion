@@ -11,6 +11,7 @@ class Apartment(Property):
     __tablename__ = "Apartment"
     _stage = db.Column('stage', db.Integer, nullable=False)
     _outdoor = db.Column('outdoor', db.Boolean, default=False, nullable=False)
+    _rental = db.relationship('Rental', uselist=False, backref='apartment', lazy=True)
 
     # Constructor
     def __init__(self, property_id: int, reference: str, living_area: float, rooms: int,

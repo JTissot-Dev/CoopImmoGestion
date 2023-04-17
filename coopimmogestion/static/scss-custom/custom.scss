@@ -156,3 +156,8 @@ table{
 .check-custom{
   @include logo-sizing(20px, 20px)
 }
+
+.btn-ct-form{
+  @include button-outline-variant(#86bcd7);
+  @include button-size(2px,10px,15px,2px);
+}

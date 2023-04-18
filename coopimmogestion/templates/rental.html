@@ -17,7 +17,7 @@
                 <div class="row mx-1">
                     <div class="d-flex justify-content-between align-items-center p-0 mt-5">
                         {#Large screen create rental button#}
-                        <button class="btn btn-ct-add d-none d-lg-block">
+                        <button class="btn btn-ct-add d-none d-lg-block" data-bs-toggle="modal" data-bs-target="#CreateRentalModal">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                  class="bi bi-key me-1" viewBox="0 0 16 16">
                               <path d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5
@@ -30,7 +30,7 @@
                             Ajouter
                         </button>
                         {#small screen create rental button#}
-                        <button class="btn btn-ct-add-s d-block d-lg-none" data-bs-toggle="modal" data-bs-target="#CreateTenantModal">
+                        <button class="btn btn-ct-add-s d-block d-lg-none" data-bs-toggle="modal" data-bs-target="#CreateRentalModal">
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                                  class="bi bi-key my-1" viewBox="0 0 16 16">
                               <path d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5
@@ -191,30 +191,86 @@
             {% else %}
                 {# First creation #}
                 <div class="row mx-1 my-5 d-flex justify-content-center">
-                        <div class="col-12 col-sm-10 col-md-8 col-lg-6 p-4 my-5 rounded-3 bg-secondary-subtle
-                                    d-flex align-items-center justify-content-around shadow-sm">
-                            <img src="{{ url_for('static', filename='img/rentals-logo.svg') }}"
-                             class="logo-sizing-index me-5 p-2">
-                            <div class="d-flex flex-column justify-content-around me-2">
-                                <div class="fw-semibold text-center mb-4">
-                                    <span>Aucune Location</span> <br>
-                                    <span class="d-none d-sm-block">Ajouter une première location ?</span>
-                                </div>
-                                <button class="btn btn-ct-add" data-bs-toggle="modal" data-bs-target="#CreateTenantModal">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                         class="bi bi-person-plus mb-1 d-none d-sm-inline-block" viewBox="0 0 16 16">
-                                      <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1
-                                      1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10
-                                      6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-                                      <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1
-                                      0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
-                                    </svg>
-                                    Ajouter
-                                </button>
+                    <div class="col-12 col-sm-10 col-md-8 col-lg-6 p-4 my-5 rounded-3 bg-secondary-subtle
+                                d-flex align-items-center justify-content-around shadow-sm">
+                        <img src="{{ url_for('static', filename='img/rentals-logo.svg') }}"
+                         class="logo-sizing-index me-5 p-2">
+                        <div class="d-flex flex-column justify-content-around me-2">
+                            <div class="fw-semibold text-center mb-4">
+                                <span>Aucune Location</span> <br>
+                                <span class="d-none d-sm-block">Ajouter une première location ?</span>
                             </div>
+                            <button class="btn btn-ct-add" data-bs-toggle="modal" data-bs-target="#CreateRentalModal">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-person-plus mb-1 d-none d-sm-inline-block" viewBox="0 0 16 16">
+                                  <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1
+                                  1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10
+                                  6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                                  <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1
+                                  0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+                                </svg>
+                                Ajouter
+                            </button>
                         </div>
+                    </div>
                 </div>
             {% endif %}
+        </div>
+
+        {# Create rental modal #}
+        <div class="modal modal-lg fade rounded-2" id="CreateRentalModal" tabindex="-1" aria-labelledby="CreateRentalModalLabel" aria-hidden="true">
+            <div class="modal-dialog my-3">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-5" id="CreateRentalModalLabel">Ajouter une location</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body position-relative modal-body-rental">
+                        <form class="form-rental" action="{{url_for('rental.rental_create')}}" method="post">
+                            <fieldset class="row g-3 m-1 pb-2 border border-primary-subtle rounded-2">
+                                <legend class="my-0 py-0 text-custom text-modal-sizing text-center">Locations</legend>
+                                <div class="col-md-6 my-1">
+                                    <label for="start_date" class="form-label text-modal-sizing">Début du bail*</label>
+                                    <input name="start_date" type="date" class="form-control form-control-sm rounded-1" id="start_date">
+                                </div>
+                                <div class="col-md-6 my-1">
+                                    <label for="end_date" class="form-label text-modal-sizing">Fin du bail*</label>
+                                    <input name="end_date" type="date" class="form-control form-control-sm rounded-1" id="end_date">
+                                </div>
+                            </fieldset>
+                            <fieldset class="row g-3 mt-4 m-1 pb-2 border border-primary-subtle rounded-2">
+                                <legend class="my-0 py-0 text-custom text-modal-sizing text-center">Associer</legend>
+                                <div class="col-md-6 my-1">
+                                    <label for="tenant_id" class="form-label text-modal-sizing">Locataire*</label>
+                                    <select name="tenant_id" id="tenant_id" class="form-select form-select-sm rounded-1">
+                                        <option></option>
+                                        {% if tenants %}
+                                            {% for tenant in tenants %}
+                                                <option value="{{ tenant.person_id }}">{{ tenant.full_name }}</option>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </select>
+                                </div>
+                                <div class="col-md-6 my-1">
+                                    <label for="apartment_id" class="form-label text-modal-sizing">Appartement*</label>
+                                    <select name="apartment_id" id="apartment_id" class="form-select form-select-sm rounded-1">
+                                        <option></option>
+                                        {% if apartments %}
+                                            {% for apartment in apartments %}
+                                                <option value="{{ apartment.property_id }}">{{ apartment.reference }}</option>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </select>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-ct-cancel-modal" data-bs-dismiss="modal">Annuler</button>
+                        <button type="button" class="btn btn-primary btn-ct-modal submit-rental">Valider</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 

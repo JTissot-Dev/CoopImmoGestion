@@ -18,14 +18,14 @@ class Rental(db.Model):
                               nullable=False)
 
     # Constructor
-    def __init__(self, rental_id: int, start_date: dt, end_date: dt, tenant: Tenant, apartment: Apartment):
+    def __init__(self, rental_id: int, start_date: dt, end_date: dt, tenant_id: int, apartment_id: int):
         self._rental_id = rental_id
         self._start_date = start_date
         self._end_date = end_date
         # Update with Payement relationship when Payment will be implementing
         self._rental_balance = 0.00
-        self._tenant_id = tenant.person_id
-        self._apartment_id = apartment.property_id
+        self._tenant_id = tenant_id
+        self._apartment_id = apartment_id
 
     # Define getter and setter property
     @hybrid_property
@@ -91,8 +91,20 @@ class Rental(db.Model):
         except Exception:
             return None
 
+    @classmethod
+    def create(cls, user_input):
+        # Get text date in datetime
+        start_date = cls.convert_date(user_input['start_date'])
+        end_date = cls.convert_date(user_input['end_date'])
 
-
+        rental = cls(None, start_date, end_date, user_input['tenant_id'], user_input['apartment_id'])
+        try:
+            db.session.add(rental)
+            db.session.commit()
+            return rental
+        except Exception:
+            db.session.rollback()
+            return None
 
 
 

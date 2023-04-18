@@ -3,6 +3,7 @@ import { AccountCreateFormCheck } from "./AccountCreateFormCheck.js";
 import { AccountUpdateFormCheck } from "./AccountUpdateFormCheck.js";
 import {ApartmentFormCheck} from "./ApartmentFormCheck.js";
 import {TenantFormCheck} from "./TenantFormCheck.js";
+import {RentalFormCheck} from "./RentalFormCheck.js";
 
 
 // Table variables
@@ -30,6 +31,11 @@ const submitsButtonApartment = document.querySelectorAll('.submit-apartment');
 const modalsBodyTenant = document.querySelectorAll('.modal-body-tenant');
 const formsTenant = document.querySelectorAll('.form-tenant');
 const submitsButtonTenant = document.querySelectorAll('.submit-tenant');
+
+// Rental modal variables
+const modalsBodyRental = document.querySelectorAll('.modal-body-rental');
+const formsRental = document.querySelectorAll('.form-rental');
+const submitsButtonRental = document.querySelectorAll('.submit-rental');
 
 // Table display
 if (tbodyRows, pagesNumber, nextPage, previousPage){
@@ -74,6 +80,18 @@ if (modalsBodyTenant, formsTenant, submitsButtonTenant){
             const submitButtonTenant = submitsButtonTenant[index];
             const tenantFormCheck = new TenantFormCheck(modalBodyTenant, formTenant, submitButtonTenant);
             tenantFormCheck.attachEventListeners();
+        })
+    }
+}
+
+// Rental Create/Update form submit
+if (modalsBodyRental, formsRental, submitsButtonRental){
+    if (modalsBodyRental.length, formsRental.length, submitsButtonRental.length){
+        modalsBodyRental.forEach((modalBodyRental, index)=>{
+            const formRental = formsRental[index];
+            const submitButtonRental = submitsButtonRental[index];
+            const rentalFormCheck = new RentalFormCheck(modalBodyRental, formRental, submitButtonRental);
+            rentalFormCheck.attachEventListeners();
         })
     }
 }

@@ -11,6 +11,6 @@ class TestConsultRental:
         with client.session_transaction() as session:
             session["username"] = "test@test.fr"
             session["role"] = "admin"
-        response = client.get("/locataires", follow_redirects=True)
+        response = client.get("/locations", follow_redirects=True)
         assert '<title>CoopImmoGestion-Locations</title>' in response.data.decode('utf-8')
 

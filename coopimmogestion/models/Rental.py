@@ -3,7 +3,6 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from datetime import datetime as dt
 from .Tenant import Tenant
 from .Apartment import Apartment
-from .Price import Price
 
 
 class Rental(db.Model):
@@ -13,21 +12,18 @@ class Rental(db.Model):
     _start_date = db.Column('start_date', db.DateTime, nullable=False)
     _end_date = db.Column('end_date', db.DateTime, nullable=False)
     _rental_balance = db.Column('rental_balance', db.Float(precision=15, decimal_return_scale=2), nullable=False)
-    _price = db.relationship('Price', uselist=False, backref='rental', lazy=True)
     _tenant_id = db.Column('tenant_id', db.Integer, db.ForeignKey('Tenant.person_id'),
                            nullable=False)
     _apartment_id = db.Column('apartment_id', db.Integer, db.ForeignKey('Apartment.property_id'),
                               nullable=False)
 
     # Constructor
-    def __init__(self, rental_id: int, start_date: dt, end_date: dt, rent: float, charge: float,
-                 security_deposit: float, tenant: Tenant, apartment: Apartment):
+    def __init__(self, rental_id: int, start_date: dt, end_date: dt, tenant: Tenant, apartment: Apartment):
         self._rental_id = rental_id
         self._start_date = start_date
         self._end_date = end_date
         # Update with Payement relationship when Payment will be implementing
         self._rental_balance = 0.00
-        self._price = Price(None, rent, charge, security_deposit, rental_id)
         self._tenant_id = tenant.person_id
         self._apartment_id = apartment.property_id
 
@@ -55,10 +51,6 @@ class Rental(db.Model):
     @hybrid_property
     def rental_balance(self):
         return self._rental_balance
-
-    @hybrid_property
-    def price(self):
-        return self._price
 
     @hybrid_property
     def tenant_id(self):

@@ -8,16 +8,16 @@ class Price(db.Model):
     _rent = db.Column('rent', db.Float(precision=15, decimal_return_scale=2), nullable=False)
     _charge = db.Column('charge', db.Float(precision=15, decimal_return_scale=2), nullable=False)
     _security_deposit = db.Column('security_deposit', db.Float(precision=15, decimal_return_scale=2), nullable=False)
-    _rental_id = db.Column('rental_id', db.Integer, db.ForeignKey('Rental.rental_id'),
-                           nullable=False)
+    _apartment_id = db.Column('apartment_id', db.Integer, db.ForeignKey('Apartment.property_id'),
+                              nullable=False)
 
     # Constructor
-    def __init__(self, price_id: int, rent: float, charge: float, security_deposit: float, rental_id: int):
+    def __init__(self, price_id: int, rent: float, charge: float, security_deposit: float, apartment_id: int):
         self._price_id = price_id
         self._rent = rent
         self._charge = charge
         self._security_deposit = security_deposit
-        self._rental_id = rental_id
+        self._apartment_id = apartment_id
 
     # Define getter and setter property
     @hybrid_property
@@ -49,10 +49,11 @@ class Price(db.Model):
         self._security_deposit = security_deposit
 
     @hybrid_property
-    def rental_id(self):
-        return self._rental_id
+    def apartment_id(self):
+        return self._apartment_id
 
-    @rental_id.setter
-    def rental_id(self, rental_id):
-        self._rental_id = rental_id
+    @apartment_id.setter
+    def apartment_id(self, apartment_id):
+        self._apartment_id = apartment_id
+
 

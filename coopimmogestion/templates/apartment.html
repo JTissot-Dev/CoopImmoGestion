@@ -92,9 +92,10 @@
                             <tr class="text-custom">
                                 <th>Réference</th>
                                 <th class="d-none d-lg-table-cell">Superficie(m²)</th>
-                                <th>Pièces</th>
+                                <th class="d-none d-lg-table-cell">Pièces</th>
                                 <th class="d-none d-lg-table-cell">Etage</th>
                                 <th class="d-none d-lg-table-cell">Exterieur</th>
+                                <th>Loyer(€)</th>
                                 <th class="pe-4">Editer</th>
                             </tr>
                         </thead>
@@ -107,7 +108,7 @@
                                 <td class="align-middle d-none d-lg-table-cell">
                                     {{ apartment.living_area }}
                                 </td>
-                                <td class="align-middle">
+                                <td class="align-middle d-none d-lg-table-cell">
                                     {{ apartment.rooms }}
                                 </td>
                                 <td class="align-middle d-none d-lg-table-cell">
@@ -121,6 +122,11 @@
                                         <input class="form-check-input check-custom border-primary" type="checkbox" value="{{ apartment.outdoor }}"
                                                id="flexCheckDefault" disabled>
                                     {% endif %}
+                                </td>
+                                <td class="align-middle">
+                                    <button class="btn btn-ct-form" data-bs-toggle="modal" data-bs-target="#price{{ apartment.property_id }}">
+                                        {{ apartment.price.rent }}
+                                    </button>
                                 </td>
                                 <td class="align-middle pe-4">
                                     <button type="button" class="btn btn-ct-edit dropdown-toggle" data-bs-toggle="dropdown"
@@ -160,7 +166,7 @@
                                     </button>
                                 </th>
                                 <th class="d-table-cell d-lg-none page-number"></th>
-                                <th colspan="4" class="d-none d-lg-table-cell page-number"></th>
+                                <th colspan="5" class="d-none d-lg-table-cell page-number"></th>
                                 <th class="text-center pe-4">
                                     <button type="button" class="btn btn-ct-page-tab pb-1 next-page">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -243,7 +249,7 @@
                         <form class="form-apartment" action="{{url_for('apartment.apartment_create')}}" method="post">
                             <fieldset class="row g-3 m-1 pb-2 border border-primary-subtle rounded-2">
                                 <legend class="my-0 py-0 text-custom text-modal-sizing text-center">Appartement</legend>
-                                <div class="col-8 my-1">
+                                <div class="col-md-8 my-1">
                                     <label for="reference" class="form-label text-modal-sizing">Réference*</label>
                                     <input name="reference" type="text" class="form-control form-control-sm rounded-1" id="reference">
                                 </div>
@@ -262,6 +268,21 @@
                                 <div class="form-check col-12 ms-2 mb-1 mt-3">
                                     <input name="outdoor" class="form-check-input mt-1" value="false" type="checkbox" id="outdoor">
                                     <label class="form-check-label align-text-top text-modal-sizing" for="outdoor">Espace extérieur</label>
+                                </div>
+                            </fieldset>
+                            <fieldset class="row g-3 mx-1 mt-3 pb-2 border border-primary-subtle rounded-2">
+                                <legend class="my-0 py-0 text-custom  text-modal-sizing text-center">Prix</legend>
+                                <div class="col-md-4 my-1">
+                                    <label for="rent" class="form-label text-modal-sizing">Loyer*</label>
+                                    <input name="rent" type="number" class="form-control form-control-sm rounded-1" id="rent">
+                                </div>
+                                <div class="col-md-4 my-1">
+                                    <label for="charge" class="form-label text-modal-sizing">Charges*</label>
+                                    <input name="charge" type="number" class="form-control form-control-sm rounded-1" id="charge">
+                                </div>
+                                <div class="col-md-4 my-1">
+                                    <label for="security_deposit" class="form-label text-modal-sizing">Dépôt de garantie*</label>
+                                    <input name="security_deposit" type="number" class="form-control form-control-sm rounded-1" id="security_deposit">
                                 </div>
                             </fieldset>
                             <fieldset class="row g-3 mx-1 mt-3 pb-2 border border-primary-subtle rounded-2">
@@ -340,6 +361,24 @@
                                         </div>
                                     </fieldset>
                                     <fieldset class="row g-3 mx-1 mt-3 pb-2 border border-primary-subtle rounded-2">
+                                        <legend class="my-0 py-0 text-custom  text-modal-sizing text-center">Prix</legend>
+                                        <div class="col-md-4 my-1">
+                                            <label for="rent" class="form-label text-modal-sizing">Loyer*</label>
+                                            <input name="rent" type="number" class="form-control form-control-sm rounded-1"
+                                                   id="rent" value="{{ apartment.price.rent }}">
+                                        </div>
+                                        <div class="col-md-4 my-1">
+                                            <label for="charge" class="form-label text-modal-sizing">Charges*</label>
+                                            <input name="charge" type="number" class="form-control form-control-sm rounded-1"
+                                                   id="charge" value="{{ apartment.price.charge }}">
+                                        </div>
+                                        <div class="col-md-4 my-1">
+                                            <label for="security_deposit" class="form-label text-modal-sizing">Dépôt de garantie*</label>
+                                            <input name="security_deposit" type="number" class="form-control form-control-sm rounded-1"
+                                                   id="security_deposit" value="{{ apartment.price.security_deposit }}">
+                                        </div>
+                                    </fieldset>
+                                    <fieldset class="row g-3 mx-1 mt-3 pb-2 border border-primary-subtle rounded-2">
                                         <legend class="my-0 py-0 text-custom  text-modal-sizing text-center">Adresse</legend>
                                         <div class="col-md-10 my-1">
                                             <label for="street_name" class="form-label text-modal-sizing">Nom de voie*</label>
@@ -390,6 +429,34 @@
                                 <button type="button" class="btn btn-ct-cancel-modal" data-bs-dismiss="modal">Annuler</button>
                                 <a href="{{ url_for('apartment.apartment_delete', property_id = apartment.property_id) }}" type="button"
                                    class="btn btn-ct-modal">Confirmer</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {# Price detail #}
+                <div class="modal fade" id="price{{ apartment.property_id }}" tabindex="-1" aria-labelledby="PriceModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content rounded-2">
+                            <div class="modal-header py-2">
+                                <h1 class="modal-title fs-5" id="PriceModalLabel">Prix détail</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body pb-4 pt-2">
+                                <div class="col my-1">
+                                    <label for="rent" class="form-label text-modal-sizing">Loyer*</label>
+                                    <input name="rent" type="number" class="form-control form-control-sm rounded-1"
+                                           id="rent" value="{{ apartment.price.rent }}" disabled>
+                                </div>
+                                <div class="col my-1">
+                                    <label for="charge" class="form-label text-modal-sizing">Charges*</label>
+                                    <input name="charge" type="number" class="form-control form-control-sm rounded-1"
+                                           id="charge" value="{{ apartment.price.charge }}" disabled>
+                                </div>
+                                <div class="col my-1">
+                                    <label for="security_deposit" class="form-label text-modal-sizing">Dépôt de garantie*</label>
+                                    <input name="security_deposit" type="number" class="form-control form-control-sm rounded-1"
+                                           id="security_deposit" value="{{ apartment.price.security_deposit }}" disabled>
+                                </div>
                             </div>
                         </div>
                     </div>

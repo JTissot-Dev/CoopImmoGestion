@@ -14,8 +14,7 @@ class Property(db.Model):
                             nullable=False)
 
     # Constructor
-    def __init__(self, property_id: int, reference: str, living_area: float, rooms: int,
-                 address: Address):
+    def __init__(self, property_id: int, reference: str, living_area: float, rooms: int, address: Address):
         self._property_id = property_id
         self._reference = reference
         self._living_area = living_area
@@ -50,5 +49,6 @@ class Property(db.Model):
     @rooms.setter
     def rooms(self, rooms):
         self._rooms = rooms
+
 
 

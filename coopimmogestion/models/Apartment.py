@@ -4,6 +4,7 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm.exc import NoResultFound
 from .Property import Property
 from .Address import Address
+from .Price import Price
 
 
 class Apartment(Property):
@@ -11,14 +12,17 @@ class Apartment(Property):
     __tablename__ = "Apartment"
     _stage = db.Column('stage', db.Integer, nullable=False)
     _outdoor = db.Column('outdoor', db.Boolean, default=False, nullable=False)
+    _price = db.relationship('Price', uselist=False, backref='apartment', lazy=True)
     _rental = db.relationship('Rental', uselist=False, backref='apartment', lazy=True)
 
     # Constructor
     def __init__(self, property_id: int, reference: str, living_area: float, rooms: int,
-                 address: Address, stage: int, outdoor: bool):
+                 address: Address, stage: int, outdoor: bool, rent: float, charge: float,
+                 security_deposit: float):
         super().__init__(property_id, reference, living_area, rooms, address)
         self._stage = stage
         self._outdoor = outdoor
+        self._price = Price(None, rent, charge, security_deposit, property_id)
 
     # Define getter and setter property
     @hybrid_property
@@ -36,6 +40,10 @@ class Apartment(Property):
     @outdoor.setter
     def outdoor(self, outdoor):
         self._outdoor = outdoor
+
+    @hybrid_property
+    def price(self):
+        return self._price
 
     # Define string representation for Apartment object
     def __repr__(self):
@@ -60,7 +68,8 @@ class Apartment(Property):
             outdoor = False
 
         apartment = cls(None, user_input['reference'], user_input['living_area'], user_input['rooms'],
-                        apartment_address, user_input['stage'], outdoor)
+                        apartment_address, user_input['stage'], outdoor, user_input['rent'],
+                        user_input['charge'], user_input['security_deposit'])
         try:
             db.session.add(apartment)
             db.session.commit()
@@ -84,6 +93,9 @@ class Apartment(Property):
             apartment.rooms = user_input['rooms']
             apartment.stage = user_input['stage']
             apartment.outdoor = outdoor
+            apartment.price.rent = user_input['rent']
+            apartment.price.charge = user_input['charge']
+            apartment.price.security_deposit = user_input['security_deposit']
             apartment.address_id = apartment_address.address_id
             db.session.commit()
             return apartment
@@ -94,8 +106,12 @@ class Apartment(Property):
     def delete(cls, property_id):
         try:
             apartment = cls.query.get(property_id)
+            apartment_price = Price.query.filter_by(apartment_id=property_id).first()
+            db.session.delete(apartment_price)
+            db.session.commit()
             db.session.delete(apartment)
             db.session.commit()
             return True
-        except Exception:
+        except Exception as e:
+            print(e)
             return False

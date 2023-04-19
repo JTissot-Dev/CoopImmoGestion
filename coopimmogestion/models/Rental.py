@@ -106,6 +106,21 @@ class Rental(db.Model):
             db.session.rollback()
             return None
 
+    @classmethod
+    def update(cls, rental_id, user_input):
+        # Get text date in datetime
+        start_date = cls.convert_date(user_input['start_date'])
+        end_date = cls.convert_date(user_input['end_date'])
 
+        try:
+            rental = cls.query.get(rental_id)
+            rental.start_date = start_date
+            rental.end_date = end_date
+            rental.tenant_id = user_input['tenant_id']
+            rental.apartment_id = user_input['apartment_id']
+            db.session.commit()
+            return rental
+        except Exception:
+            return None
 
 

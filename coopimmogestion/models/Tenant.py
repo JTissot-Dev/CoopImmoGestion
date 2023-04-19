@@ -87,8 +87,7 @@ class Tenant(Person):
             tenant.address_id = tenant_address.address_id
             db.session.commit()
             return tenant
-        except Exception as e:
-            print(e)
+        except Exception:
             return None
 
     @classmethod

@@ -3,6 +3,7 @@ from ..decorators.login_required import login_required
 from ..models.Rental import Rental
 from ..models.Tenant import Tenant
 from ..models.Apartment import Apartment
+from ..models.Address import Address
 
 
 rental = Blueprint('rental', __name__, template_folder='templates')
@@ -35,5 +36,57 @@ def rental_create():
         flash("Succès de la création de la location", "success")
     else:
         flash("Erreur lors de la création de la location", "error")
+
+    return redirect(url_for('rental.rental_read_all'))
+
+
+@rental.post('/locations/modifier/<int:rental_id>')
+@login_required
+def rental_update(rental_id):
+    # Escape form inputs values
+    user_input = {name: escape(value) for name, value in request.form.items()}
+    # Update Rental
+    rental: Rental = Rental.update(rental_id, user_input)
+
+    if rental:
+        flash("Succès de la mise à jour de la location", "success")
+    else:
+        flash("Erreur lors de la mise à jour de la location", "error")
+
+    return redirect(url_for('rental.rental_read_all'))
+
+
+# Update rental tenant
+@rental.post('/locations/locataire/modifier/<int:person_id>')
+@login_required
+def rental_tenant_update(person_id):
+    # Escape form inputs values
+    user_input = {name: escape(value) for name, value in request.form.items()}
+    # Update Apartment
+    tenant_address: Address = Address.create(user_input)
+    tenant: Tenant = Tenant.update(person_id, user_input, tenant_address)
+
+    if tenant:
+        flash("Succès de la mise à jour du locataire", "success")
+    else:
+        flash("Erreur lors de la mise à jour du locataire", "error")
+
+    return redirect(url_for('rental.rental_read_all'))
+
+
+# Update rental apartment
+@rental.post('/locations/appartement/modifier/<int:property_id>')
+@login_required
+def rental_apartment_update(property_id):
+    # Escape form inputs values
+    user_input = {name: escape(value) for name, value in request.form.items()}
+    # Update Apartment
+    apartment_address: Address = Address.create(user_input)
+    apartment: Apartment = Apartment.update(property_id, user_input, apartment_address)
+
+    if apartment:
+        flash("Succès de la mise à jour de l'appartement", "success")
+    else:
+        flash("Erreur lors de la mise à jour de l'appartement", "error")
 
     return redirect(url_for('rental.rental_read_all'))

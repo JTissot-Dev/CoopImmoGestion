@@ -90,3 +90,15 @@ def rental_apartment_update(property_id):
         flash("Erreur lors de la mise à jour de l'appartement", "error")
 
     return redirect(url_for('rental.rental_read_all'))
+
+
+@rental.get('/locations/supprimer/<int:rental_id>')
+@login_required
+def rental_delete(rental_id):
+    # Delete Rental concerned by rental_id
+    if Rental.delete(rental_id):
+        flash("Succès de la suppression de la location", "success")
+    else:
+        flash("Erreur lors de la suppression de la location", "error")
+
+    return redirect(url_for('rental.rental_read_all'))

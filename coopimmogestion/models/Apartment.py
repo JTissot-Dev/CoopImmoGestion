@@ -12,7 +12,7 @@ class Apartment(Property):
     __tablename__ = "Apartment"
     _stage = db.Column('stage', db.Integer, nullable=False)
     _outdoor = db.Column('outdoor', db.Boolean, default=False, nullable=False)
-    _price = db.relationship('Price', uselist=False, backref='apartment', lazy=True)
+    _price = db.relationship('Price', uselist=False, backref='apartment', lazy=True, cascade='all, delete-orphan')
     _rental = db.relationship('Rental', uselist=False, backref='apartment', lazy=True)
 
     # Constructor
@@ -106,12 +106,9 @@ class Apartment(Property):
     def delete(cls, property_id):
         try:
             apartment = cls.query.get(property_id)
-            apartment_price = Price.query.filter_by(apartment_id=property_id).first()
-            db.session.delete(apartment_price)
-            db.session.commit()
             db.session.delete(apartment)
             db.session.commit()
             return True
-        except Exception as e:
-            print(e)
+        except Exception:
             return False
+

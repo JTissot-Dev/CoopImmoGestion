@@ -123,4 +123,14 @@ class Rental(db.Model):
         except Exception:
             return None
 
+    @classmethod
+    def delete(cls, rental_id):
+        try:
+            rental = cls.query.get(rental_id)
+            db.session.delete(rental)
+            db.session.commit()
+            return True
+        except Exception:
+            return False
+
 

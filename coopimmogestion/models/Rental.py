@@ -16,6 +16,7 @@ class Rental(db.Model):
                            nullable=False)
     _apartment_id = db.Column('apartment_id', db.Integer, db.ForeignKey('Apartment.property_id'),
                               nullable=False)
+    _inventories = db.relationship('Inventory', backref='rental', lazy=True)
 
     # Constructor
     def __init__(self, rental_id: int, start_date: dt, end_date: dt, tenant_id: int, apartment_id: int):
@@ -80,8 +81,8 @@ class Rental(db.Model):
     # Convert text in datetime format
     @classmethod
     def convert_date(cls, date):
-        date_birthday = dt.strptime(date, "%Y-%m-%d")
-        return date_birthday
+        date = dt.strptime(date, "%Y-%m-%d")
+        return date
 
     @classmethod
     def read(cls):

@@ -80,8 +80,8 @@
                             <tr class="text-custom">
                                 <th>Locataire</th>
                                 <th>Propriété</th>
-                                <th class="d-none d-xl-table-cell">Début du bail</th>
-                                <th class="d-none d-xl-table-cell">Fin du bail</th>
+                                <th class="d-none d-lg-table-cell">Début du bail</th>
+                                <th class="d-none d-lg-table-cell">Fin du bail</th>
                                 <th class="pe-4">Editer</th>
                             </tr>
                         </thead>
@@ -89,19 +89,21 @@
                         {% for rental in rentals %}
                             <tr class="d-none">
                                 <td class="align-middle">
-                                    <button class="btn btn-ct-form" data-bs-toggle="modal" data-bs-target="#update{{ rental.tenant.person_id }}">
+                                    <button class="btn btn-ct-form" data-bs-toggle="modal"
+                                            data-bs-target="#update-tenant{{ rental.tenant.person_id }}">
                                         {{ rental.tenant.full_name }}
                                     </button>
                                 </td>
                                 <td class="align-middle">
-                                    <button class="btn btn-ct-form" data-bs-toggle="modal" data-bs-target="#update{{ rental.apartment.property_id }}">
+                                    <button class="btn btn-ct-form" data-bs-toggle="modal"
+                                            data-bs-target="#update-apartment{{ rental.apartment.property_id }}">
                                         {{ rental.apartment.reference }}
                                     </button>
                                 </td>
-                                <td class="align-middle d-none d-xl-table-cell">
+                                <td class="align-middle d-none d-lg-table-cell">
                                     {{ rental.text_start_date }}
                                 </td>
-                                <td class="align-middle d-none d-xl-table-cell">
+                                <td class="align-middle d-none d-lg-table-cell">
                                     {{ rental.text_end_date }}
                                 </td>
                                 <td class="align-middle pe-4">
@@ -153,7 +155,7 @@
                                     </button>
                                 </th>
                                 <th class="d-table-cell d-lg-none page-number"></th>
-                                <th colspan="3" class="d-none d-sm-table-cell page-number"></th>
+                                <th colspan="3" class="d-none d-lg-table-cell page-number"></th>
                                 <th class="text-center pe-4">
                                     <button type="button" class="btn btn-ct-page-tab pb-1 next-page">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -279,7 +281,9 @@
                     <div class="modal-dialog my-3">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h2 class="modal-title fs-5" id="UpdateRentalModalLabel">Ajouter une location</h2>
+                                <h2 class="modal-title fs-5" id="UpdateRentalModalLabel">
+                                    {{ rental.tenant.full_name }} - {{ rental.apartment.reference }}
+                                </h2>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body position-relative modal-body-rental">
@@ -356,7 +360,7 @@
         {# Update tenant modal #}
         {% if tenants %}
             {% for tenant in tenants %}
-                <div class="modal modal-lg fade rounded-2" id="update{{ tenant.person_id }}" tabindex="-1" aria-labelledby="UpdateTenantModalLabel" aria-hidden="true">
+                <div class="modal modal-lg fade rounded-2" id="update-tenant{{ tenant.person_id }}" tabindex="-1" aria-labelledby="UpdateTenantModalLabel" aria-hidden="true">
                     <div class="modal-dialog my-3">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -454,7 +458,7 @@
         {% if apartments %}
             {% for apartment in apartments %}
                 {# Update apartment modal #}
-                <div class="modal modal-lg fade rounded-2" id="update{{ apartment.property_id }}" tabindex="-1" aria-labelledby="UpdateApartmentModalLabel" aria-hidden="true">
+                <div class="modal modal-lg fade rounded-2" id="update-apartment{{ apartment.property_id }}" tabindex="-1" aria-labelledby="UpdateApartmentModalLabel" aria-hidden="true">
                     <div class="modal-dialog my-3">
                         <div class="modal-content">
                             <div class="modal-header">

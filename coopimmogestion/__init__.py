@@ -14,6 +14,7 @@ from .controller.account import account
 from .controller.apartment import apartment
 from .controller.tenant import tenant
 from .controller.rental import rental
+from .controller.inventory import inventory
 
 
 def create_app(test_config=None):
@@ -29,8 +30,8 @@ def create_app(test_config=None):
         # load the test config for unit test pytest
         app.config.from_object(test_config)
 
+    # Register views/controllers
     app.register_error_handler(403, page_forbidden)
-
     app.register_blueprint(login)
     app.register_blueprint(logout)
     app.register_blueprint(index)
@@ -38,6 +39,7 @@ def create_app(test_config=None):
     app.register_blueprint(apartment)
     app.register_blueprint(tenant)
     app.register_blueprint(rental)
+    app.register_blueprint(inventory)
 
     # Initialize hashing, db, db migration
     bcrypt.init_app(app)

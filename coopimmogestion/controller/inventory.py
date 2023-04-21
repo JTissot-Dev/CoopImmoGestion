@@ -35,3 +35,19 @@ def inventory_create():
         flash("Erreur lors de la création de l'état des lieux", "error")
 
     return redirect(url_for('inventory.inventory_read_all'))
+
+
+@inventory.post('/etat-des-lieux/modifier/<int:inventory_id>')
+@login_required
+def inventory_update(inventory_id):
+    # Escape form inputs values
+    user_input = {name: escape(value) for name, value in request.form.items()}
+    # Update Rental
+    inventory: Inventory = Inventory.update(inventory_id, user_input)
+
+    if inventory:
+        flash("Succès de la mise à jour de l'état des lieux", "success")
+    else:
+        flash("Erreur lors de la mise à jour de l'état des lieux", "error")
+
+    return redirect(url_for('inventory.inventory_read_all'))

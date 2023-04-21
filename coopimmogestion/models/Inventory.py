@@ -99,3 +99,19 @@ class Inventory(db.Model):
         except Exception:
             db.session.rollback()
             return None
+
+    @classmethod
+    def update(cls, inventory_id, user_input):
+        # Get text date in datetime
+        inventory_date = cls.convert_date(user_input['inventory_date'])
+
+        try:
+            inventory = cls.query.get(inventory_id)
+            inventory.type_inv = user_input['type_inv']
+            inventory.end_date = inventory_date
+            inventory.observation = user_input['observation']
+            inventory.rental_id = user_input['rental_id']
+            db.session.commit()
+            return inventory
+        except Exception:
+            return None

@@ -125,7 +125,8 @@
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end">
                                         <li>
-                                            <button class="dropdown-item" type="button">
+                                            <button class="dropdown-item" type="button" data-bs-toggle="modal"
+                                                    data-bs-target="#update{{ inventory.inventory_id }}">
                                                 <img src="{{ url_for('static', filename='img/update-logo.svg') }}" class="me-1 mb-1">
                                                 Modifier
                                             </button>
@@ -276,8 +277,8 @@
                                     <label for="start_date" class="form-label text-modal-sizing">Type*</label>
                                     <select name="type_inv" id="type_inv" class="form-select form-select-sm rounded-1">
                                         <option></option>
-                                            <option>Entrée</option>
-                                            <option>Sortie</option>
+                                        <option>Entrée</option>
+                                        <option>Sortie</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6 my-1">
@@ -286,8 +287,7 @@
                                 </div>
                                 <div class="col-12 my-1">
                                     <label for="observation" class="form-label text-modal-sizing">Observation</label>
-                                    <textarea name="observation" class="form-control rounded-1" id="observation" rows="3">
-                                    </textarea>
+                                    <textarea name="observation" class="form-control rounded-1" id="observation" rows="3"></textarea>
                                 </div>
                             </fieldset>
                         </form>
@@ -316,6 +316,64 @@
                                 <p class="observation-ct-content">
                                     {{ inventory.observation }}
                                 </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {# Update inventory modal #}
+                <div class="modal modal-lg fade rounded-2" id="update{{ inventory.inventory_id }}" tabindex="-1" aria-labelledby="UpdateInventoryModalLabel" aria-hidden="true">
+                    <div class="modal-dialog my-3">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="modal-title fs-5" id="UpdateInventoryModalLabel">Ajouter un état des lieux</h2>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body position-relative modal-body-inventory">
+                                <form class="form-inventory" action="{{url_for('inventory.inventory_update', inventory_id=inventory.inventory_id)}}" method="post">
+                                    <fieldset class="row g-3 m-1 pb-2 border border-primary-subtle rounded-2">
+                                        <legend class="my-0 py-0 text-custom text-modal-sizing text-center">Location</legend>
+                                        <div class="col my-1">
+                                            <label for="rental_id" class="form-label text-modal-sizing">Location*</label>
+                                            <select name="rental_id" id="rental_id" class="form-select form-select-sm rounded-1">
+                                                <option value="{{ inventory.rental.rental_id }}" selected>
+                                                    {{ inventory.rental.tenant.full_name }}-{{ inventory.rental.apartment.reference }}
+                                                </option>
+                                                {% if rentals %}
+                                                    {% for rental in rentals %}
+                                                        <option value="{{ rental.rental_id }}">
+                                                            {{ rental.tenant.full_name }}-{{ rental.apartment.reference }}
+                                                        </option>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </select>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset class="row g-3 mt-4 m-1 pb-2 border border-primary-subtle rounded-2">
+                                        <legend class="my-0 py-0 text-custom text-modal-sizing text-center">Etat des lieux</legend>
+                                        <div class="col-md-6 my-1">
+                                            <label for="start_date" class="form-label text-modal-sizing">Type*</label>
+                                            <select name="type_inv" id="type_inv" class="form-select form-select-sm rounded-1">
+                                                <option>{{ inventory.type_inv }}</option>
+                                                <option>Entrée</option>
+                                                <option>Sortie</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 my-1">
+                                            <label for="inventory_date" class="form-label text-modal-sizing">Date*</label>
+                                            <input name="inventory_date" type="date" class="form-control form-control-sm rounded-1"
+                                                   id="inventory_date" value="{{ inventory.text_inventory_date }}">
+                                        </div>
+                                        <div class="col-12 my-1">
+                                            <label for="observation" class="form-label text-modal-sizing">Observation</label>
+                                            <textarea name="observation" class="form-control rounded-1" id="observation" rows="3">{{ inventory.observation }}</textarea>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-ct-cancel-modal" data-bs-dismiss="modal">Annuler</button>
+                                <button type="button" class="btn btn-primary btn-ct-modal submit-inventory">Valider</button>
                             </div>
                         </div>
                     </div>

@@ -51,3 +51,15 @@ def inventory_update(inventory_id):
         flash("Erreur lors de la mise à jour de l'état des lieux", "error")
 
     return redirect(url_for('inventory.inventory_read_all'))
+
+
+@inventory.get('/etat-des-lieux/supprimer/<int:inventory_id>')
+@login_required
+def inventory_delete(inventory_id):
+    # Delete Rental concerned by rental_id
+    if Inventory.delete(inventory_id):
+        flash("Succès de la suppression de l'état des lieux", "success")
+    else:
+        flash("Erreur lors de la suppression de l'état des lieux", "error")
+
+    return redirect(url_for('inventory.inventory_read_all'))

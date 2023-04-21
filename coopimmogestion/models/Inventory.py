@@ -115,3 +115,13 @@ class Inventory(db.Model):
             return inventory
         except Exception:
             return None
+
+    @classmethod
+    def delete(cls, inventory_id):
+        try:
+            inventory = cls.query.get(inventory_id)
+            db.session.delete(inventory)
+            db.session.commit()
+            return True
+        except Exception:
+            return False

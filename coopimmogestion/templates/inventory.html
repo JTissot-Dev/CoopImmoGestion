@@ -17,7 +17,7 @@
                 <div class="row mx-1">
                     <div class="d-flex justify-content-between align-items-center p-0 mt-5">
                         {#Large screen create inventory button#}
-                        <button class="btn btn-ct-add d-none d-lg-block">
+                        <button class="btn btn-ct-add d-none d-lg-block" data-bs-toggle="modal" data-bs-target="#CreateInventoryModal">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                      class="bi bi-building-down me-1" viewBox="0 0 16 16">
                                     <path d="M12.5 9a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7Zm.354 5.854 1.5-1.5a.5.5 0 0
@@ -37,7 +37,7 @@
                             Ajouter
                         </button>
                         {#small screen create inventory button#}
-                        <button class="btn btn-ct-add-s d-block d-lg-none">
+                        <button class="btn btn-ct-add-s d-block d-lg-none" data-bs-toggle="modal" data-bs-target="#CreateInventoryModal">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                                      class="bi bi-building-down" viewBox="0 0 16 16">
                                     <path d="M12.5 9a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7Zm.354 5.854 1.5-1.5a.5.5 0 0
@@ -200,7 +200,7 @@
                                 <span class="me-3">Aucun état des lieux</span> <br>
                                 <span class="d-none d-sm-block me-3">Ajouter un premier état des lieux ?</span>
                             </div>
-                            <button class="btn btn-ct-add me-3" data-bs-toggle="modal" data-bs-target="#CreateTenantModal">
+                            <button class="btn btn-ct-add me-3" data-bs-toggle="modal" data-bs-target="#CreateInventoryModal">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                      class="bi bi-building-down d-none d-sm-inline-block me-1" viewBox="0 0 16 16">
                                     <path d="M12.5 9a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7Zm.354 5.854 1.5-1.5a.5.5 0 0
@@ -223,6 +223,62 @@
                     </div>
                 </div>
             {% endif %}
+        </div>
+
+        {# Create inventory modal #}
+        <div class="modal modal-lg fade rounded-2" id="CreateInventoryModal" tabindex="-1" aria-labelledby="CreateInventoryModalLabel" aria-hidden="true">
+            <div class="modal-dialog my-3">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-5" id="CreateInventoryModalLabel">Ajouter un état des lieux</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body position-relative modal-body-inventory">
+                        <form class="form-inventory" action="{{url_for('inventory.inventory_create')}}" method="post">
+                            <fieldset class="row g-3 m-1 pb-2 border border-primary-subtle rounded-2">
+                                <legend class="my-0 py-0 text-custom text-modal-sizing text-center">Location</legend>
+                                <div class="col my-1">
+                                    <label for="rental_id" class="form-label text-modal-sizing">Location*</label>
+                                    <select name="rental_id" id="rental_id" class="form-select form-select-sm rounded-1">
+                                        <option></option>
+                                        {% if rentals %}
+                                            {% for rental in rentals %}
+                                                <option value="{{ rental.rental_id }}">
+                                                    {{ rental.tenant.full_name }}-{{ rental.apartment.reference }}
+                                                </option>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </select>
+                                </div>
+                            </fieldset>
+                            <fieldset class="row g-3 mt-4 m-1 pb-2 border border-primary-subtle rounded-2">
+                                <legend class="my-0 py-0 text-custom text-modal-sizing text-center">Etat des lieux</legend>
+                                <div class="col-md-6 my-1">
+                                    <label for="start_date" class="form-label text-modal-sizing">Type*</label>
+                                    <select name="type_inv" id="type_inv" class="form-select form-select-sm rounded-1">
+                                        <option></option>
+                                            <option>Entrée</option>
+                                            <option>Sortie</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 my-1">
+                                    <label for="inventory_date" class="form-label text-modal-sizing">Date*</label>
+                                    <input name="inventory_date" type="date" class="form-control form-control-sm rounded-1" id="inventory_date">
+                                </div>
+                                <div class="col-12 my-1">
+                                    <label for="observation" class="form-label text-modal-sizing">Observation</label>
+                                    <textarea name="observation" class="form-control rounded-1" id="observation" rows="3">
+                                    </textarea>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-ct-cancel-modal" data-bs-dismiss="modal">Annuler</button>
+                        <button type="button" class="btn btn-primary btn-ct-modal submit-inventory">Valider</button>
+                    </div>
+                </div>
+            </div>
         </div>
         {% if inventories and inventories|length > 0  %}
             {% for inventory in inventories %}

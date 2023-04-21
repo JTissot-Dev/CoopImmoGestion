@@ -80,3 +80,22 @@ class Inventory(db.Model):
             return []
         except Exception:
             return None
+
+    @classmethod
+    def create(cls, user_input, rental_id):
+        # Get text date in datetime
+        inventory_date = cls.convert_date(user_input['inventory_date'])
+
+        if rental_id:
+            inventory = cls(None, user_input['type_inv'], inventory_date, user_input['observation'],
+                            rental_id)
+        else:
+            inventory = cls(None, user_input['type_inv'], inventory_date, user_input['observation'],
+                            user_input['rental_id'])
+        try:
+            db.session.add(inventory)
+            db.session.commit()
+            return inventory
+        except Exception:
+            db.session.rollback()
+            return None

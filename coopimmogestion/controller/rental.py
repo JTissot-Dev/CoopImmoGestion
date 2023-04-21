@@ -4,6 +4,7 @@ from ..models.Rental import Rental
 from ..models.Tenant import Tenant
 from ..models.Apartment import Apartment
 from ..models.Address import Address
+from ..models.Inventory import Inventory
 
 
 rental = Blueprint('rental', __name__, template_folder='templates')
@@ -88,6 +89,22 @@ def rental_apartment_update(property_id):
         flash("Succès de la mise à jour de l'appartement", "success")
     else:
         flash("Erreur lors de la mise à jour de l'appartement", "error")
+
+    return redirect(url_for('rental.rental_read_all'))
+
+
+@rental.post('/locations/etat-des-lieux/creer/<int:rental_id>')
+@login_required
+def rental_inventory_create(rental_id):
+    # Escape form inputs values
+    user_input = {name: escape(value) for name, value in request.form.items()}
+    # Create Apartment and associate Address
+    inventory: Inventory = Inventory.create(user_input, rental_id)
+
+    if inventory:
+        flash("Succès de la création de l'état des lieux", "success")
+    else:
+        flash("Erreur lors de la création de l'état des lieux", "error")
 
     return redirect(url_for('rental.rental_read_all'))
 

@@ -4,6 +4,7 @@ import { AccountUpdateFormCheck } from "./AccountUpdateFormCheck.js";
 import {ApartmentFormCheck} from "./ApartmentFormCheck.js";
 import {TenantFormCheck} from "./TenantFormCheck.js";
 import {RentalFormCheck} from "./RentalFormCheck.js";
+import {InventoryFormCheck} from "./InventoryFormCheck.js";
 
 
 // Table variables
@@ -36,6 +37,11 @@ const submitsButtonTenant = document.querySelectorAll('.submit-tenant');
 const modalsBodyRental = document.querySelectorAll('.modal-body-rental');
 const formsRental = document.querySelectorAll('.form-rental');
 const submitsButtonRental = document.querySelectorAll('.submit-rental');
+
+// Inventory modal variables
+const modalsBodyInventory = document.querySelectorAll('.modal-body-inventory');
+const formsInventory = document.querySelectorAll('.form-inventory');
+const submitsButtonInventory = document.querySelectorAll('.submit-inventory');
 
 // Table display
 if (tbodyRows, pagesNumber, nextPage, previousPage){
@@ -92,6 +98,18 @@ if (modalsBodyRental, formsRental, submitsButtonRental){
             const submitButtonRental = submitsButtonRental[index];
             const rentalFormCheck = new RentalFormCheck(modalBodyRental, formRental, submitButtonRental);
             rentalFormCheck.attachEventListeners();
+        })
+    }
+}
+
+// Inventory Create/Update form submit
+if (modalsBodyInventory, formsInventory, submitsButtonInventory){
+    if (modalsBodyInventory.length, formsInventory.length, submitsButtonInventory.length){
+        modalsBodyInventory.forEach((modalBodyInventory, index)=>{
+            const formInventory = formsInventory[index];
+            const submitButtonInventory = submitsButtonInventory[index];
+            const inventoryFormCheck = new InventoryFormCheck(modalBodyInventory, formInventory, submitButtonInventory);
+            inventoryFormCheck.attachEventListeners();
         })
     }
 }

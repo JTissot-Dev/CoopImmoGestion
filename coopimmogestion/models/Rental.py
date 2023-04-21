@@ -1,8 +1,7 @@
 from ..db.db import db
 from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.orm.exc import NoResultFound
 from datetime import datetime as dt
-from .Tenant import Tenant
-from .Apartment import Apartment
 
 
 class Rental(db.Model):
@@ -89,6 +88,8 @@ class Rental(db.Model):
         try:
             rentals = cls.query.all()
             return rentals
+        except NoResultFound:
+            return []
         except Exception:
             return None
 

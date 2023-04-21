@@ -192,6 +192,25 @@
                 </div>
             {% else %}
                 {# First creation #}
+                <div class="row mx-1 mt-2">
+                    {% with log = get_flashed_messages(with_categories=true) %}
+                        {% if log %}
+                            {% for category, message in log %}
+                                {% if category == "success" %}
+                                    <div class="alert alert-success d-flex align-items-center justify-content-between alert-sizing"
+                                         role="alert">
+                                        <div>
+                                            {{ message }}
+                                        </div>
+                                        <button type="button"
+                                                class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                        </button>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                </div>
                 <div class="row mx-1 my-5 d-flex justify-content-center">
                     <div class="col-12 col-sm-10 col-md-8 col-lg-6 p-4 my-5 rounded-3 bg-secondary-subtle
                                 d-flex align-items-center justify-content-around shadow-sm">
@@ -510,7 +529,7 @@
                                 <form class="form-apartment" action="{{url_for('rental.rental_apartment_update', property_id=apartment.property_id)}}" method="post">
                                     <fieldset class="row g-3 m-1 pb-2 border border-primary-subtle rounded-2">
                                         <legend class="my-0 py-0 text-custom text-modal-sizing text-center">Appartement</legend>
-                                        <div class="col-8 my-1">
+                                        <div class="col-md-8 my-1">
                                             <label for="reference" class="form-label text-modal-sizing">Réference*</label>
                                             <input name="reference" type="text" class="form-control form-control-sm rounded-1"
                                                    id="reference" value="{{ apartment.reference }}">

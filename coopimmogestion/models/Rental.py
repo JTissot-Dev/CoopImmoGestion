@@ -16,6 +16,8 @@ class Rental(db.Model):
     _apartment_id = db.Column('apartment_id', db.Integer, db.ForeignKey('Apartment.property_id'),
                               nullable=False)
     _inventories = db.relationship('Inventory', backref='rental', lazy=True, cascade='all, delete-orphan')
+    _security_deposits = db.relationship('SecurityDeposit', backref='rental', lazy=True, cascade='all, delete-orphan')
+    _rents = db.relationship('Rent', backref='rental', lazy=True, cascade='all, delete-orphan')
 
     # Constructor
     def __init__(self, rental_id: int, start_date: dt, end_date: dt, tenant_id: int, apartment_id: int):

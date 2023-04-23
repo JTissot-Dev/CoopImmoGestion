@@ -15,6 +15,7 @@ from .controller.apartment import apartment
 from .controller.tenant import tenant
 from .controller.rental import rental
 from .controller.inventory import inventory
+from .controller.finance import finance
 
 
 def create_app(test_config=None):
@@ -40,6 +41,7 @@ def create_app(test_config=None):
     app.register_blueprint(tenant)
     app.register_blueprint(rental)
     app.register_blueprint(inventory)
+    app.register_blueprint(finance)
 
     # Initialize hashing, db, db migration
     bcrypt.init_app(app)

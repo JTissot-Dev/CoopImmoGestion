@@ -50,3 +50,18 @@ class SecurityDeposit(Payment):
         except Exception:
             db.session.rollback()
             return None
+
+    @classmethod
+    def update(cls, payment_id, user_input):
+        # Get text date in datetime
+        payment_date = cls.convert_payment_date(user_input['payment_date'])
+
+        try:
+            security_deposit = cls.query.get(payment_id)
+            security_deposit.amount = user_input['amount']
+            security_deposit.payment_date = payment_date
+            security_deposit.rental_id = user_input['rental_id']
+            db.session.commit()
+            return security_deposit
+        except Exception:
+            return None

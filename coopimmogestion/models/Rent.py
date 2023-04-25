@@ -39,10 +39,10 @@ class Rent(Payment):
         self._rental_id = rental_id
 
     @classmethod
-    def read(cls, rent_id):
-        if rent_id:
+    def read(cls, payment_id):
+        if payment_id:
             try:
-                rent = cls.query.get(rent_id)
+                rent = cls.query.get(payment_id)
                 return rent
             except Exception:
                 return None
@@ -73,4 +73,21 @@ class Rent(Payment):
         except Exception as e:
             print(e)
             db.session.rollback()
+            return None
+
+    @classmethod
+    def update(cls, payment_id, user_input):
+        # Get text date in datetime
+        payment_date = cls.convert_payment_date(user_input['payment_date'])
+
+        try:
+            rent = cls.query.get(payment_id)
+            rent.amount = user_input['amount']
+            rent.payment_date = payment_date
+            rent.origin = user_input['origin']
+            rent.rental_id = user_input['rental_id']
+            db.session.commit()
+            return rent
+        except Exception as e:
+            print(e)
             return None

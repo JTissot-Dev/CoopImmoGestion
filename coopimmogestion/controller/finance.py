@@ -47,3 +47,28 @@ def finance_create():
         flash("Erreur lors de la création du paiement", "error")
 
     return redirect(url_for('finance.finance_read_all'))
+
+
+@finance.post('/finances/modifier/<int:payment_id>')
+@login_required
+def finance_update(payment_id):
+    # Escape form inputs values
+    user_input = {name: escape(value) for name, value in request.form.items()}
+    # Create Rent or SecurityDeposit
+    if user_input['type_payment'] == 'Loyer':
+        # Decrease rental balance with current rent amount
+        payment: Rent = Rent.read(payment_id)
+        Rental.delete_payment_balance(payment.rental_id, payment)
+        # Update rent values
+        payment: Rent = Rent.update(payment_id, user_input)
+        # Increase rental balance with update rent amount
+        Rental.add_payment_balance(payment.rental_id, payment)
+    elif user_input['type_payment'] == 'Dépôt de garantie':
+        payment: SecurityDeposit = SecurityDeposit.update(payment_id, user_input)
+
+    if payment:
+        flash("Succès de la mise à jour du paiement", "success")
+    else:
+        flash("Erreur lors de la mise à jour du paiement", "error")
+
+    return redirect(url_for('finance.finance_read_all'))

@@ -125,12 +125,12 @@ def rental_payment_create(rental_id):
 
     if payment:
         if isinstance(payment, Rent):
-            Rental.add_payment_balance(user_input['rental_id'], payment)
+            Rental.add_payment_balance(rental_id, payment)
         flash("Succès de la création du paiement", "success")
     else:
         flash("Erreur lors de la création du paiement", "error")
 
-    return redirect(url_for('finance.finance_read_all'))
+    return redirect(url_for('rental.rental_read_all'))
 
 
 @rental.get('/locations/supprimer/<int:rental_id>')

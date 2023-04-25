@@ -4,7 +4,9 @@ from coopimmogestion import create_app
 from coopimmogestion.config.TestingConfig import TestingConfig
 from coopimmogestion.models.Address import Address
 from coopimmogestion.models.AppUser import AppUser
+from coopimmogestion.models.AgencyFee import AgencyFee
 from coopimmogestion.db.db import db
+from coopimmogestion.schedule.schedule import scheduler
 from datetime import datetime as dt
 from coopimmogestion.crypt.crypt import bcrypt
 
@@ -15,11 +17,13 @@ def app():
     with app.app_context():
         db.create_all()
         create_user_test(app)
+        create_agency_fee_test(app)
 
     yield app
 
     with app.app_context():
         db.drop_all()
+        scheduler.shutdown()
 
 
 @pytest.fixture()
@@ -44,3 +48,8 @@ def create_user_test(app):
         db.session.commit()
 
 
+def create_agency_fee_test(app):
+    with app.app_context():
+        agency_fee_test: AgencyFee = AgencyFee(1, 0.08)
+        db.session.add(agency_fee_test)
+        db.session.commit()

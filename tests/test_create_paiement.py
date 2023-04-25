@@ -49,11 +49,11 @@ class TestCreatePayment:
             "apartment_id": 1
         }, follow_redirects=True)
 
-        response = client.post("/paiements/creer", data={
+        response = client.post("/finances/creer", data={
             "amount": 500,
             "payment_date": "2023-05-08",
             "observation": "test",
-            "payment_type": "Loyer",
+            "type_payment": "Loyer",
             "origin": "Locataire",
             "rental_id": 1
         }, follow_redirects=True)
@@ -103,11 +103,11 @@ class TestCreatePayment:
             "apartment_id": 1
         }, follow_redirects=True)
 
-        client.post("/paiements/creer", data={
+        client.post("/finances/creer", data={
             "amount": 500,
             "payment_date": "2023-05-08",
             "observation": "test",
-            "payment_type": "Loyer",
+            "type_payment": "Loyer",
             "origin": "Locataire",
             "rental_id": 1
         }, follow_redirects=True)
@@ -163,11 +163,11 @@ class TestCreatePayment:
             "apartment_id": 1
         }, follow_redirects=True)
 
-        response = client.post("/paiements/creer", data={
+        response = client.post("/finances/creer", data={
             "amount": 500,
             "payment_date": "2023-05-08",
             "observation": "test",
-            "payment_type": "Loyer",
+            "type_payment": "Loyer",
             "origin": "Locataire",
             "rental_id": 1
         }, follow_redirects=True)
@@ -218,11 +218,11 @@ class TestCreatePayment:
             "apartment_id": 1
         }, follow_redirects=True)
 
-        response = client.post("/paiements/creer", data={
+        response = client.post("/finances/creer", data={
             "amount": 500,
             "payment_date": "2023-05-08",
             "observation": "test",
-            "payment_type": "Dépôt de garantie",
+            "type_payment": "Dépôt de garantie",
             "origin": "",
             "rental_id": 1
         }, follow_redirects=True)
@@ -272,11 +272,11 @@ class TestCreatePayment:
             "apartment_id": 1
         }, follow_redirects=True)
 
-        client.post("/paiements/creer", data={
+        client.post("/finances/creer", data={
             "amount": 500,
             "payment_date": "2023-05-08",
             "observation": "test",
-            "payment_type": "Dépôt de garantie",
+            "type_payment": "Dépôt de garantie",
             "origin": "",
             "rental_id": 1
         }, follow_redirects=True)
@@ -332,11 +332,11 @@ class TestCreatePayment:
             "apartment_id": 1
         }, follow_redirects=True)
 
-        response = client.post("/paiements/creer", data={
+        response = client.post("/finances/creer", data={
             "amount": 500,
             "payment_date": "2023-05-08",
             "observation": "test",
-            "payment_type": "Dépôt de garantie",
+            "type_payment": "Dépôt de garantie",
             "origin": "",
             "rental_id": 1
         }, follow_redirects=True)
@@ -388,13 +388,12 @@ class TestCreatePayment:
             "apartment_id": 1
         }, follow_redirects=True)
 
-        response = client.post("/locations/paiements/creer", data={
+        response = client.post("/locations/paiement/creer/1", data={
             "amount": 500,
             "payment_date": "2023-05-08",
             "observation": "test",
-            "payment_type": "Loyer",
-            "origin": "Locataire",
-            "rental_id": 1
+            "type_payment": "Loyer",
+            "origin": "Locataire"
         }, follow_redirects=True)
         assert response.status_code == 200
 
@@ -442,13 +441,12 @@ class TestCreatePayment:
             "apartment_id": 1
         }, follow_redirects=True)
 
-        client.post("/locations/paiements/creer", data={
+        client.post("/locations/paiement/creer/1", data={
             "amount": 500,
             "payment_date": "2023-05-08",
             "observation": "test",
-            "payment_type": "Loyer",
-            "origin": "Locataire",
-            "rental_id": 1
+            "type_payment": "Loyer",
+            "origin": "Locataire"
         }, follow_redirects=True)
 
         with app.app_context():
@@ -502,13 +500,12 @@ class TestCreatePayment:
             "apartment_id": 1
         }, follow_redirects=True)
 
-        response = client.post("/locations/paiements/creer", data={
+        response = client.post("/locations/paiement/creer/1", data={
             "amount": 500,
             "payment_date": "2023-05-08",
             "observation": "test",
-            "payment_type": "Loyer",
-            "origin": "Locataire",
-            "rental_id": 1
+            "type_payment": "Loyer",
+            "origin": "Locataire"
         }, follow_redirects=True)
         assert '<title>CoopImmoGestion-Locations</title>' in response.data.decode('utf-8')
 
@@ -557,13 +554,12 @@ class TestCreatePayment:
             "apartment_id": 1
         }, follow_redirects=True)
 
-        response = client.post("/locations/paiements/creer", data={
+        response = client.post("/locations/paiement/creer/1", data={
             "amount": 500,
             "payment_date": "2023-05-08",
             "observation": "test",
-            "payment_type": "Dépôt de garantie",
-            "origin": "",
-            "rental_id": 1
+            "type_payment": "Dépôt de garantie",
+            "origin": ""
         }, follow_redirects=True)
         assert response.status_code == 200
 
@@ -611,13 +607,12 @@ class TestCreatePayment:
             "apartment_id": 1
         }, follow_redirects=True)
 
-        client.post("/locations/paiements/creer", data={
+        client.post("/locations/paiement/creer/1", data={
             "amount": 500,
             "payment_date": "2023-05-08",
             "observation": "test",
-            "payment_type": "Dépôt de garantie",
-            "origin": "",
-            "rental_id": 1
+            "type_payment": "Dépôt de garantie",
+            "origin": ""
         }, follow_redirects=True)
 
         with app.app_context():
@@ -671,12 +666,11 @@ class TestCreatePayment:
             "apartment_id": 1
         }, follow_redirects=True)
 
-        response = client.post("/locations/paiements/creer", data={
+        response = client.post("/locations/paiement/creer/1", data={
             "amount": 500,
             "payment_date": "2023-05-08",
             "observation": "test",
-            "payment_type": "Dépôt de garantie",
-            "origin": "",
-            "rental_id": 1
+            "type_payment": "Dépôt de garantie",
+            "origin": ""
         }, follow_redirects=True)
         assert '<title>CoopImmoGestion-Locations</title>' in response.data.decode('utf-8')

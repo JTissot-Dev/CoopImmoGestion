@@ -65,3 +65,13 @@ class SecurityDeposit(Payment):
             return security_deposit
         except Exception:
             return None
+
+    @classmethod
+    def delete(cls, payment_id):
+        try:
+            security_deposit = cls.query.get(payment_id)
+            db.session.delete(security_deposit)
+            db.session.commit()
+            return True
+        except Exception:
+            return False

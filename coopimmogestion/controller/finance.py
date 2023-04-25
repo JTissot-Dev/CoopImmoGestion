@@ -72,3 +72,30 @@ def finance_update(payment_id):
         flash("Erreur lors de la mise à jour du paiement", "error")
 
     return redirect(url_for('finance.finance_read_all'))
+
+
+# Delete rent
+@finance.get('/finances/loyer/supprimer/<int:payment_id>')
+@login_required
+def rent_delete(payment_id):
+    # Delete Rent concerned by payment_id
+    if Rent.delete(payment_id):
+        flash("Succès de la suppression du paiement", "success")
+    else:
+        flash("Erreur lors de la suppression du paiement", "error")
+
+    return redirect(url_for('finance.finance_read_all'))
+
+
+# Delete security deposit
+@finance.get('/finances/depot-garantie/supprimer/<int:payment_id>')
+@login_required
+def security_deposit_delete(payment_id):
+    # Delete Security deposit concerned by payment_id
+    if SecurityDeposit.delete(payment_id):
+        flash("Succès de la suppression du paiement", "success")
+    else:
+        flash("Erreur lors de la suppression du paiement", "error")
+
+    return redirect(url_for('finance.finance_read_all'))
+

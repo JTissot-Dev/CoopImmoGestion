@@ -128,10 +128,19 @@
                                             </button>
                                         </li>
                                         <li>
-                                            <button class="dropdown-item" type="button">
+                                            {% if payment.origin %}
+                                                <button class="dropdown-item" type="button" data-bs-toggle="modal"
+                                                        data-bs-target="#delete-rent{{ payment.payment_id }}">
+                                                    <img src="{{ url_for('static', filename='img/delete-logo.svg') }}" class="me-1 mb-1">
+                                                    Supprimer
+                                                </button>
+                                            {% else %}
+                                                <button class="dropdown-item" type="button" data-bs-toggle="modal"
+                                                    data-bs-target="#delete-security-deposit{{ payment.payment_id }}">
                                                 <img src="{{ url_for('static', filename='img/delete-logo.svg') }}" class="me-1 mb-1">
                                                 Supprimer
                                             </button>
+                                            {% endif %}
                                         </li>
                                     </ul>
                                 </td>
@@ -371,6 +380,49 @@
                         </div>
                     </div>
                 </div>
+
+
+                {% if payment.origin %}
+                    {# Delete rent modal #}
+                    <div class="modal fade" id="delete-rent{{ payment.payment_id }}" tabindex="-1" aria-labelledby="DeleteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content rounded-2">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="DeleteModalLabel">Supprimer un paiement</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                Confirmer la suppression du paiement ?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-ct-cancel-modal" data-bs-dismiss="modal">Annuler</button>
+                                        <a href="{{ url_for('finance.rent_delete', payment_id=payment.payment_id) }}" type="button"
+                                           class="btn btn-ct-modal">Confirmer</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    {# Delete security deposit modal #}
+                    <div class="modal fade" id="delete-security-deposit{{ payment.payment_id }}" tabindex="-1" aria-labelledby="DeleteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content rounded-2">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="DeleteModalLabel">Supprimer un paiement</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                Confirmer la suppression du paiement ?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-ct-cancel-modal" data-bs-dismiss="modal">Annuler</button>
+                                        <a href="{{ url_for('finance.security_deposit_delete', payment_id=payment.payment_id) }}" type="button"
+                                           class="btn btn-ct-modal">Confirmer</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
             {% endfor %}
         {% endif %}
     </main>

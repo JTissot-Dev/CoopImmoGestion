@@ -91,3 +91,13 @@ class Rent(Payment):
         except Exception as e:
             print(e)
             return None
+
+    @classmethod
+    def delete(cls, payment_id):
+        try:
+            rent = cls.query.get(payment_id)
+            db.session.delete(rent)
+            db.session.commit()
+            return True
+        except Exception:
+            return False

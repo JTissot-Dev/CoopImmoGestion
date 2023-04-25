@@ -79,7 +79,9 @@ def finance_update(payment_id):
 @login_required
 def rent_delete(payment_id):
     # Delete Rent concerned by payment_id
-    if Rent.delete(payment_id):
+    rent = Rent.delete(payment_id)
+    if rent:
+        Rental.delete_payment_balance(rent.rental_id, rent)
         flash("Succès de la suppression du paiement", "success")
     else:
         flash("Erreur lors de la suppression du paiement", "error")

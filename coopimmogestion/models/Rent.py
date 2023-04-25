@@ -98,6 +98,6 @@ class Rent(Payment):
             rent = cls.query.get(payment_id)
             db.session.delete(rent)
             db.session.commit()
-            return True
+            return rent
         except Exception:
-            return False
+            return None

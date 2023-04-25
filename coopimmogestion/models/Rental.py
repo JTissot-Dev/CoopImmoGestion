@@ -1,4 +1,6 @@
 from ..db.db import db
+from ..schedule.schedule import scheduler
+from apscheduler.triggers.cron import CronTrigger
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm.exc import NoResultFound
 from datetime import datetime as dt
@@ -24,7 +26,6 @@ class Rental(db.Model):
         self._rental_id = rental_id
         self._start_date = start_date
         self._end_date = end_date
-        # Update with Payement relationship when Payment will be implementing
         self._rental_balance = 0.00
         self._tenant_id = tenant_id
         self._apartment_id = apartment_id
@@ -54,6 +55,10 @@ class Rental(db.Model):
     def rental_balance(self):
         return self._rental_balance
 
+    @rental_balance.setter
+    def rental_balance(self, rental_balance):
+        self._rental_balance = rental_balance
+
     @hybrid_property
     def tenant_id(self):
         return self._tenant_id
@@ -69,6 +74,14 @@ class Rental(db.Model):
     @apartment_id.setter
     def apartment_id(self, apartment_id):
         self._apartment_id = apartment_id
+
+    @hybrid_property
+    def rents(self):
+        return self._rents
+
+    @hybrid_property
+    def security_deposits(self):
+        return self._security_deposits
 
     # Get date in text format
     @hybrid_property
@@ -137,4 +150,37 @@ class Rental(db.Model):
         except Exception:
             return False
 
+    @classmethod
+    def add_payment_balance(cls, rental_id, rent):
+        try:
+            rental = cls.query.get(rental_id)
+            rental.rental_balance += rent.amount
+            db.session.commit()
+        except Exception:
+            db.session.rollback()
 
+    # Update rental balance depending on rents
+    @classmethod
+    def delete_payment_balance(cls, rental_id, rent):
+        try:
+            rental = cls.query.get(rental_id)
+            rental.rental_balance -= rent.amount
+            db.session.commit()
+        except Exception:
+            db.session.rollback()
+
+    # Decrease rentals balance each month depending on apartment prices
+    @staticmethod
+    @scheduler.task(trigger=CronTrigger(day='1', hour='0', minute='0', second='0'))
+    def _decrease_price_rental_balance():
+        with scheduler.app.app_context():
+            try:
+                rentals = Rental.query.all()
+                for rental in rentals:
+                    # Update only over the duration of the lease
+                    if rental.start_date <= dt.now() <= rental.end_date:
+                        rental.rental_balance -= \
+                         (rental.apartment.price.rent + rental.apartment.price.charge)
+                        db.session.commit()
+            except Exception:
+                db.session.rollback()

@@ -39,11 +39,38 @@ class Rent(Payment):
         self._rental_id = rental_id
 
     @classmethod
-    def read(cls):
+    def read(cls, rent_id):
+        if rent_id:
+            try:
+                rent = cls.query.get(rent_id)
+                return rent
+            except Exception:
+                return None
+        else:
+            try:
+                rents = cls.query.all()
+                return rents
+            except NoResultFound:
+                return []
+            except Exception:
+                return None
+
+    @classmethod
+    def create(cls, user_input, rental_id):
+        # Get text date in datetime
+        payment_date = cls.convert_payment_date(user_input['payment_date'])
+
+        if rental_id:
+            rent = cls(None, user_input['amount'], payment_date, user_input['origin'],
+                       rental_id, 1)
+        else:
+            rent = cls(None, user_input['amount'], payment_date, user_input['origin'],
+                       user_input['rental_id'], 1)
         try:
-            rents = cls.query.all()
-            return rents
-        except NoResultFound:
-            return []
-        except Exception:
+            db.session.add(rent)
+            db.session.commit()
+            return rent
+        except Exception as e:
+            print(e)
+            db.session.rollback()
             return None

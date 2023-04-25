@@ -469,9 +469,19 @@
                                         </div>
                                         <div class="col-md-6 my-1">
                                             <label for="balance" class="form-label fw-semibold text-modal-sizing">Solde</label>
-                                            <input name="balance" type="number"
-                                                   class="form-control form-control-sm rounded-1"
-                                                   id="balance" value="{{ tenant.balance }}" disabled>
+                                            {% if tenant.balance == 0 %}
+                                                <input name="balance" type="text"
+                                                       class="form-control form-control-sm rounded-1"
+                                                       id="balance" value="{{ tenant.balance }}" disabled>
+                                            {% elif tenant.balance >= 0 %}
+                                                <input name="balance" type="text"
+                                                       class="form-control form-control-sm rounded-1 text-success"
+                                                       id="balance" value="+{{ tenant.balance }}" disabled>
+                                            {% else %}
+                                                <input name="balance" type="text"
+                                                       class="form-control form-control-sm rounded-1 text-danger"
+                                                       id="balance" value="{{ tenant.balance }}" disabled>
+                                            {% endif %}
                                         </div>
                                     </fieldset>
                                     <fieldset class="row g-3 mx-1 mt-3 pb-2 border border-primary-subtle rounded-2">

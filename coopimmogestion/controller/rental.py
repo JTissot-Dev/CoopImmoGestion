@@ -5,6 +5,8 @@ from ..models.Tenant import Tenant
 from ..models.Apartment import Apartment
 from ..models.Address import Address
 from ..models.Inventory import Inventory
+from ..models.Rent import Rent
+from ..models.SecurityDeposit import SecurityDeposit
 
 
 rental = Blueprint('rental', __name__, template_folder='templates')
@@ -92,7 +94,7 @@ def rental_apartment_update(property_id):
 
     return redirect(url_for('rental.rental_read_all'))
 
-
+# Add inventory
 @rental.post('/locations/etat-des-lieux/creer/<int:rental_id>')
 @login_required
 def rental_inventory_create(rental_id):
@@ -107,6 +109,28 @@ def rental_inventory_create(rental_id):
         flash("Erreur lors de la création de l'état des lieux", "error")
 
     return redirect(url_for('rental.rental_read_all'))
+
+
+# Add payment
+@rental.post('/locations/paiement/creer/<int:rental_id>')
+@login_required
+def rental_payment_create(rental_id):
+    # Escape form inputs values
+    user_input = {name: escape(value) for name, value in request.form.items()}
+    # Create Rent or SecurityDeposit
+    if user_input['type_payment'] == 'Loyer':
+        payment: Rent = Rent.create(user_input, rental_id)
+    elif user_input['type_payment'] == 'Dépôt de garantie':
+        payment: SecurityDeposit = SecurityDeposit.create(user_input, rental_id)
+
+    if payment:
+        if isinstance(payment, Rent):
+            Rental.add_payment_balance(user_input['rental_id'], payment)
+        flash("Succès de la création du paiement", "success")
+    else:
+        flash("Erreur lors de la création du paiement", "error")
+
+    return redirect(url_for('finance.finance_read_all'))
 
 
 @rental.get('/locations/supprimer/<int:rental_id>')

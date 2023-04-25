@@ -33,3 +33,20 @@ class SecurityDeposit(Payment):
             return []
         except Exception:
             return None
+
+    @classmethod
+    def create(cls, user_input, rental_id):
+        # Get text date in datetime
+        payment_date = cls.convert_payment_date(user_input['payment_date'])
+
+        if rental_id:
+            security_deposit = cls(None, user_input['amount'], payment_date, rental_id)
+        else:
+            security_deposit = cls(None, user_input['amount'], payment_date, user_input['rental_id'])
+        try:
+            db.session.add(security_deposit)
+            db.session.commit()
+            return security_deposit
+        except Exception:
+            db.session.rollback()
+            return None

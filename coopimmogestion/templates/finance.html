@@ -17,7 +17,7 @@
                 <div class="row mx-1">
                     <div class="d-flex justify-content-between align-items-center p-0 mt-5">
                         {#Large screen create payment button#}
-                        <button class="btn btn-ct-add d-none d-lg-block">
+                        <button class="btn btn-ct-add d-none d-lg-block" data-bs-toggle="modal" data-bs-target="#CreatePaymentModal">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin me-1" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"/>
                                 <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529
@@ -31,8 +31,8 @@
                             Ajouter
                         </button>
                         {#small screen create payment button#}
-                        <button class="btn btn-ct-add-s d-block d-lg-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cash-coin py-1" viewBox="0 0 16 16">
+                        <button class="btn btn-ct-add-s d-block d-lg-none" data-bs-toggle="modal" data-bs-target="#CreatePaymentModal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-cash-coin pb-1 pt-2" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"/>
                                 <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529
                                 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255
@@ -215,7 +215,7 @@
                                 <span>Aucun paiement</span> <br>
                                 <span class="d-none d-sm-block">Ajouter un premier paiement ?</span>
                             </div>
-                            <button class="btn btn-ct-add">
+                            <button class="btn btn-ct-add" data-bs-toggle="modal" data-bs-target="#CreatePaymentModal">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                      class="bi bi-cash-coin d-none d-lg-inline-block me-1" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"/>
@@ -233,6 +233,69 @@
                     </div>
                 </div>
             {% endif %}
+        </div>
+
+        {# Create payment modal #}
+        <div class="modal modal-lg fade rounded-2" id="CreatePaymentModal" tabindex="-1" aria-labelledby="CreatePaymentModalLabel" aria-hidden="true">
+            <div class="modal-dialog my-3">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-5" id="CreatePaymentModalLabel">Ajouter un paiement</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body position-relative modal-body-payment">
+                        <form class="form-payment" action="{{url_for('finance.finance_create')}}" method="post">
+                            <fieldset class="row g-3 m-1 pb-2 border border-primary-subtle rounded-2">
+                                <legend class="my-0 py-0 text-custom text-modal-sizing text-center">Location</legend>
+                                <div class="col my-1">
+                                    <label for="rental_id" class="form-label text-modal-sizing">Location*</label>
+                                    <select name="rental_id" id="rental_id" class="form-select form-select-sm rounded-1">
+                                        <option></option>
+                                        {% if rentals %}
+                                            {% for rental in rentals %}
+                                                <option value="{{ rental.rental_id }}">
+                                                    {{ rental.tenant.full_name }}-{{ rental.apartment.reference }}
+                                                </option>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </select>
+                                </div>
+                            </fieldset>
+                            <fieldset class="row g-3 mt-4 m-1 pb-2 border border-primary-subtle rounded-2">
+                                <legend class="my-0 py-0 text-custom text-modal-sizing text-center">Paiement</legend>
+                                <div class="col-md-6 my-1">
+                                    <label for="type_payment" class="form-label text-modal-sizing">Type*</label>
+                                    <select name="type_payment" id="type_payment" class="form-select form-select-sm rounded-1">
+                                        <option></option>
+                                        <option>Loyer</option>
+                                        <option>Dépôt de garantie</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 my-1">
+                                    <label for="amount" class="form-label text-modal-sizing">Montant*</label>
+                                    <input name="amount" type="text" class="form-control form-control-sm rounded-1" id="amount">
+                                </div>
+                                <div class="col-md-6 my-1">
+                                    <label for="payment_date" class="form-label text-modal-sizing">Date*</label>
+                                    <input name="payment_date" type="date" class="form-control form-control-sm rounded-1" id="payment_date">
+                                </div>
+                                <div class="col my-1">
+                                    <label for="origin" class="form-label text-modal-sizing">Provenance</label>
+                                    <select name="origin" id="origin" class="form-select form-select-sm rounded-1">
+                                        <option></option>
+                                        <option>Locataire</option>
+                                        <option>Allocation</option>
+                                    </select>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-ct-cancel-modal" data-bs-dismiss="modal">Annuler</button>
+                        <button type="button" class="btn btn-primary btn-ct-modal submit-payment">Valider</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 

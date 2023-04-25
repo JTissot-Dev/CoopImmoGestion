@@ -5,6 +5,7 @@ import {ApartmentFormCheck} from "./ApartmentFormCheck.js";
 import {TenantFormCheck} from "./TenantFormCheck.js";
 import {RentalFormCheck} from "./RentalFormCheck.js";
 import {InventoryFormCheck} from "./InventoryFormCheck.js";
+import {PaymentFormCheck} from "./PaymentFormCheck.js";
 
 
 // Table variables
@@ -42,6 +43,11 @@ const submitsButtonRental = document.querySelectorAll('.submit-rental');
 const modalsBodyInventory = document.querySelectorAll('.modal-body-inventory');
 const formsInventory = document.querySelectorAll('.form-inventory');
 const submitsButtonInventory = document.querySelectorAll('.submit-inventory');
+
+// Payment modal variables
+const modalsBodyPayment = document.querySelectorAll('.modal-body-payment');
+const formsPayment = document.querySelectorAll('.form-payment');
+const submitsButtonPayment = document.querySelectorAll('.submit-payment');
 
 // Table display
 if (tbodyRows, pagesNumber, nextPage, previousPage){
@@ -114,4 +120,14 @@ if (modalsBodyInventory, formsInventory, submitsButtonInventory){
     }
 }
 
-
+// Payment Create/Update form submit
+if (modalsBodyPayment, formsPayment, submitsButtonPayment){
+    if (modalsBodyPayment.length, formsPayment.length, submitsButtonPayment.length){
+        modalsBodyPayment.forEach((modalBodyPayment, index)=>{
+            const formPayment = formsPayment[index];
+            const submitButtonPayment = submitsButtonPayment[index];
+            const paymentFormCheck = new PaymentFormCheck(modalBodyPayment, formPayment, submitButtonPayment);
+            paymentFormCheck.attachEventListeners();
+        })
+    }
+}

@@ -3,6 +3,7 @@ import os
 from flask import Flask
 from .crypt.crypt import bcrypt
 from .db.db import db, migrate
+from .schedule.schedule import scheduler
 from .config.DevelopmentConfig import DevelopmentConfig
 from .config.ProductionConfig import ProductionConfig
 from .config.TestingConfig import TestingConfig
@@ -43,9 +44,14 @@ def create_app(test_config=None):
     app.register_blueprint(inventory)
     app.register_blueprint(finance)
 
-    # Initialize hashing, db, db migration
+    # Initialize hashing, db, db migration, schedule
     bcrypt.init_app(app)
     db.init_app(app)
     migrate.init_app(app, db)
+    scheduler.init_app(app)
+
+    # Start schedule tasks
+    with app.app_context():
+        scheduler.start()
 
     return app

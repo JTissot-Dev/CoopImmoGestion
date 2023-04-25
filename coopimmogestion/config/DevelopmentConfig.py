@@ -6,5 +6,6 @@ class DevelopmentConfig(Config):
     SQLALCHEMY_DATABASE_URI = "postgresql://postgres:Development_2023@localhost:5432/coopimmogestion"
     DEBUG = True
     TEMPLATES_AUTO_RELOAD = True
+    SCHEDULER_API_ENABLED = True
 
 

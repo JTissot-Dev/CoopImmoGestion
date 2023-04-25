@@ -1,6 +1,8 @@
 from ..db.db import db
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm.exc import NoResultFound
+from ..schedule.schedule import scheduler
+from apscheduler.triggers.cron import CronTrigger
 from datetime import datetime as dt
 from .Person import Person
 from .Address import Address
@@ -22,7 +24,6 @@ class Tenant(Person):
                          address)
         self._social_security_number = social_security_number
         self._annual_salary = annual_salary
-        # Update with Rental relationship when Rental will be implementing
         self._balance = 0.00
 
     # Define getter and setter property
@@ -45,6 +46,10 @@ class Tenant(Person):
     @hybrid_property
     def balance(self):
         return self._balance
+
+    @hybrid_property
+    def rentals(self):
+        return self._rentals
 
     # Define string representation for UserApp object
     def __repr__(self):
@@ -102,3 +107,18 @@ class Tenant(Person):
             return True
         except Exception:
             return False
+
+    # Update tenant balance depending on his rentals
+    @staticmethod
+    @scheduler.task(trigger=CronTrigger(hour='*', minute='*', second='0'))
+    def _update_balance():
+        with scheduler.app.app_context():
+            try:
+                tenants = Tenant.query.all()
+                for tenant in tenants:
+                    tenant._balance = \
+                        sum(rental.rental_balance for rental in tenant.rentals)
+                db.session.commit()
+            except Exception as e:
+                print(e)
+                db.session.rollback()

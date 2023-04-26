@@ -1,58 +1,19 @@
-from coopimmogestion.models.Inventory import Inventory
 from coopimmogestion.db.db import db
+from datetime import datetime as dt
+from coopimmogestion.models.Apartment import Apartment
+from coopimmogestion.models.Tenant import Tenant
+from coopimmogestion.models.Rental import Rental
+from coopimmogestion.models.Address import Address
+from coopimmogestion.models.Inventory import Inventory
 
 
 class TestDeleteInventory:
-    def test_access_delete_inventory(self, client):
+    def test_access_delete_inventory(self, client, app):
         with client.session_transaction() as session:
             session["username"] = "test@test.fr"
             session["role"] = "admin"
 
-        client.post("/appartements/creer", data={
-            "reference": "test",
-            "living_area": 150.333,
-            "rooms": 5,
-            "stage": 1,
-            "outdoor": True,
-            "rent": 200,
-            "charge": 100,
-            "security_deposit": 400,
-            "street_name": "test",
-            "street_number": 1,
-            "additional_address": "A",
-            "zip_code": "00000",
-            "city": "Test"
-        }, follow_redirects=True)
-
-        client.post("/locataires/creer", data={
-            "first_name": "test",
-            "last_name": "test",
-            "birthday": "2023-04-08",
-            "phone_number": "0000000001",
-            "email": "test@test1.fr",
-            "social_security_number": "test",
-            "annual_salary": 30000.00,
-            "balance": 0.00,
-            "street_name": "test",
-            "street_number": 1,
-            "additional_address": "A",
-            "zip_code": "00000",
-            "city": "Test"
-        }, follow_redirects=True)
-
-        client.post("/locations/creer", data={
-            "start_date": "2023-04-08",
-            "end_date": "2023-05-08",
-            "tenant_id": 1,
-            "apartment_id": 1
-        }, follow_redirects=True)
-
-        client.post("/etat-des-lieux/creer", data={
-            "type_inv": "Entrée",
-            "inventory_date": "2023-05-08",
-            "observation": "test",
-            "rental_id": 1
-        }, follow_redirects=True)
+        TestDeleteInventory.create_test_entity(app)
 
         response = client.get("/etat-des-lieux/supprimer/1", follow_redirects=True)
         assert response.status_code == 200
@@ -62,51 +23,7 @@ class TestDeleteInventory:
             session["username"] = "test@test.fr"
             session["role"] = "admin"
 
-        client.post("/appartements/creer", data={
-            "reference": "test",
-            "living_area": 150.333,
-            "rooms": 5,
-            "stage": 1,
-            "outdoor": True,
-            "rent": 200,
-            "charge": 100,
-            "security_deposit": 400,
-            "street_name": "test",
-            "street_number": 1,
-            "additional_address": "A",
-            "zip_code": "00000",
-            "city": "Test"
-        }, follow_redirects=True)
-
-        client.post("/locataires/creer", data={
-            "first_name": "test",
-            "last_name": "test",
-            "birthday": "2023-04-08",
-            "phone_number": "0000000001",
-            "email": "test@test1.fr",
-            "social_security_number": "test",
-            "annual_salary": 30000.00,
-            "balance": 0.00,
-            "street_name": "test",
-            "street_number": 1,
-            "additional_address": "A",
-            "zip_code": "00000",
-            "city": "Test"
-        }, follow_redirects=True)
-
-        client.post("/locations/creer", data={
-            "start_date": "2023-04-08",
-            "end_date": "2023-05-08",
-            "tenant_id": 1,
-            "apartment_id": 1
-        }, follow_redirects=True)
-
-        client.post("/etat-des-lieux/creer", data={
-            "type_inv": "Entrée",
-            "inventory_date": "2023-05-08",
-            "observation": "test",
-            "rental_id": 1
-        }, follow_redirects=True)
+        TestDeleteInventory.create_test_entity(app)
 
         client.get("/etat-des-lieux/supprimer/1", follow_redirects=True)
 
@@ -118,56 +35,37 @@ class TestDeleteInventory:
                     inventory_test = None
             assert inventory_test is None
 
-    def test_delete_inventory_redirect(self, client):
+    def test_delete_inventory_redirect(self, client, app):
         with client.session_transaction() as session:
             session["username"] = "test@test.fr"
             session["role"] = "admin"
 
-        client.post("/appartements/creer", data={
-            "reference": "test",
-            "living_area": 150.333,
-            "rooms": 5,
-            "stage": 1,
-            "outdoor": True,
-            "rent": 200,
-            "charge": 100,
-            "security_deposit": 400,
-            "street_name": "test",
-            "street_number": 1,
-            "additional_address": "A",
-            "zip_code": "00000",
-            "city": "Test"
-        }, follow_redirects=True)
-
-        client.post("/locataires/creer", data={
-            "first_name": "test",
-            "last_name": "test",
-            "birthday": "2023-04-08",
-            "phone_number": "0000000001",
-            "email": "test@test1.fr",
-            "social_security_number": "test",
-            "annual_salary": 30000.00,
-            "balance": 0.00,
-            "street_name": "test",
-            "street_number": 1,
-            "additional_address": "A",
-            "zip_code": "00000",
-            "city": "Test"
-        }, follow_redirects=True)
-
-        client.post("/locations/creer", data={
-            "start_date": "2023-04-08",
-            "end_date": "2023-05-08",
-            "tenant_id": 1,
-            "apartment_id": 1
-        }, follow_redirects=True)
-
-        client.post("/etat-des-lieux/creer", data={
-            "type_inv": "Entrée",
-            "inventory_date": "2023-05-08",
-            "observation": "test",
-            "rental_id": 1
-        }, follow_redirects=True)
+        TestDeleteInventory.create_test_entity(app)
 
         response = client.get("/etat-des-lieux/supprimer/1", follow_redirects=True)
         assert '<title>CoopImmoGestion-Etat des lieux</title>' in response.data.decode('utf-8')
+
+    @staticmethod
+    def create_test_entity(app):
+        with app.app_context():
+            address_test: Address = Address(None, 'Test', 1, '', '00000', 'Test')
+            db.session.add(address_test)
+            db.session.commit()
+
+            apartment_test: Apartment = Apartment(None, 'Apartement-test', 150, 5, address_test,
+                                                  2, True, 400, 100, 700)
+            tenant_test: Tenant = Tenant(None, 'Test', 'Test', dt.now(), '0000000102', 'test@test.fr',
+                                         address_test, 'Test', 30000)
+            db.session.add(apartment_test)
+            db.session.add(tenant_test)
+            db.session.commit()
+
+            rental_test: Rental = Rental(None, dt.strptime('2023-01-01', '%Y-%m-%d'),
+                                         dt.strptime('2023-04-01', '%Y-%m-%d'), 1, 1)
+            db.session.add(rental_test)
+            db.session.commit()
+
+            inventory_test = Inventory(None, 'Entrée', dt.strptime('2023-01-01', '%Y-%m-%d'), 'Test', 1)
+            db.session.add(inventory_test)
+            db.session.commit()
+

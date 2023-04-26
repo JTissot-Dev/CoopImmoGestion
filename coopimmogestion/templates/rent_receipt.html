@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quittance de Loyer</title>
+    <style>
+        td, th{
+            padding: 5px 100px 5px 100px;
+            border: solid black 1px;
+        }
+        table{
+            border-collapse: collapse;
+            margin-bottom: 50px;
+        }
+        thead{
+            background-color: lightgray;
+        }
+        h3{
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1> Quittance de loyer {{ rental.apartment.reference }}</h1>
+        <h2>Quittante de loyer sur la periode du {{ text_start_date }} au {{ text_end_date }}</h2>
+        <table style="border: black solid 1px">
+            <thead>
+                <tr>
+                    <th>Locataire</th>
+                    <th>Bien</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <b>Prénom:</b>  {{ rental.tenant.first_name }}<br>
+                        <b>Nom:</b>  {{ rental.tenant.first_name }}<br>
+                        <b>Adresse:</b>  {{ rental.tenant.address.street_number }} {{ rental.tenant.address.street_name }}<br>
+                        <b>Complément addresse:</b>  {{ rental.tenant.address.additional_address }}<br>
+                        <b>Code postal:</b>  {{ rental.tenant.address.zip_code }}<br>
+                        <b>Ville:</b>  {{ rental.tenant.address.city }}
+                    </td>
+                    <td>
+                        <b>Référence:</b>  {{ rental.apartment.reference }}<br>
+                        <b>Adresse:</b>  {{ rental.apartment.address.street_number }} {{ rental.apartment.address.street_name }}<br>
+                        <b>Complément addresse:</b>  {{ rental.apartment.address.additional_address }}<br>
+                        <b>Code postal:</b>  {{ rental.apartment.address.zip_code }}<br>
+                        <b>Ville:</b>  {{ rental.apartment.address.city }}<br>
+                        <b>Prix du loyer:</b>  {{ rental.apartment.price.rent }} €<br>
+                        <b>Prix des charges:</b>  {{ rental.apartment.price.charge }} €
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Détail règlement(s)</h3>
+        {% for rent in rental.rents %}
+            {% if start_date <= rent.payment_date <= end_date %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="2">
+                                <b>Date du règlement:</b> {{ rent.text_payment_date }}
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                Libelle
+                            </th>
+                            <th>
+                                Montant
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <b>Loyer</b>
+                            </td>
+                            <td>
+                                {{ rent.amount - rental.apartment.price.charge }} €
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Charges</b>
+                            </td>
+                            <td>
+                                {{ rental.apartment.price.charge }} €
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Total</b>
+                            </td>
+                            <td>
+                                {{ rent.amount }} €
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            {% endif %}
+        {% endfor %}
+        <p>
+            <b>Nous vous remercions pour ce(s) règlement(s).</b>
+        </p>
+    </div>
+</body>
+</html>

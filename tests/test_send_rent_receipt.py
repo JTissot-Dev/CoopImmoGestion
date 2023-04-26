@@ -1,3 +1,5 @@
+from coopimmogestion.smtp.smtp import mail
+
 
 class TestSendRentRecept:
     def test_send_rent_receipt_status(self, client):
@@ -60,6 +62,17 @@ class TestSendRentRecept:
         }, follow_redirects=True)
 
         assert response.status_code == 200
+
+    def test_send_rent_receipt(self, client, app):
+        with app.app_context():
+            with mail.record_messages() as outbox:
+                mail.send_message(subject='testing',
+                                  sender='coopimmogestion@gmail.com',
+                                  body='test',
+                                  recipients=['test@test.fr'])
+
+                assert len(outbox) == 1
+                assert outbox[0].subject == "testing"
 
     def test_send_rent_receipt_redirect(self, client):
         with client.session_transaction() as session:

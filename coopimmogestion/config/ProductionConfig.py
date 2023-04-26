@@ -8,4 +8,4 @@ class ProductionConfig(Config):
     TESTING = False
     DEBUG = False
     SESSION_COOKIE_SECURE = True
-    SCHEDULER_API_ENABLED = True
+

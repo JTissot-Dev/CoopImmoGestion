@@ -15,7 +15,7 @@
             </div>
             {% if payments and payments|length > 0  %}
                 <div class="row mx-1">
-                    <div class="d-flex justify-content-between align-items-center p-0 mt-5">
+                    <div class="d-flex justify-content-start align-items-center p-0 mt-5">
                         {#Large screen create payment button#}
                         <button class="btn btn-ct-add d-none d-lg-block" data-bs-toggle="modal" data-bs-target="#CreatePaymentModal">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin me-1" viewBox="0 0 16 16">
@@ -30,9 +30,19 @@
                             </svg>
                             Ajouter
                         </button>
+                        {#large screen send rent receipt button#}
+                        <button class="btn btn-ct-add d-none d-lg-block ms-2" data-bs-toggle="modal" data-bs-target="#SendRentReceipt">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-send mb-1 me-1" viewBox="0 0 16 16">
+                              <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643
+                              7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576
+                              6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
+                            </svg>
+                            Quittance de loyer
+                        </button>
                         {#small screen create payment button#}
                         <button class="btn btn-ct-add-s d-block d-lg-none" data-bs-toggle="modal" data-bs-target="#CreatePaymentModal">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-cash-coin pb-1 pt-2" viewBox="0 0 16 16">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cash-coin my-1" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"/>
                                 <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529
                                 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255
@@ -41,6 +51,15 @@
                                 <path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083c.058-.344.145-.678.258-1H3a2 2 0 0 0-2-2V3a2
                                 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1H1z"/>
                                 <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 5.982 5.982 0 0 1 3.13-1.567z"/>
+                            </svg>
+                        </button>
+                        {#small screen send rent receipt button#}
+                        <button class="btn btn-ct-add-s d-block d-lg-none ms-2" data-bs-toggle="modal" data-bs-target="#SendRentReceipt">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                                 class="bi bi-send my-1" viewBox="0 0 16 16">
+                              <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643
+                              7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576
+                              6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
                             </svg>
                         </button>
                     </div>
@@ -320,6 +339,54 @@
                 </div>
             </div>
         </div>
+
+        {# Send rent receipt modal#}
+        <div class="modal modal-lg fade rounded-2" id="SendRentReceipt" tabindex="-1" aria-labelledby="SendRentReceiptLabel" aria-hidden="true">
+            <div class="modal-dialog my-3">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-5" id="SendRentReceiptLabel">Envoyer une quittance de loyer</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body position-relative modal-body-rent-receipt">
+                        <form class="form-rent-receipt" action="{{url_for('finance.send_rent_receipt')}}" method="post">
+                            <fieldset class="row g-3 m-1 pb-2 border border-primary-subtle rounded-2">
+                                <legend class="my-0 py-0 text-custom text-modal-sizing text-center">Location</legend>
+                                <div class="col my-1">
+                                    <label for="rental_id" class="form-label text-modal-sizing">Location*</label>
+                                    <select name="rental_id" id="rental_id" class="form-select form-select-sm rounded-1">
+                                        <option></option>
+                                        {% if rentals %}
+                                            {% for rental in rentals %}
+                                                <option value="{{ rental.rental_id }}">
+                                                    {{ rental.tenant.full_name }}-{{ rental.apartment.reference }}
+                                                </option>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </select>
+                                </div>
+                            </fieldset>
+                            <fieldset class="row g-3 mt-4 m-1 pb-2 border border-primary-subtle rounded-2">
+                                <legend class="my-0 py-0 text-custom text-modal-sizing text-center">Période</legend>
+                                <div class="col-md-6 my-1">
+                                    <label for="start_date" class="form-label text-modal-sizing">Début*</label>
+                                    <input name="start_date" type="date" class="form-control form-control-sm rounded-1" id="start_date">
+                                </div>
+                                <div class="col-md-6 my-1">
+                                    <label for="end_date" class="form-label text-modal-sizing">Fin*</label>
+                                    <input name="end_date" type="date" class="form-control form-control-sm rounded-1" id="end_date">
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-ct-cancel-modal" data-bs-dismiss="modal">Annuler</button>
+                        <button type="button" class="btn btn-primary btn-ct-modal submit-rent-receipt">Envoyer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         {% if payments and payments|length > 0  %}
             {% for payment in payments %}
                 {% if payment.origin %}
@@ -389,6 +456,7 @@
                         </div>
                     </div>
                 {% else %}
+                    {# Update security deposit modal #}
                     <div class="modal modal-lg fade rounded-2" id="update-security-deposit{{ payment.payment_id }}" tabindex="-1"
                          aria-labelledby="UpdatePaymentModalLabel" aria-hidden="true">
                         <div class="modal-dialog my-3">

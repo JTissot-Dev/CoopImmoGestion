@@ -4,6 +4,8 @@ from ..models.Rent import Rent
 from ..models.AgencyFee import AgencyFee
 from ..models.SecurityDeposit import SecurityDeposit
 from ..models.Rental import Rental
+from ..smtp.smtp import mail
+from flask_mail import Message
 
 
 finance = Blueprint('finance', __name__, template_folder='templates')
@@ -98,6 +100,36 @@ def security_deposit_delete(payment_id):
         flash("Succès de la suppression du paiement", "success")
     else:
         flash("Erreur lors de la suppression du paiement", "error")
+
+    return redirect(url_for('finance.finance_read_all'))
+
+
+# Send email with rent receipt concerned by rental
+@finance.post('/finances/quittance-loyer')
+@login_required
+def send_rent_receipt():
+    # Escape form inputs values
+    user_input = {name: escape(value) for name, value in request.form.items()}
+
+    rental = Rental.read(user_input['rental_id'])
+    start_date = Rental.convert_date(user_input['start_date'])
+    end_date = Rental.convert_date(user_input['end_date'])
+
+    msg = Message(f'Quittance de loyer {rental.apartment.reference}', sender='coopimmogestion@gmail.com',
+                  recipients=[rental.tenant.email])
+    msg.html = render_template('rent_receipt.html', rental=rental, start_date=start_date,
+                               end_date=end_date, text_start_date=user_input['start_date'],
+                               text_end_date=user_input['end_date'])
+
+    # Check if rental payments are conformed for the period before sending email
+    if rental.check_rental_payment(start_date, end_date):
+        try:
+            mail.send(msg)
+            flash("Quittance de loyer envoyée avec succès", "success")
+        except Exception:
+            flash("Erreur lors de l'envoie de la quittance de loyer", "error")
+    else:
+        flash("Le locataire n'est pas en règle des règlements sur cette periode", "error")
 
     return redirect(url_for('finance.finance_read_all'))
 

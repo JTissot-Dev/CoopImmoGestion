@@ -99,14 +99,21 @@ class Rental(db.Model):
         return date
 
     @classmethod
-    def read(cls):
-        try:
-            rentals = cls.query.all()
-            return rentals
-        except NoResultFound:
-            return []
-        except Exception:
-            return None
+    def read(cls, rental_id=None):
+        if rental_id:
+            try:
+                rental = cls.query.get(rental_id)
+                return rental
+            except Exception:
+                return None
+        else:
+            try:
+                rentals = cls.query.all()
+                return rentals
+            except NoResultFound:
+                return []
+            except Exception:
+                return None
 
     @classmethod
     def create(cls, user_input):
@@ -184,3 +191,16 @@ class Rental(db.Model):
                         db.session.commit()
             except Exception:
                 db.session.rollback()
+
+    # Check if sum of payments amount of the rental are
+    # conformed to the sum of amount due depending on apartment prices
+    def check_rental_payment(self, start_date, end_date):
+        period_payments = (payment for payment in self.rents if start_date <= payment.payment_date <= end_date)
+        period_payment_amount = sum(payment.amount for payment in period_payments)
+        period_prices_amount = (self.apartment.price.rent + self.apartment.price.charge) * \
+                               ((end_date.year - start_date.year) * 12 + (end_date.month - start_date.month)+1)
+
+        if period_payment_amount >= period_prices_amount:
+            return True
+        else:
+            return False

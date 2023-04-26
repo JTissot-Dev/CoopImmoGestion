@@ -6,6 +6,7 @@ import {TenantFormCheck} from "./TenantFormCheck.js";
 import {RentalFormCheck} from "./RentalFormCheck.js";
 import {InventoryFormCheck} from "./InventoryFormCheck.js";
 import {PaymentFormCheck} from "./PaymentFormCheck.js";
+import {RentReceiptFormCheck} from "./RentReceiptFormCheck.js";
 
 
 // Table variables
@@ -48,6 +49,10 @@ const submitsButtonInventory = document.querySelectorAll('.submit-inventory');
 const modalsBodyPayment = document.querySelectorAll('.modal-body-payment');
 const formsPayment = document.querySelectorAll('.form-payment');
 const submitsButtonPayment = document.querySelectorAll('.submit-payment');
+
+const modalBodyRentReceipt = document.querySelector('.modal-body-rent-receipt');
+const formRentReceipt = document.querySelector('.form-rent-receipt');
+const submitButtonRentReceipt = document.querySelector('.submit-rent-receipt');
 
 // Table display
 if (tbodyRows, pagesNumber, nextPage, previousPage){
@@ -130,4 +135,9 @@ if (modalsBodyPayment, formsPayment, submitsButtonPayment){
             paymentFormCheck.attachEventListeners();
         })
     }
+}
+
+if (modalBodyRentReceipt, formRentReceipt, submitButtonRentReceipt){
+    const rentReceiptFormCheck = new RentReceiptFormCheck(modalBodyRentReceipt, formRentReceipt, submitButtonRentReceipt);
+    rentReceiptFormCheck.attachEventListeners();
 }

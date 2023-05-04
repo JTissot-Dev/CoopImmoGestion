@@ -187,7 +187,7 @@ class Rental(db.Model):
                     # Update only over the duration of the lease
                     if rental.start_date <= dt.now() <= rental.end_date:
                         rental.rental_balance -= \
-                         (rental.apartment.price.rent + rental.apartment.price.charge)
+                            (rental.apartment.price.rent + rental.apartment.price.charge)
                         db.session.commit()
             except Exception:
                 db.session.rollback()
@@ -198,9 +198,25 @@ class Rental(db.Model):
         period_payments = (payment for payment in self.rents if start_date <= payment.payment_date <= end_date)
         period_payment_amount = sum(payment.amount for payment in period_payments)
         period_prices_amount = (self.apartment.price.rent + self.apartment.price.charge) * \
-                               ((end_date.year - start_date.year) * 12 + (end_date.month - start_date.month)+1)
+                               ((end_date.year - start_date.year) * 12 + (end_date.month - start_date.month) + 1)
 
         if period_payment_amount >= period_prices_amount:
             return True
         else:
             return False
+
+    def extract_balance_account(self):
+        total_amount = sum(payment.amount for payment in self.rents)
+        payment_number = len(self.rents)
+        rents_excluding_charges_amount = sum((payment.amount - self.apartment.price.charge) for payment in self.rents)
+        charges_amount = sum(payment.amount for payment in self.rents) - rents_excluding_charges_amount
+        agency_fee_amount = sum \
+            ((payment.amount - self.apartment.price.charge) * payment.agency_fee.rate for payment in self.rents)
+
+        return {
+            "payment_number": payment_number,
+            "rents_excluding_charges_amount": rents_excluding_charges_amount,
+            "charges_amount": charges_amount,
+            "total_amount": total_amount,
+            "agency_fee_amount": agency_fee_amount
+        }

@@ -165,3 +165,7 @@ table{
 .observation-ct-content{
   overflow-wrap: anywhere;
 }
+
+.logo-sizing-exit{
+  @include logo-sizing(22px, 22px);
+}

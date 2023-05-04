@@ -40,6 +40,21 @@
                             </svg>
                             Quittance de loyer
                         </button>
+                        {#large screen account balance button#}
+                        <button class="btn btn-ct-add d-none d-lg-block ms-2" data-bs-toggle="modal" data-bs-target="#AccountBalance">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-safe mb-1 me-1" viewBox="0 0 16 16">
+                                <path d="M1 1.5A1.5 1.5 0 0 1 2.5 0h12A1.5 1.5 0 0 1 16 1.5v13a1.5 1.5 0 0 1-1.5 1.5h-12A1.5 1.5 0 0 1 1 14.5V13H.5a.5.5
+                                0 0 1 0-1H1V8.5H.5a.5.5 0 0 1 0-1H1V4H.5a.5.5 0 0 1 0-1H1V1.5zM2.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 .5.5h12a.5.5 0 0
+                                0 .5-.5v-13a.5.5 0 0 0-.5-.5h-12z"/>
+                                <path d="M13.5 6a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zM4.828 4.464a.5.5 0
+                                0 1 .708 0l1.09 1.09a3.003 3.003 0 0 1 3.476 0l1.09-1.09a.5.5 0 1 1 .707.708l-1.09 1.09c.74
+                                1.037.74 2.44 0 3.476l1.09 1.09a.5.5 0 1 1-.707.708l-1.09-1.09a3.002 3.002 0 0 1-3.476 0l-1.09
+                                1.09a.5.5 0 1 1-.708-.708l1.09-1.09a3.003 3.003 0 0 1 0-3.476l-1.09-1.09a.5.5 0 0 1 0-.708zM6.95
+                                6.586a2 2 0 1 0 2.828 2.828A2 2 0 0 0 6.95 6.586z"/>
+                            </svg>
+                            Bilan des comptes
+                        </button>
                         {#small screen create payment button#}
                         <button class="btn btn-ct-add-s d-block d-lg-none" data-bs-toggle="modal" data-bs-target="#CreatePaymentModal">
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cash-coin my-1" viewBox="0 0 16 16">
@@ -60,6 +75,20 @@
                               <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643
                               7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576
                               6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
+                            </svg>
+                        </button>
+                        {#small screen account balance button#}
+                        <button class="btn btn-ct-add-s d-block d-lg-none ms-2" data-bs-toggle="modal" data-bs-target="#AccountBalance">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                                 class="bi bi-safe my-1" viewBox="0 0 16 16">
+                                <path d="M1 1.5A1.5 1.5 0 0 1 2.5 0h12A1.5 1.5 0 0 1 16 1.5v13a1.5 1.5 0 0 1-1.5 1.5h-12A1.5 1.5 0 0 1 1 14.5V13H.5a.5.5
+                                0 0 1 0-1H1V8.5H.5a.5.5 0 0 1 0-1H1V4H.5a.5.5 0 0 1 0-1H1V1.5zM2.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 .5.5h12a.5.5 0 0
+                                0 .5-.5v-13a.5.5 0 0 0-.5-.5h-12z"/>
+                                <path d="M13.5 6a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zM4.828 4.464a.5.5 0
+                                0 1 .708 0l1.09 1.09a3.003 3.003 0 0 1 3.476 0l1.09-1.09a.5.5 0 1 1 .707.708l-1.09 1.09c.74
+                                1.037.74 2.44 0 3.476l1.09 1.09a.5.5 0 1 1-.707.708l-1.09-1.09a3.002 3.002 0 0 1-3.476 0l-1.09
+                                1.09a.5.5 0 1 1-.708-.708l1.09-1.09a3.003 3.003 0 0 1 0-3.476l-1.09-1.09a.5.5 0 0 1 0-.708zM6.95
+                                6.586a2 2 0 1 0 2.828 2.828A2 2 0 0 0 6.95 6.586z"/>
                             </svg>
                         </button>
                     </div>
@@ -382,6 +411,42 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-ct-cancel-modal" data-bs-dismiss="modal">Annuler</button>
                         <button type="button" class="btn btn-primary btn-ct-modal submit-rent-receipt">Envoyer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# Account balance modal#}
+        <div class="modal modal-lg fade rounded-2" id="AccountBalance" tabindex="-1" aria-labelledby="AccountBalanceLabel" aria-hidden="true">
+            <div class="modal-dialog my-3">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-5" id="AccountBalanceLabel">Bilan des comptes</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body position-relative modal-body-account-balance">
+                        <form class="form-account-balance" action="{{url_for('finance.account_balances')}}" method="post">
+                            <fieldset class="row g-3 m-1 pb-2 border border-primary-subtle rounded-2">
+                                <legend class="my-0 py-0 text-custom text-modal-sizing text-center">Location</legend>
+                                <div class="col my-1">
+                                    <label for="rental_id" class="form-label text-modal-sizing">Location*</label>
+                                    <select name="rental_id" id="rental_id" class="form-select form-select-sm rounded-1">
+                                        <option></option>
+                                        {% if rentals %}
+                                            {% for rental in rentals %}
+                                                <option value="{{ rental.rental_id }}">
+                                                    {{ rental.tenant.full_name }}-{{ rental.apartment.reference }}
+                                                </option>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </select>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-ct-cancel-modal" data-bs-dismiss="modal">Annuler</button>
+                        <button type="button" class="btn btn-primary btn-ct-modal submit-account-balance">Valider</button>
                     </div>
                 </div>
             </div>

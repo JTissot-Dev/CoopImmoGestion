@@ -1,4 +1,4 @@
-from flask import render_template, request, escape, redirect, url_for, flash, Blueprint
+from flask import render_template, request, escape, redirect, url_for, flash, Blueprint, make_response
 from ..decorators.login_required import login_required
 from ..models.Rent import Rent
 from ..models.AgencyFee import AgencyFee
@@ -6,6 +6,9 @@ from ..models.SecurityDeposit import SecurityDeposit
 from ..models.Rental import Rental
 from ..smtp.smtp import mail
 from flask_mail import Message
+from datetime import datetime as dt
+import pandas as pd
+import io
 
 
 finance = Blueprint('finance', __name__, template_folder='templates')
@@ -133,3 +136,68 @@ def send_rent_receipt():
 
     return redirect(url_for('finance.finance_read_all'))
 
+
+# Access account balance page
+@finance.post('/finances/bilan-des-comptes')
+@login_required
+def account_balances():
+    page_title = 'CoopImmoGestion-Bilan-des-comptes'
+
+    # Escape form inputs values
+    rental_id = escape(request.form['rental_id'])
+    rental = Rental.read(rental_id)
+
+    # Get detail from rental payments
+    rents_detail = rental.extract_balance_account()
+    total_amount = rents_detail['total_amount']
+    payment_number = rents_detail['payment_number']
+    rents_excluding_charges_amount = rents_detail['rents_excluding_charges_amount']
+    charges_amount = rents_detail['charges_amount']
+    agency_fee_amount = rents_detail['agency_fee_amount']
+
+    return render_template('account_balance.html',
+                           page_title=page_title,
+                           rental=rental,
+                           payment_number=payment_number,
+                           total_amount=total_amount,
+                           rents_excluding_charges_amount=rents_excluding_charges_amount,
+                           charges_amount=charges_amount,
+                           agency_fee_amount=agency_fee_amount)
+
+
+# Export data in xlsx
+@finance.post('/finances/bilan-des-comptes/export/<int:rental_id>')
+@login_required
+def account_balances_export(rental_id):
+    rental = Rental.read(rental_id)
+
+    # Get detail from rental payments
+    rents_detail = rental.extract_balance_account()
+
+    # Define data structure for DataFrame
+    series = pd.Series(rents_detail,
+                       name=f'Bilan_des_comptes: {rental.tenant.full_name} {rental.apartment.reference}')
+    series.index = [
+        'Nombre de loyers perçus',
+        'Loyers hors charges',
+        'Charges',
+        'Total perçu',
+        'Frais d\'agence'
+    ]
+
+    export_file = pd.DataFrame(data=series)
+
+    # Store Excel file in RAM
+    buffer = io.BytesIO()
+
+    # write data in Excel file
+    with pd.ExcelWriter(buffer) as writer:
+        export_file.to_excel(writer, sheet_name=f'{rental.text_start_date} au {rental.text_end_date}')
+
+    # Define response
+    response = make_response(buffer.getvalue())
+    response.headers['Content-Disposition'] = \
+        f'attachment; filename=Bilan_des_comptes_{dt.strftime(dt.now(), "%Y-%m-%d")}.xlsx'
+    response.headers['Content-Type'] = 'application/vnd.ms-excel'
+
+    return response

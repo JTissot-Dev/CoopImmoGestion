@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+    <main>
+        <div class="container py-3">
+            <div class="row justify-content-between my-4 mx-1 border-bottom border-primary-subtle">
+                <h1 class="col-8 fs-5 p-0">Bilan des comptes</h1>
+                <div class="col-4 d-none d-lg-flex justify-content-end p-0">
+                    <a href="{{ url_for('index.index_get') }}"
+                       class="link-body-emphasis link-underline link-underline-opacity-0 pe-0 me-2">
+                        <img src="{{ url_for('static', filename='img/home-logo.svg') }}" class="mb-1">
+                        Accueil
+                    </a>
+                    <span> / </span>
+                    <a href="{{ url_for('finance.finance_read_all') }}"
+                       class="link-body-emphasis link-underline link-underline-opacity-0 pe-0 ms-2">
+                        <img src="{{ url_for('static', filename='img/money-logo.svg') }}">
+                        Finances
+                    </a>
+                </div>
+                <div class="col-4 d-flex d-lg-none justify-content-end p-0">
+                    <a href="{{ url_for('finance.finance_read_all') }}">
+                        <img src="{{ url_for('static', filename='img/exit-logo.svg') }}"
+                             class="mb-2 logo-sizing-exit">
+                    </a>
+                </div>
+            </div>
+            <div class="row mx-1">
+                <div class="col col-12 my-1 p-0">
+                    <span class="fw-semibold">
+                        Locataire:
+                    </span>
+                    {{ rental.tenant.full_name }}
+                </div>
+                <div class="col col-12 my-1 p-0">
+                    <span class="fw-semibold">
+                        Bien:
+                    </span>
+                    {{ rental.apartment.reference }}
+                </div>
+                <div class="col col-12 my-1 p-0">
+                    <span class="fw-semibold">
+                        Periode du bail:
+                    </span>
+                    {{ rental.text_start_date }} au {{ rental.text_end_date }}
+                </div>
+            </div>
+            <div class="row mx-1 mt-5 shadow-sm">
+                <div class="col-lg-6 p-0">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item my-1 d-flex justify-content-between">
+                            <div>
+                                Nombre de loyers perçus
+                            </div>
+                            <div>
+                                {{ payment_number }}
+                            </div>
+                        </li>
+                        <li class="list-group-item my-1 d-flex justify-content-between">
+                            <div>
+                                Loyers hors charges
+                            </div>
+                            <div>
+                                {{ rents_excluding_charges_amount }} €
+                            </div>
+                        </li>
+                        <li class="list-group-item my-1 d-flex justify-content-between">
+                            <div>
+                                Charges
+                            </div>
+                            <div>
+                                {{ charges_amount }} €
+                            </div>
+                        </li>
+                        <li class="list-group-item my-1 d-flex justify-content-between">
+                            <div>
+                                Total perçu
+                            </div>
+                            <div>
+                                {{ total_amount }} €
+                            </div>
+                        </li>
+                        <li class="list-group-item my-1 d-flex justify-content-between">
+                            <div>
+                                Frais d'agence
+                            </div>
+                            <div class="text-success">
+                                {{ agency_fee_amount }} €
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-6 d-flex justify-content-center align-items-center p-0">
+                    <form action="{{url_for('finance.account_balances_export', rental_id=rental.rental_id)}}"
+                          method="post" class="bg-light h-100 w-100 d-flex flex-column justify-content-center align-items-center">
+                        <div class="mt-4">
+                            Exporter les informations
+                        </div>
+                        <button class="btn btn-ct-add my-5" type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-file-earmark-spreadsheet mb-1" viewBox="0 0 16 16">
+                                <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0
+                                0 11 4.5h2V9H3V2a1 1 0 0 1 1-1h5.5v2zM3 12v-2h2v2H3zm0 1h2v2H4a1 1 0 0 1-1-1v-1zm3 2v-2h3v2H6zm4
+                                0v-2h3v1a1 1 0 0 1-1 1h-2zm3-3h-3v-2h3v2zm-7 0v-2h3v2H6z"/>
+                            </svg>
+                            Export Excel
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="row mb-5 pb-5"></div>
+        </div>
+    </main>
+
+{% endblock %}

@@ -38,6 +38,10 @@ class Rent(Payment):
     def rental_id(self, rental_id):
         self._rental_id = rental_id
 
+    # Define string representation for Rent object
+    def __repr__(self):
+        return f'<Rent>: {self.payment_id}'
+
     @classmethod
     def read(cls, payment_id):
         if payment_id:

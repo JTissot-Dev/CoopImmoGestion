@@ -24,6 +24,10 @@ class SecurityDeposit(Payment):
     def rental_id(self, rental_id):
         self._rental_id = rental_id
 
+    # Define string representation for SecurityDeposit object
+    def __repr__(self):
+        return f'<SecurityDeposit>: {self.payment_id}'
+
     @classmethod
     def read(cls):
         try:

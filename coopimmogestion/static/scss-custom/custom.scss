@@ -169,3 +169,13 @@ table{
 .logo-sizing-exit{
   @include logo-sizing(22px, 22px);
 }
+
+.btn-ct-agency_fee{
+  @include button-outline-variant(#663a7e);
+  @include button-size(5px,40px,15px,3px);
+}
+
+.btn-ct-agency_fee-s{
+  @include button-outline-variant(#663a7e);
+  @include button-size(5px,10px,10px,3px);
+}

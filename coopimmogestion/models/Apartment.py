@@ -47,7 +47,7 @@ class Apartment(Property):
 
     # Define string representation for Apartment object
     def __repr__(self):
-        return f'<UserApp>: {self.reference}'
+        return f'<Apartment>: {self.reference}'
 
     @classmethod
     def read(cls):

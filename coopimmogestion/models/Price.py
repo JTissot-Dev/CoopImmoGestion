@@ -56,4 +56,6 @@ class Price(db.Model):
     def apartment_id(self, apartment_id):
         self._apartment_id = apartment_id
 
-
+    # Define string representation for Price object
+    def __repr__(self):
+        return f'<Price>: {self.price_id}'

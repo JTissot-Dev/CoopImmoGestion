@@ -71,6 +71,10 @@ class Inventory(db.Model):
         date = dt.strptime(date, "%Y-%m-%d")
         return date
 
+    # Define string representation for Inventory object
+    def __repr__(self):
+        return f'<Inventory>: {self.inventory_id}'
+
     @classmethod
     def read(cls):
         try:

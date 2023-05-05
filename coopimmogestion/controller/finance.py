@@ -1,5 +1,6 @@
 from flask import render_template, request, escape, redirect, url_for, flash, Blueprint, make_response
 from ..decorators.login_required import login_required
+from ..decorators.admin_required import admin_required
 from ..models.Rent import Rent
 from ..models.AgencyFee import AgencyFee
 from ..models.SecurityDeposit import SecurityDeposit
@@ -21,6 +22,7 @@ def finance_read_all():
     rents = Rent.read(None)
     security_deposits = SecurityDeposit.read()
     rentals = Rental.read()
+    agency_fee = AgencyFee.read()
 
     # If connection database error
     if not isinstance(rents, list) or not isinstance(security_deposits, list):
@@ -30,7 +32,7 @@ def finance_read_all():
         payments = rents + security_deposits
 
     return render_template('finance.html', page_title=page_title,
-                           payments=payments, rentals=rentals)
+                           payments=payments, rentals=rentals, agency_fee=agency_fee)
 
 
 @finance.post('/finances/creer')
@@ -165,7 +167,7 @@ def account_balances():
                            agency_fee_amount=agency_fee_amount)
 
 
-# Export data in xlsx
+# Export account balance data in xlsx
 @finance.post('/finances/bilan-des-comptes/export/<int:rental_id>')
 @login_required
 def account_balances_export(rental_id):
@@ -201,3 +203,21 @@ def account_balances_export(rental_id):
     response.headers['Content-Type'] = 'application/vnd.ms-excel'
 
     return response
+
+
+@finance.post('/finances/frais-agence/modifier')
+@login_required
+@admin_required
+def agency_fee_update():
+    # Escape form input value
+    rate = escape(request.form['rate'])
+
+    agency_fee: AgencyFee = AgencyFee.update(rate)
+
+    if agency_fee:
+        flash("Succès de la mise à jour des frais d'agence", "success")
+    else:
+        flash("Erreur lors de la mise à jour des frais d'agence", "error")
+
+    return redirect(url_for('finance.finance_read_all'))
+

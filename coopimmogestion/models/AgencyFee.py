@@ -25,3 +25,25 @@ class AgencyFee(db.Model):
     @rate.setter
     def rate(self, rate):
         self._rate = rate
+
+    # Define string representation for AgencyFee object
+    def __repr__(self):
+        return f'<AgencyFee>: {self.agency_fee_id}'
+
+    @classmethod
+    def read(cls):
+        try:
+            agency_fee = cls.query.get(1)
+            return agency_fee
+        except Exception:
+            return None
+
+    @classmethod
+    def update(cls, rate):
+        try:
+            agency_fee = cls.query.get(1)
+            agency_fee.rate = rate
+            db.session.commit()
+            return agency_fee
+        except Exception:
+            return None

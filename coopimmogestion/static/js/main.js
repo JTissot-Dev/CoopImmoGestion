@@ -8,6 +8,7 @@ import {InventoryFormCheck} from "./InventoryFormCheck.js";
 import {PaymentFormCheck} from "./PaymentFormCheck.js";
 import {RentReceiptFormCheck} from "./RentReceiptFormCheck.js";
 import {AccountBalanceFormCheck} from "./AccountBalanceFormCheck.js";
+import {AgencyFeeFormCheck} from "./AgencyFeeFormCheck.js";
 
 
 // Table variables
@@ -60,6 +61,11 @@ const submitButtonRentReceipt = document.querySelector('.submit-rent-receipt');
 const modalBodyAccountBalance = document.querySelector('.modal-body-account-balance');
 const formAccountBalance = document.querySelector('.form-account-balance');
 const submitButtonAccountBalance = document.querySelector('.submit-account-balance');
+
+// AgencyFee modal variables
+const modalBodyAgencyFee = document.querySelector('.modal-body-agency-fee');
+const formAgencyFee = document.querySelector('.form-agency-fee');
+const submitButtonAgencyFee = document.querySelector('.submit-agency-fee');
 
 
 // Table display
@@ -145,12 +151,20 @@ if (modalsBodyPayment, formsPayment, submitsButtonPayment){
     }
 }
 
+// Rent receipt form submit
 if (modalBodyRentReceipt, formRentReceipt, submitButtonRentReceipt){
     const rentReceiptFormCheck = new RentReceiptFormCheck(modalBodyRentReceipt, formRentReceipt, submitButtonRentReceipt);
     rentReceiptFormCheck.attachEventListeners();
 }
 
+// Account balance receipt form submit
 if (modalBodyAccountBalance, formAccountBalance, submitButtonAccountBalance){
     const accountBalanceFormCheck = new AccountBalanceFormCheck(modalBodyAccountBalance, formAccountBalance, submitButtonAccountBalance);
     accountBalanceFormCheck.attachEventListeners();
+}
+
+// Agency fee receipt form submit
+if (modalBodyAgencyFee, formAgencyFee, submitButtonAgencyFee){
+    const agencyFeeFormCheck = new AgencyFeeFormCheck(modalBodyAgencyFee, formAgencyFee, submitButtonAgencyFee);
+    agencyFeeFormCheck.attachEventListeners();
 }

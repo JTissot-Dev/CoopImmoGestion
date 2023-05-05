@@ -22,7 +22,7 @@ export class FormCheck{
         this.loading_spinner.ariaRoleDescription = "status";
         span_spinner.className = "visually-hidden";
 
-        this.loading_spinner.append(span_spinner)
+        this.loading_spinner.append(span_spinner);
         this.modalBody.append(this.loading_spinner);
     }
 }

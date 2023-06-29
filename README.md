@@ -1,11 +1,14 @@
-![Cover](https://github.com/JeromeTissot69500/CoopImmoGestion/blob/main/img/Logo-brand.png)
+<div align="center">
+  <img src="https://github.com/JeromeTissot69500/CoopImmoGestion/blob/OTH-Add-img-readme/img/Brand_logo.jpg" width="100%">
+</div>
+
 
 <br>
 
 ## About The Project
 
 <div align="center">
-  <img src="https://github.com/JeromeTissot69500/CoopImmoGestion/blob/main/img/Index-view.png">
+  <img src="https://github.com/JeromeTissot69500/CoopImmoGestion/blob/OTH-Add-img-readme/img/Index_view.jpg?raw=true">
 </div>
 CoopImmoGestion is a responsive web application allowing to make rental management easier, and have been developed as part of my training as a "concepteur, developpeur de solutions digitales".
 <br>
@@ -27,5 +30,5 @@ CoopImmoGestion is a responsive web application allowing to make rental manageme
 The following instructions will show you how to run it in your local environment.
 
 ### Prerequisites
-Set up:
+#### Set up:
 * <a href="https://www.python.org/downloads/release/python-3110/"> Python 3.11.0 </a>

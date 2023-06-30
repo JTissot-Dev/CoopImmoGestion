@@ -4,11 +4,16 @@
 
 ## About The Project
 
-<div align="center">
-  <img src="https://github.com/JeromeTissot69500/CoopImmoGestion/blob/OTH-Add-img-readme/img/Index_view.jpg?raw=true">
-</div>
-CoopImmoGestion is a responsive web application allowing to make rental management easier, and have been developed as part of my training as a "concepteur, developpeur de solutions digitales".
 <br>
+<br>
+<div align="center">
+  <img src="https://github.com/JeromeTissot69500/CoopImmoGestion/blob/OTH-Add-img-readme/img/Index_view.jpg?raw=true" width="90%">
+</div>
+<br>
+<br>
+CoopImmoGestion is a responsive web application allowing to make rental management easier, and have been developed as part of my training as a "Concepteur, développeur de solutions digitales".
+<br>
+
 
 ### Built With
 
@@ -54,15 +59,15 @@ Set up:
 
 5. Create postgres database with pg Admin 
 <div align="center">
-  <img src="https://github.com/JeromeTissot69500/CoopImmoGestion/blob/OTH-Add-img-readme/img/pg_Admin_capture.jpg?raw=true">
+  <img src="https://github.com/JeromeTissot69500/CoopImmoGestion/blob/OTH-Add-img-readme/img/pg_Admin_capture.jpg?raw=true" width="90%">
 </div>
 
 6. Set the name and save
 <div align="center">
-  <img src="https://github.com/JeromeTissot69500/CoopImmoGestion/blob/OTH-Add-img-readme/img/pg_Admin_capture2.jpg?raw=true">
+  <img src="https://github.com/JeromeTissot69500/CoopImmoGestion/blob/OTH-Add-img-readme/img/pg_Admin_capture2.jpg?raw=true" width="90%">
 </div>
 
-7. Set environment variable for the flask application
+7. Set environment variable for the flask app
    ```
    export FLASK_APP=coopimmogestion
    ```
@@ -72,8 +77,24 @@ Set up:
    flask db upgrade
    ```
 
-9. At this point, the application should be properly installed on your device, now, you juste have to run it !
+9. At this point, the app should be properly installed on your device, now, you juste have to run it !
    ```
    flask run
    ```
+<br>
+
+## Usage
+
+It's time to test the app, but before that, you need to follow somme additional steps.
+
+### First connexion
+
+To access the app, you'll need a username and a password, so, you have to create a first user in database.
+<br>
+<br>
+<div align="center">
+  <img src="https://github.com/JeromeTissot69500/CoopImmoGestion/blob/OTH-Add-img-readme/img/Login_view.jpg?raw=true" width="90%">
+</div>
+<br>
+<br>
 

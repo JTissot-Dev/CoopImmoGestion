@@ -1,7 +1,4 @@
-<div align="center">
-  <img src="https://github.com/JeromeTissot69500/CoopImmoGestion/blob/OTH-Add-img-readme/img/Brand_logo.jpg" width="100%">
-</div>
-
+![Cover](https://github.com/JeromeTissot69500/CoopImmoGestion/blob/OTH-Add-img-readme/img/Brand_logo2.jpg?raw=true)
 
 <br>
 
@@ -30,5 +27,53 @@ CoopImmoGestion is a responsive web application allowing to make rental manageme
 The following instructions will show you how to run it in your local environment.
 
 ### Prerequisites
-#### Set up:
+Set up:
 * <a href="https://www.python.org/downloads/release/python-3110/"> Python 3.11.0 </a>
+* <a href="https://www.enterprisedb.com/downloads/postgres-postgresql-downloads"> PostgreSQL 15.3 </a>
+
+### Installation
+1. Clone the repository
+   ```sh
+   git clone https://github.com/JeromeTissot69500/CoopImmoGestion.git
+   ```
+
+2. Create python virtual environment in CoopImmoGestion folder
+   ```sh
+   python -m venv venvimmo
+   ```
+
+3. Activate virtual environment
+   ```
+   venvimmo/Scripts/activate
+   ```
+
+4. Install required package
+   ```
+   pip install -r requirements.txt
+   ```
+
+5. Create postgres database with pg Admin 
+<div align="center">
+  <img src="https://github.com/JeromeTissot69500/CoopImmoGestion/blob/OTH-Add-img-readme/img/pg_Admin_capture.jpg?raw=true">
+</div>
+
+6. Set the name and save
+<div align="center">
+  <img src="https://github.com/JeromeTissot69500/CoopImmoGestion/blob/OTH-Add-img-readme/img/pg_Admin_capture2.jpg?raw=true">
+</div>
+
+7. Set environment variable for the flask application
+   ```
+   export FLASK_APP=coopimmogestion
+   ```
+
+8. Upgrade database schema
+   ```
+   flask db upgrade
+   ```
+
+9. At this point, the application should be properly installed on your device, now, you juste have to run it !
+   ```
+   flask run
+   ```
+

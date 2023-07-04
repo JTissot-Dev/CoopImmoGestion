@@ -57,27 +57,37 @@ Set up:
    pip install -r requirements.txt
    ```
 
-5. Create postgres database with pg Admin 
+5. Before the nexts instructions, please insure that your postgres password matche with the password setting in database URI of the development config and the connexion password setting in create data file:
+
+* _coopimmogestion/config/DevelopmentConfig.py_
+&nbsp; <img src="https://github.com/JeromeTissot69500/CoopImmoGestion/blob/OTH-Add-img-readme/img/Dev_config_capture.jpg?raw=true" width="80%">
+<br>
+
+* _coopimmogestion/db/create_data.py_
+&nbsp; <img src="https://github.com/JeromeTissot69500/CoopImmoGestion/blob/OTH-Add-img-readme/img/Create_data_capture.jpg?raw=true" width="50%">
+<br>
+
+6. Create postgres database with pg Admin
 <div align="center">
   <img src="https://github.com/JeromeTissot69500/CoopImmoGestion/blob/OTH-Add-img-readme/img/pg_Admin_capture.jpg?raw=true" width="90%">
 </div>
 
-6. Set the name and save
+7. Set the name and save
 <div align="center">
   <img src="https://github.com/JeromeTissot69500/CoopImmoGestion/blob/OTH-Add-img-readme/img/pg_Admin_capture2.jpg?raw=true" width="90%">
 </div>
 
-7. Set environment variable for the flask app
+8. Set environment variable for the flask app
    ```
    export FLASK_APP=coopimmogestion
    ```
 
-8. Upgrade database schema
+9. Upgrade database schema
    ```
    flask db upgrade
    ```
 
-9. At this point, the app should be properly installed on your device, now, you juste have to run it !
+10. At this point, the app should be properly installed on your device, now, you juste have to run it !
    ```
    flask run
    ```

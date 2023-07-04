@@ -118,3 +118,7 @@ To access the app, you'll need a username and a password, so, you have to create
 ### Handling
 
 <p>You can now testing the full application, for a better handling, please refer to the <a href="https://drive.google.com/file/d/1Mcj-lSemjnrF0MeqdqLluUgZBjacuFEh/view?usp=sharing)https://drive.google.com/file/d/1Mcj-lSemjnrF0MeqdqLluUgZBjacuFEh/view?usp=sharing">Documentation</a></p>
+
+## Contact
+
+Jérôme Tissot - jerome.tissot@lamache.org
